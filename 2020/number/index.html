@@ -46,7 +46,7 @@
     "articleSection" : "posts",
     "name" : "Number of Lambda-Calculus",
     "headline" : "Number of Lambda-Calculus",
-    "description" : "len\x26amp;fact function fact :: (Integral a) =\x26gt; a -\x26gt; a fact 0 = 1 fact n = n * fact (n - 1) function fact(n) if n == 0 then return 1 end return n * fact(n - 1) end --------------------------- fact = function(n) if n == 0 then return 1 end return n * ???(n-1) end arr = [1, 2, 3, 4, 5] -------------------------------- arr.length -------------------------------- def len(arr) if arr == [] return 0 else return 1 \x2b len(arr[1.",
+    "description" : "万物皆数，数是宇宙的根本，找到数就找到了宇宙的本原. \x26mdash;\x26mdash;\x26mdash; 毕达哥拉斯\n 0x01 函数化的数字 1 \x26lt;- 这是什么数? | 数字 1 呀 2 \x26lt;- 那这个呢？ | 数字 2 呗 1 \x2b 2 \x26lt;- 这个的结果呢 | 数字 3 吧 小伙伴(😡): ???当我三岁小孩呢~\n上面的示例中, 使用了数字和算术运算. 但数字并不真正存在于lambda演算中，我们有的只有函数! 我们得想个法子用函数来表示数字. 那么往下看..\n`lambda f x . x` \x26lt;- 那么这是啥呢~ , 我们假设它就是 0 `lambda f x . f x` 假定这个就是 1 `lambda f x . f (f x)` 假定这个就是 2 , `lambda f x . f (f (f x))` 那么 3 呢， `lambda f x .",
     "inLanguage" : "en-us",
     "author" : "ash",
     "creator" : "ash",
@@ -57,7 +57,7 @@
     "datePublished": "2020-11-19 11:40:10 \x2b0800 CST",
     "dateModified" : "2020-11-19 11:40:10 \x2b0800 CST",
     "url" : "https:\/\/ash-z01.github.io\/2020\/number\/",
-    "wordCount" : "481",
+    "wordCount" : "347",
     "keywords" : [ "Lambda","λ","λ-演算", "E-Meow Site"]
 }
 </script>
@@ -149,127 +149,77 @@
           
           
 
-          <h3 id="lenfact-function">len&amp;fact function</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-hs" data-lang="hs"><span style="color:#a6e22e">fact</span> <span style="color:#f92672">::</span> (<span style="color:#66d9ef">Integral</span> a) <span style="color:#f92672">=&gt;</span> a <span style="color:#f92672">-&gt;</span> a
-<span style="color:#a6e22e">fact</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
-<span style="color:#a6e22e">fact</span> n <span style="color:#f92672">=</span> n <span style="color:#f92672">*</span> fact (n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">fact</span>(n)
-    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span>
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
-    <span style="color:#66d9ef">end</span>
-    <span style="color:#66d9ef">return</span> n <span style="color:#f92672">*</span> fact(n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
-<span style="color:#66d9ef">end</span>
-<span style="color:#75715e">---------------------------</span>
-fact <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(n)
-    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span>
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
-    <span style="color:#66d9ef">end</span>
-    <span style="color:#66d9ef">return</span> n <span style="color:#f92672">*</span> <span style="color:#960050;background-color:#1e0010">???</span>(n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
-<span style="color:#66d9ef">end</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rb" data-lang="rb">arr <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span><span style="color:#f92672">]</span>
-<span style="color:#f92672">--------------------------------</span>
-arr<span style="color:#f92672">.</span>length
-<span style="color:#f92672">--------------------------------</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">len</span>(arr)
-    <span style="color:#66d9ef">if</span> arr <span style="color:#f92672">==</span> <span style="color:#f92672">[]</span>
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
-    <span style="color:#66d9ef">else</span>
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> len(arr<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">..]</span>)
-    <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-<span style="color:#f92672">---------------------------------</span>
-<span style="color:#f92672">-&gt;</span> arr {
-    <span style="color:#66d9ef">if</span> arr <span style="color:#f92672">==</span> <span style="color:#f92672">[]</span>
-        <span style="color:#ae81ff">0</span>
-    <span style="color:#66d9ef">else</span> 
-        <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">??</span>?(arr<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">..]</span>)
-    <span style="color:#66d9ef">end</span>
-}
-<span style="color:#f92672">--------------------------------</span>
-</code></pre></div><ol>
-<li><strong>λ-演算</strong></li>
-</ol>
-<blockquote>
-<ul>
-<li><strong>λ-演算</strong> 是一套从数学逻辑中发展，以变量绑定和替换的规则，来研究函数如何抽象化定义、函数如何被应用以及递归的形式系统</li>
-<li><strong>𝜆-演算</strong> 分为 <code>类型化𝜆-演算(Typed λ-Calculus)</code> 和 <code>无类型𝜆-演算(Type-Free λ-Calculus)</code> 也称为 <code>朴素λ-演算(Naive λ-Calculs)</code>. 本次主要分享的是无类型的<strong>λ-演算</strong></li>
-<li>无类型 <strong>λ-演算</strong> 内核非常小，可以用下面的文法来描述：</li>
-</ul>
+          <blockquote>
+<p>万物皆数，数是宇宙的根本，找到数就找到了宇宙的本原. &mdash;&mdash;&mdash; 毕达哥拉斯</p>
 </blockquote>
-<p>$$
-<!-- raw HTML omitted --> \longrightarrow a | b | &hellip;
-\<br>
-<!-- raw HTML omitted --> \longrightarrow λ<!-- raw HTML omitted -->.&lt;λ-exp&gt;
-\<br>
-<!-- raw HTML omitted --> \longrightarrow (&lt;λ-exp&gt;)<!-- raw HTML omitted -->
-\<br>
-&lt;λ-exp&gt; \longrightarrow <!-- raw HTML omitted --> | <!-- raw HTML omitted --> | <!-- raw HTML omitted -->
-$$</p>
-<ol>
-<li><strong>λ-演算中的数字</strong></li>
-</ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">let</span> <span style="color:#ae81ff">0</span> = lambda s z . z
-<span style="color:#66d9ef">let</span> <span style="color:#ae81ff">1</span> = lambda s z . s z
-<span style="color:#66d9ef">let</span> <span style="color:#ae81ff">2</span> = lambda s z . s (s z)
-<span style="color:#75715e">// let n = lambda s z . (n s z)
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">let</span> <span style="color:#66d9ef">add</span> = lambda x y . (lambda s z . x s (y s z))
-(<span style="color:#66d9ef">add</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span>) = 
-    (lambda x y . (lambda s z . x s (y s z))) <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span>  <span style="color:#75715e">// 展开
-</span><span style="color:#75715e"></span>    lambda s z . <span style="color:#ae81ff">2</span> s (<span style="color:#ae81ff">3</span> s z)  <span style="color:#75715e">// β-规约 右侧函数
-</span><span style="color:#75715e"></span>     lambda s z . (lambda s2 z2 . s2 (s2 z2)) s (<span style="color:#ae81ff">3</span> s z) <span style="color:#75715e">// 将数字2展开
-</span><span style="color:#75715e"></span>    lambda s z . s (s (<span style="color:#ae81ff">3</span> s z)) <span style="color:#75715e">// β-规约 右侧函数
-</span><span style="color:#75715e"></span>    lambda s z . s (s ((lambda s3 z3 . s3 (s3 (s3 z3))) s z)) <span style="color:#75715e">// 将数字3展开
-</span><span style="color:#75715e"></span>    lambda s z . s (s (s (s (s z)))) <span style="color:#75715e">// 邱奇数-5
-</span></code></pre></div><ol start="2">
-<li><strong>λ-演算中的布尔值与选择</strong></li>
-</ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">let</span> TRUE = lambda x y . x
-<span style="color:#66d9ef">let</span> FALSE = lambda x y . y
+<h2 id="0x01-函数化的数字">0x01 函数化的数字</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">1 &lt;- 这是什么数? |  数字 1 呀
+2 &lt;- 那这个呢？  |  数字 2 呗
+1 + 2 &lt;- 这个的结果呢  |  数字 3 吧
+</code></pre></div><p>小伙伴(😡): ???当我三岁小孩呢~</p>
+<p>上面的示例中, 使用了数字和算术运算. 但数字并不真正存在于lambda演算中，我们有的只有函数! 我们得想个法子用函数来表示数字. 那么往下看..</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md"><span style="color:#e6db74">`lambda f x . x`</span> &lt;- 那么这是啥呢~ , 我们假设它就是 0
+<span style="color:#e6db74">`lambda f x . f x`</span>  假定这个就是 1
+<span style="color:#e6db74">`lambda f x . f (f x)`</span> 假定这个就是 2 , 
+<span style="color:#e6db74">`lambda f x . f (f (f x))`</span> 那么 3 呢，
+<span style="color:#e6db74">`lambda f x . f (f (f (f (f x))))`</span> 5呢？ 看出啥规律没鸭?
+</code></pre></div><p>我们简单地用  -&gt; 函数 <code>f</code> 运用到 <code>x</code> (及其后继) 上的次数  来表示数字.</p>
+<h2 id="0x02-算术运算">0x02 算术运算</h2>
+<p>现在我们有了数字，那么我想实现 <code>2 + 3</code> 该怎么做呢？ 看看lambda表达式是怎么做加法的..</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md"><span style="color:#e6db74">`lambda m n . (lambda f x . m f (n f x))`</span> 
+let add = <span style="color:#e6db74">`lambda m n . (lambda f x . m f (n f x))`</span> // 来点语法糖， 巴啦啦能量变！！
+</code></pre></div><p>看着有点费解哎~ 我们应用一下试试， (没忘记alpha转换和beta规约吧..)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">add 2 3
+    = (lambda m n . (lambda f x . m f (n f x))) 2 3
+    = lambda f x . 2 f (3 f x) // beta规约
+    = lambda f x . (lambda s2 z2 . s2 (s2 z2)) f (3 f x) // 看看上面lambda演算中的数字2，alpha转换一下, 回避名称冲突
+    = lambda f x . f (f (3 f x)) // beta规约
+    = lambda f x . f (f ((lambda s3 z3 . s3 (s3 (s3 z3))) f x)) // 展开 3
+    = lambda f x . f (f (f (f (f x)))) // beta规约 仔细看看这是啥. 5?! 
+</code></pre></div><p>嘿!~ 还挺神奇哈!!</p>
+<h2 id="0x03-它还能指导编程语言">0x03 它还能指导编程语言?</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#75715e">-- 0 = lambda f x. x</span>
+zero <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (f)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (x)
+        <span style="color:#66d9ef">return</span> x
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#66d9ef">let</span> And = lambda x y . x y FALSE 
-<span style="color:#66d9ef">let</span> Or = lambda x y. x TRUE y 
-<span style="color:#66d9ef">let</span> Not = lambda x . x FALSE TRUE 
+<span style="color:#75715e">-- 1 = lambda f x . f x</span>
+one <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (f)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (x)
+        f(x)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#66d9ef">let</span> IfThenElse = lambda cond <span style="color:#66d9ef">true</span>-exp <span style="color:#66d9ef">false</span>-exp . cond <span style="color:#66d9ef">true</span>-exp <span style="color:#66d9ef">false</span>-exp 
-</code></pre></div><ol start="3">
-<li><strong>λ演算中的重复与递归</strong></li>
-</ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lisp" data-lang="lisp"><span style="color:#75715e">;; factorial(n) = 1 if n = 0 </span>
-<span style="color:#75715e">;; factorial(n) = n * factorial(n-1) if n &gt; 0 </span>
+<span style="color:#75715e">-- add = lambda m n . (lambda f x . m f (n f x))</span>
+add <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (m, n)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (f)
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (x)
+            <span style="color:#66d9ef">return</span> m(f)(n(f)(x))
+        <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
 
-<span style="color:#75715e">;; lambda n . IfThenElse (Zero? n) 1 (Mul n ( ??? (Pred n)))</span>
+two <span style="color:#f92672">=</span> add(one, one)
+three <span style="color:#f92672">=</span> add(two, one)
+five <span style="color:#f92672">=</span> add(two, three)
+</code></pre></div><p>emmm&hellip;对上了, 函数化的数字!</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua">three(<span style="color:#66d9ef">function</span> ()
+    print(<span style="color:#e6db74">&#34;给爷打印3次&#34;</span>)
+<span style="color:#66d9ef">end</span>)()
 
-(lambda n
-    (cond 
-        ((zero? n) <span style="color:#ae81ff">1</span>)
-        (else (<span style="color:#a6e22e">*</span> n (?? (<span style="color:#a6e22e">-</span> n <span style="color:#ae81ff">1</span>))))))
-</code></pre></div><blockquote>
+five(<span style="color:#66d9ef">function</span> ()
+    print(<span style="color:#e6db74">&#34;再来5次康康&#34;</span>)
+<span style="color:#66d9ef">end</span>)()
+</code></pre></div><h2 id="0x04-参考">0x04 参考</h2>
 <ul>
-<li>不动点::定义函数 𝑓:ℝ↦ℝ，如果 ∃𝑥 ∈ 𝐷(𝑓)，使得 𝑥=𝑓(𝑥)，则称点 𝑥 是函数 𝑓(𝑥) 的不动点</li>
+<li><a href="https://zh.wikipedia.org/wiki/%CE%9B%E6%BC%94%E7%AE%97">wiki - λ演算</a></li>
+<li><a href="http://goodmath.blogspot.com/">blog - Good Math/Bad Math</a></li>
+<li><a href="https://liujiacai.net/blog/2014/10/12/lambda-calculus-introduction/">blog - Keep Coding</a></li>
+<li><a href="https://www.liaoxuefeng.com/wiki/1022910821149312">site - 廖雪峰的官方网站</a></li>
 </ul>
-</blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#75715e">// x 为 f(x) 的不动点， 则有
-</span><span style="color:#75715e"></span>x = f(x)
-  = f(f(x))
-  = f(f(f(x)))
-  = ...
-</code></pre></div><blockquote>
-<p>哈斯凯尔·布鲁克·柯里(Haskell.Brooks.Curry)</p>
-<ul>
-<li>Y := λf.(λx.(f (x x)) λx.(f (x x))) &ndash; Call-By-Name</li>
-<li>Y := λf.(λu.(u u)) λx.(f λv.(x x v)) &ndash; Call-By-Value</li>
-</ul>
-</blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#75715e">// 用一个例子函数g来展开它，可以看到这个函数是如何成为一个不动点组合子的
-</span><span style="color:#75715e"></span>
-(Y g)
-    = (<span style="color:#960050;background-color:#1e0010">λ</span>f.(<span style="color:#960050;background-color:#1e0010">λ</span>x.(f (x x)) <span style="color:#960050;background-color:#1e0010">λ</span>x.(f (x x))) g) <span style="color:#75715e">// 展开
-</span><span style="color:#75715e"></span>    = (<span style="color:#960050;background-color:#1e0010">λ</span>x.(g (x x)) <span style="color:#960050;background-color:#1e0010">λ</span>x.(g (x x))) <span style="color:#75715e">// λf的β-归约 - 应用主函数于g
-</span><span style="color:#75715e"></span>    = (<span style="color:#960050;background-color:#1e0010">λ</span>y.(g (y y)) <span style="color:#960050;background-color:#1e0010">λ</span>x.(g (x x)))<span style="color:#75715e">// α-转换 - 重命名约束变量
-</span><span style="color:#75715e"></span>    = (g (<span style="color:#960050;background-color:#1e0010">λ</span>x.(g (x x)) <span style="color:#960050;background-color:#1e0010">λ</span>x.(g (x x)))) <span style="color:#75715e">// λy的β-归约 - 应用左侧函数于右侧函数
-</span><span style="color:#75715e"></span>    = (g (Y g)) <span style="color:#75715e">// Y的定义
-</span></code></pre></div>
+
     </div>
 
     <div class="post-copyright">

@@ -17,7 +17,10 @@
       <pubDate>Thu, 19 Nov 2020 11:40:10 +0800</pubDate>
       
       <guid>https://ash-z01.github.io/2020/number/</guid>
-      <description>len&amp;amp;fact function fact :: (Integral a) =&amp;gt; a -&amp;gt; a fact 0 = 1 fact n = n * fact (n - 1) function fact(n) if n == 0 then return 1 end return n * fact(n - 1) end --------------------------- fact = function(n) if n == 0 then return 1 end return n * ???(n-1) end arr = [1, 2, 3, 4, 5] -------------------------------- arr.length -------------------------------- def len(arr) if arr == [] return 0 else return 1 + len(arr[1.</description>
+      <description>万物皆数，数是宇宙的根本，找到数就找到了宇宙的本原. &amp;mdash;&amp;mdash;&amp;mdash; 毕达哥拉斯
+ 0x01 函数化的数字 1 &amp;lt;- 这是什么数? | 数字 1 呀 2 &amp;lt;- 那这个呢？ | 数字 2 呗 1 + 2 &amp;lt;- 这个的结果呢 | 数字 3 吧 小伙伴(😡): ???当我三岁小孩呢~
+上面的示例中, 使用了数字和算术运算. 但数字并不真正存在于lambda演算中，我们有的只有函数! 我们得想个法子用函数来表示数字. 那么往下看..
+`lambda f x . x` &amp;lt;- 那么这是啥呢~ , 我们假设它就是 0 `lambda f x . f x` 假定这个就是 1 `lambda f x . f (f x)` 假定这个就是 2 , `lambda f x . f (f (f x))` 那么 3 呢， `lambda f x .</description>
     </item>
     
     <item>

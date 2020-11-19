@@ -195,7 +195,7 @@ lambda演算作为一种广泛用途的计算模型，可以清晰地定义什�
 &lt;application&gt; --&gt; (&lt;λ-exp&gt;)&lt;identifier&gt;
 &lt;λ-exp&gt; --&gt; &lt;identifier&gt; | &lt;abstraction&gt; | &lt;application&gt;
 </code></pre></div><h2 id="0x03-柯里化">0x03 柯里化</h2>
-<p>观察上面的定义，你会发现一个 Lambda表达式 只接受一个参数. 这似乎是一个很大的局限. 比如，怎样才能能在只有一个参数的情况下实现加法呢？</p>
+<p>观察上面的定义，你会发现一个 Lambda表达式 只接受一个参数. 这似乎是一个很大的局限. 比如，怎样才能在只有一个参数的情况下实现加法呢？</p>
 <p>当然没有问题啦，因为函数也是值. 所以单参数函数可以返回另一个单参数的函数，这样就可以实现两个参数相加的函数了. 本质上二者一致.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">这就是所谓的柯里化(Currying)，以伟大的逻辑学家Haskell Curry命名.
 </code></pre></div><h2 id="0x04-自由与约束">0x04 自由与约束</h2>
