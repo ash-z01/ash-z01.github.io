@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="meow">
+  
+  
+  
+  <link rel="prev" href="https://example.com/2020/essential/" />
+  
+  <link rel="canonical" href="https://example.com/2020/number/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Number of Lambda-Calculus | E-Meow Site
+       
+  </title>
+  <meta name="title" content="Number of Lambda-Calculus | E-Meow Site">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/example.com"
+    },
+    "articleSection" : "posts",
+    "name" : "Number of Lambda-Calculus",
+    "headline" : "Number of Lambda-Calculus",
+    "description" : "len\x26amp;fact function fact :: (Integral a) =\x26gt; a -\x26gt; a fact 0 = 1 fact n = n * fact (n - 1) function fact(n) if n == 0 then return 1 end return n * fact(n - 1) end --------------------------- fact = function(n) if n == 0 then return 1 end return n * ???(n-1) end arr = [1, 2, 3, 4, 5] -------------------------------- arr.length -------------------------------- def len(arr) if arr == [] return 0 else return 1 \x2b len(arr[1.",
+    "inLanguage" : "en-us",
+    "author" : "ash",
+    "creator" : "ash",
+    "publisher": "ash",
+    "accountablePerson" : "ash",
+    "copyrightHolder" : "ash",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-11-19 11:40:10 \x2b0800 CST",
+    "dateModified" : "2020-11-19 11:40:10 \x2b0800 CST",
+    "url" : "https:\/\/example.com\/2020\/number\/",
+    "wordCount" : "481",
+    "keywords" : [ "Lambda","λ","λ-演算", "E-Meow Site"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://example.com">E-Meow Site</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://example.com">E-Meow Site</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Number of Lambda-Calculus</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://example.com" rel="author">ash</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-11-19 itemprop="datePublished">November 19, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://example.com/categories/lambda%E5%A5%A5%E7%A7%98/"> Lambda奥秘 </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h3 id="lenfact-function">len&amp;fact function</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-hs" data-lang="hs"><span style="color:#a6e22e">fact</span> <span style="color:#f92672">::</span> (<span style="color:#66d9ef">Integral</span> a) <span style="color:#f92672">=&gt;</span> a <span style="color:#f92672">-&gt;</span> a
+<span style="color:#a6e22e">fact</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+<span style="color:#a6e22e">fact</span> n <span style="color:#f92672">=</span> n <span style="color:#f92672">*</span> fact (n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">fact</span>(n)
+    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">return</span> n <span style="color:#f92672">*</span> fact(n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+<span style="color:#66d9ef">end</span>
+<span style="color:#75715e">---------------------------</span>
+fact <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(n)
+    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">return</span> n <span style="color:#f92672">*</span> <span style="color:#960050;background-color:#1e0010">???</span>(n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+<span style="color:#66d9ef">end</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rb" data-lang="rb">arr <span style="color:#f92672">=</span> <span style="color:#f92672">[</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span><span style="color:#f92672">]</span>
+<span style="color:#f92672">--------------------------------</span>
+arr<span style="color:#f92672">.</span>length
+<span style="color:#f92672">--------------------------------</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">len</span>(arr)
+    <span style="color:#66d9ef">if</span> arr <span style="color:#f92672">==</span> <span style="color:#f92672">[]</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">else</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> len(arr<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">..]</span>)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+<span style="color:#f92672">---------------------------------</span>
+<span style="color:#f92672">-&gt;</span> arr {
+    <span style="color:#66d9ef">if</span> arr <span style="color:#f92672">==</span> <span style="color:#f92672">[]</span>
+        <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">else</span> 
+        <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">??</span>?(arr<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">..]</span>)
+    <span style="color:#66d9ef">end</span>
+}
+<span style="color:#f92672">--------------------------------</span>
+</code></pre></div><ol>
+<li><strong>λ-演算</strong></li>
+</ol>
+<blockquote>
+<ul>
+<li><strong>λ-演算</strong> 是一套从数学逻辑中发展，以变量绑定和替换的规则，来研究函数如何抽象化定义、函数如何被应用以及递归的形式系统</li>
+<li><strong>𝜆-演算</strong> 分为 <code>类型化𝜆-演算(Typed λ-Calculus)</code> 和 <code>无类型𝜆-演算(Type-Free λ-Calculus)</code> 也称为 <code>朴素λ-演算(Naive λ-Calculs)</code>. 本次主要分享的是无类型的<strong>λ-演算</strong></li>
+<li>无类型 <strong>λ-演算</strong> 内核非常小，可以用下面的文法来描述：</li>
+</ul>
+</blockquote>
+<p>$$
+<!-- raw HTML omitted --> \longrightarrow a | b | &hellip;
+\<br>
+<!-- raw HTML omitted --> \longrightarrow λ<!-- raw HTML omitted -->.&lt;λ-exp&gt;
+\<br>
+<!-- raw HTML omitted --> \longrightarrow (&lt;λ-exp&gt;)<!-- raw HTML omitted -->
+\<br>
+&lt;λ-exp&gt; \longrightarrow <!-- raw HTML omitted --> | <!-- raw HTML omitted --> | <!-- raw HTML omitted -->
+$$</p>
+<ol>
+<li><strong>λ-演算中的数字</strong></li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">let</span> <span style="color:#ae81ff">0</span> = lambda s z . z
+<span style="color:#66d9ef">let</span> <span style="color:#ae81ff">1</span> = lambda s z . s z
+<span style="color:#66d9ef">let</span> <span style="color:#ae81ff">2</span> = lambda s z . s (s z)
+<span style="color:#75715e">// let n = lambda s z . (n s z)
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">let</span> <span style="color:#66d9ef">add</span> = lambda x y . (lambda s z . x s (y s z))
+(<span style="color:#66d9ef">add</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span>) = 
+    (lambda x y . (lambda s z . x s (y s z))) <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span>  <span style="color:#75715e">// 展开
+</span><span style="color:#75715e"></span>    lambda s z . <span style="color:#ae81ff">2</span> s (<span style="color:#ae81ff">3</span> s z)  <span style="color:#75715e">// β-规约 右侧函数
+</span><span style="color:#75715e"></span>     lambda s z . (lambda s2 z2 . s2 (s2 z2)) s (<span style="color:#ae81ff">3</span> s z) <span style="color:#75715e">// 将数字2展开
+</span><span style="color:#75715e"></span>    lambda s z . s (s (<span style="color:#ae81ff">3</span> s z)) <span style="color:#75715e">// β-规约 右侧函数
+</span><span style="color:#75715e"></span>    lambda s z . s (s ((lambda s3 z3 . s3 (s3 (s3 z3))) s z)) <span style="color:#75715e">// 将数字3展开
+</span><span style="color:#75715e"></span>    lambda s z . s (s (s (s (s z)))) <span style="color:#75715e">// 邱奇数-5
+</span></code></pre></div><ol start="2">
+<li><strong>λ-演算中的布尔值与选择</strong></li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">let</span> TRUE = lambda x y . x
+<span style="color:#66d9ef">let</span> FALSE = lambda x y . y
+
+<span style="color:#66d9ef">let</span> And = lambda x y . x y FALSE 
+<span style="color:#66d9ef">let</span> Or = lambda x y. x TRUE y 
+<span style="color:#66d9ef">let</span> Not = lambda x . x FALSE TRUE 
+
+<span style="color:#66d9ef">let</span> IfThenElse = lambda cond <span style="color:#66d9ef">true</span>-exp <span style="color:#66d9ef">false</span>-exp . cond <span style="color:#66d9ef">true</span>-exp <span style="color:#66d9ef">false</span>-exp 
+</code></pre></div><ol start="3">
+<li><strong>λ演算中的重复与递归</strong></li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lisp" data-lang="lisp"><span style="color:#75715e">;; factorial(n) = 1 if n = 0 </span>
+<span style="color:#75715e">;; factorial(n) = n * factorial(n-1) if n &gt; 0 </span>
+
+<span style="color:#75715e">;; lambda n . IfThenElse (Zero? n) 1 (Mul n ( ??? (Pred n)))</span>
+
+(lambda n
+    (cond 
+        ((zero? n) <span style="color:#ae81ff">1</span>)
+        (else (<span style="color:#a6e22e">*</span> n (?? (<span style="color:#a6e22e">-</span> n <span style="color:#ae81ff">1</span>))))))
+</code></pre></div><blockquote>
+<ul>
+<li>不动点::定义函数 𝑓:ℝ↦ℝ，如果 ∃𝑥 ∈ 𝐷(𝑓)，使得 𝑥=𝑓(𝑥)，则称点 𝑥 是函数 𝑓(𝑥) 的不动点</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#75715e">// x 为 f(x) 的不动点， 则有
+</span><span style="color:#75715e"></span>x = f(x)
+  = f(f(x))
+  = f(f(f(x)))
+  = ...
+</code></pre></div><blockquote>
+<p>哈斯凯尔·布鲁克·柯里(Haskell.Brooks.Curry)</p>
+<ul>
+<li>Y := λf.(λx.(f (x x)) λx.(f (x x))) &ndash; Call-By-Name</li>
+<li>Y := λf.(λu.(u u)) λx.(f λv.(x x v)) &ndash; Call-By-Value</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#75715e">// 用一个例子函数g来展开它，可以看到这个函数是如何成为一个不动点组合子的
+</span><span style="color:#75715e"></span>
+(Y g)
+    = (<span style="color:#960050;background-color:#1e0010">λ</span>f.(<span style="color:#960050;background-color:#1e0010">λ</span>x.(f (x x)) <span style="color:#960050;background-color:#1e0010">λ</span>x.(f (x x))) g) <span style="color:#75715e">// 展开
+</span><span style="color:#75715e"></span>    = (<span style="color:#960050;background-color:#1e0010">λ</span>x.(g (x x)) <span style="color:#960050;background-color:#1e0010">λ</span>x.(g (x x))) <span style="color:#75715e">// λf的β-归约 - 应用主函数于g
+</span><span style="color:#75715e"></span>    = (<span style="color:#960050;background-color:#1e0010">λ</span>y.(g (y y)) <span style="color:#960050;background-color:#1e0010">λ</span>x.(g (x x)))<span style="color:#75715e">// α-转换 - 重命名约束变量
+</span><span style="color:#75715e"></span>    = (g (<span style="color:#960050;background-color:#1e0010">λ</span>x.(g (x x)) <span style="color:#960050;background-color:#1e0010">λ</span>x.(g (x x)))) <span style="color:#75715e">// λy的β-归约 - 应用左侧函数于右侧函数
+</span><span style="color:#75715e"></span>    = (g (Y g)) <span style="color:#75715e">// Y的定义
+</span></code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>meow </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://example.com/2020/number/>https://example.com/2020/number/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://example.com/tags/lambda/">
+                    #Lambda</a></span>
+            
+            <span class="tag"><a href="https://example.com/tags/%CE%BB/">
+                    #λ</a></span>
+            
+            <span class="tag"><a href="https://example.com/tags/%CE%BB-%E6%BC%94%E7%AE%97/">
+                    #λ-演算</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://example.com">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://example.com/2020/essential/" class="prev" rel="prev" title="Essential of Lambda-Calculus"><i class="iconfont icon-left"></i>&nbsp;Essential of Lambda-Calculus</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2020 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://example.com">meow</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

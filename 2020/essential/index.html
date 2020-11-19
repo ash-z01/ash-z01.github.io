@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="meow">
+  
+  
+  
+  <link rel="prev" href="https://example.com/2020/go001-chan/" />
+  <link rel="next" href="https://example.com/2020/number/" />
+  <link rel="canonical" href="https://example.com/2020/essential/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Essential of Lambda-Calculus | E-Meow Site
+       
+  </title>
+  <meta name="title" content="Essential of Lambda-Calculus | E-Meow Site">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/example.com"
+    },
+    "articleSection" : "posts",
+    "name" : "Essential of Lambda-Calculus",
+    "headline" : "Essential of Lambda-Calculus",
+    "description" : "法国作家、冒险家、艺术家和航空工程师 安东尼·德·圣埃克苏佩里 (Antoine de Saint-Exupéry) 在论飞机设计时说： “La perfection est atteinte non quand il ne reste rien à ajouter，mais quand il ne reste rien à enlever!” 完美之道，不在无可增加，而在无可删减!\n 0x01 什么是 lambda-calculus λ-演算(lambda\/λ-calculus)是一套从数学逻辑中发展，以变量绑定和替换的规则，来研究函数如何抽象化定义、函数如何被应用以及递归的形式系统.\n20世纪30年代，一个名叫阿隆佐-邱奇的数学家,首次发表了Lambda演算， 从而解决了可计算理论中的判定性问题. lambda演算作为一种广泛用途的计算模型，可以清晰地定义什么是一个可计算函数，而任何可计算函数都能以这种形式表达和求值. 𝜆-演算 分为 `类型化𝜆-演算(Typed λ-Calculus)` 和 `无类型𝜆-演算(Type-Free λ-Calculus)` 也称为 `朴素λ-演算(Naive λ-Calculs)`. lambda演算简单易读写，语义强大同时图灵完备, 后续内容主要针对是无类型的λ-演算展开讲解.\n0x02 一切皆函数 大家都学过不少编程语言, C\x2b\x2b、Java、Go、Python等\x26hellip; 它们大部分都有着丰富的语法特性，很多特性可以互相替换。 如果我们遵循安东尼的完美之道，去裁剪语法，那么最小化的语言是什么样的呢~\nlambda演算可比拟最根本的编程语言, 它的内核非常小,可以用以下规则来描述:\n   语法\/L-exp 名称 描述     a 变量\/原子 标识符引用就是一个名字，这个名字用于匹配函数表达式中的某个参数名   λx.",
+    "inLanguage" : "en-us",
+    "author" : "ash",
+    "creator" : "ash",
+    "publisher": "ash",
+    "accountablePerson" : "ash",
+    "copyrightHolder" : "ash",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-11-18 17:10:10 \x2b0800 CST",
+    "dateModified" : "2020-11-18 17:10:10 \x2b0800 CST",
+    "url" : "https:\/\/example.com\/2020\/essential\/",
+    "wordCount" : "252",
+    "keywords" : [ "Lambda","λ","λ-演算", "E-Meow Site"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://example.com">E-Meow Site</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://example.com">E-Meow Site</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Essential of Lambda-Calculus</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://example.com" rel="author">ash</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-11-18 itemprop="datePublished">November 18, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://example.com/categories/lambda%E5%A5%A5%E7%A7%98/"> Lambda奥秘 </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <blockquote>
+<p>法国作家、冒险家、艺术家和航空工程师 <strong>安东尼·德·圣埃克苏佩里</strong> (Antoine de Saint-Exupéry) 在论飞机设计时说：
+“La perfection est atteinte non quand il ne reste rien à ajouter，mais quand il ne reste rien à enlever!”
+<strong>完美之道，不在无可增加，而在无可删减!</strong></p>
+</blockquote>
+<h2 id="0x01-什么是-lambda-calculus">0x01 什么是 lambda-calculus</h2>
+<p><strong>λ-演算</strong>(lambda/λ-calculus)是一套从数学逻辑中发展，以变量绑定和替换的规则，来研究函数如何抽象化定义、函数如何被应用以及递归的形式系统.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">20世纪30年代，一个名叫阿隆佐-邱奇的数学家,首次发表了Lambda演算， 从而解决了可计算理论中的判定性问题.
+lambda演算作为一种广泛用途的计算模型，可以清晰地定义什么是一个可计算函数，而任何可计算函数都能以这种形式表达和求值.
+𝜆-演算 分为 <span style="color:#e6db74">`类型化𝜆-演算(Typed λ-Calculus)`</span> 和 <span style="color:#e6db74">`无类型𝜆-演算(Type-Free λ-Calculus)`</span> 也称为 <span style="color:#e6db74">`朴素λ-演算(Naive λ-Calculs)`</span>.
+</code></pre></div><p>lambda演算简单易读写，语义强大同时图灵完备, 后续内容主要针对是无类型的λ-演算展开讲解.</p>
+<h2 id="0x02-一切皆函数">0x02 一切皆函数</h2>
+<p>大家都学过不少编程语言, C++、Java、Go、Python等&hellip; 它们大部分都有着丰富的语法特性，很多特性可以互相替换。
+如果我们遵循安东尼的完美之道，去裁剪语法，那么最小化的语言是什么样的呢~</p>
+<p>lambda演算可比拟最根本的编程语言, 它的内核非常小,可以用以下规则来描述:</p>
+<table>
+<thead>
+<tr>
+<th align="right">语法/L-exp</th>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">a</td>
+<td>变量/原子</td>
+<td>标识符引用就是一个名字，这个名字用于匹配函数表达式中的某个参数名</td>
+</tr>
+<tr>
+<td align="right">λx.M</td>
+<td>抽象化/抽象规则</td>
+<td>函数定义, 变量x 在 body 中被绑定</td>
+</tr>
+<tr>
+<td align="right">(F N)</td>
+<td>应用/应用规则</td>
+<td>将函数 F 应用于参数 N</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">&lt;identifier&gt; --&gt; a | b | ... 
+&lt;abstraction&gt; --&gt; λ&lt;identifier&gt;.&lt;λ-exp&gt;
+&lt;application&gt; --&gt; (&lt;λ-exp&gt;)&lt;identifier&gt;
+&lt;λ-exp&gt; --&gt; &lt;identifier&gt; | &lt;abstraction&gt; | &lt;application&gt;
+</code></pre></div><h2 id="0x03-柯里化">0x03 柯里化</h2>
+<p>观察上面的定义，你会发现一个 Lambda表达式 只接受一个参数. 这似乎是一个很大的局限. 比如，怎样才能能在只有一个参数的情况下实现加法呢？</p>
+<p>当然没有问题啦，因为函数也是值. 所以单参数函数可以返回另一个单参数的函数，这样就可以实现两个参数相加的函数了. 本质上二者一致.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">这就是所谓的柯里化(Currying)，以伟大的逻辑学家Haskell Curry命名.
+</code></pre></div><h2 id="0x04-自由与约束">0x04 自由与约束</h2>
+<p>自由变量 是那些在lambda抽象不受到绑定的变量</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">例如，`lambda x.x`，其中的lambda项没有自由变量，但是在函数`lambda x.y x`中的lambda项，有一个自由变量 <span style="color:#e6db74">`y`</span>.
+</code></pre></div><p>lambda表达式还有一个重要的语法：闭包(closure)或者叫完全绑定(complete-binding). (接触过一些函数式编程技术的小伙伴一定听说过闭包吧~), 在对一个Lambda表达式进行求值的时候，不能引用任何未绑定的标识符.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">表达式 <span style="color:#e6db74">`lambda y . (lambda x . plus x y)`</span>, 在内层演算 <span style="color:#e6db74">`lambda x . plus x y`</span> 中，`y` 和 <span style="color:#e6db74">`plus`</span> 是自由的，`x`是绑定的, 而在完整表达中，`x` 和 <span style="color:#e6db74">`y`</span>是绑定的: <span style="color:#e6db74">`x`</span>受内层绑定，而`y`由剩下的演算绑定. <span style="color:#e6db74">`plus`</span>仍然是自由变量.
+</code></pre></div><h2 id="0x05-规约">0x05 规约</h2>
+<p>lambda表达式的求值过程中，需要用到的一些规约操作.</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(λx.M[x]) -&gt; (λy.M[y])</td>
+<td>α-转换</td>
+<td>重命名表达式中的绑定(形式)变量, 避免名称冲突</td>
+</tr>
+<tr>
+<td>((λx.M) E) -&gt; (M[x:=E])</td>
+<td>β-归约</td>
+<td>在抽象化的函数定义体中，以参数表达式代替绑定变量</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md"><span style="color:#66d9ef">*</span> η-变换(Eta-变换)
+Eta-变换 表达的是外延性的概念，在这里外延性指的是，对于任一给定的参数，当且仅当两个函数得到的结果都一致，则它们将被视同为一个函数.
+Eta-变换可以令 <span style="color:#e6db74">`lambda x.fx`</span> 和 <span style="color:#e6db74">`f`</span> 相互转换，只要 <span style="color:#e6db74">`x`</span> 不是 <span style="color:#e6db74">`f`</span> 中的自由变量.
+</code></pre></div><h2 id="0x06-能不能通俗点">0x06 能不能通俗点?</h2>
+<p>那就来点小栗子吧~</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">lambda x . x
+
+这个函数足够简单吧，返回自身, 那我们应用一下
+
+(lambda x . x) 1 = 1
+</code></pre></div><p>看看下一个..</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">lambda x . (lambda y . plus x y)
+
+应用一下
+
+(lambda x . (lambda y . plus x y)) 2 3
+    = (lambda y . plus 2 y) 3  // Beta规约
+    = plus 2 3 // Beta-规约
+    = 5 // 假设 plus 已经实现了数字相加
+</code></pre></div><h2 id="0x07-参考">0x07 参考</h2>
+<ul>
+<li><a href="https://zh.wikipedia.org/wiki/%CE%9B%E6%BC%94%E7%AE%97">wiki - λ演算</a></li>
+<li><a href="http://goodmath.blogspot.com/">blog - Good Math/Bad Math</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E9%98%BF%E9%9A%86%E4%BD%90%C2%B7%E9%82%B1%E5%A5%87">wiki - 阿隆佐·邱奇</a></li>
+<li><a href="https://liujiacai.net/blog/2014/10/12/lambda-calculus-introduction/">blog - Keep Coding</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>meow </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://example.com/2020/essential/>https://example.com/2020/essential/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://example.com/tags/lambda/">
+                    #Lambda</a></span>
+            
+            <span class="tag"><a href="https://example.com/tags/%CE%BB/">
+                    #λ</a></span>
+            
+            <span class="tag"><a href="https://example.com/tags/%CE%BB-%E6%BC%94%E7%AE%97/">
+                    #λ-演算</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://example.com">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://example.com/2020/go001-chan/" class="prev" rel="prev" title="Go Under The Hood"><i class="iconfont icon-left"></i>&nbsp;Go Under The Hood</a>
+         
+        
+        <a href="https://example.com/2020/number/" class="next" rel="next" title="Number of Lambda-Calculus">Number of Lambda-Calculus&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2020 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://example.com">meow</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

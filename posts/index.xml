@@ -2,22 +2,140 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on E-Meow Site</title>
-    <link>https://ash-z01.github.io/posts/</link>
+    <link>https://example.com/posts/</link>
     <description>Recent content in Posts on E-Meow Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Jul 2020 16:49:48 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 19 Nov 2020 11:40:10 +0800</lastBuildDate>
     
-	<atom:link href="https://ash-z01.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://example.com/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Number of Lambda-Calculus</title>
+      <link>https://example.com/2020/number/</link>
+      <pubDate>Thu, 19 Nov 2020 11:40:10 +0800</pubDate>
+      
+      <guid>https://example.com/2020/number/</guid>
+      <description>len&amp;amp;fact function fact :: (Integral a) =&amp;gt; a -&amp;gt; a fact 0 = 1 fact n = n * fact (n - 1) function fact(n) if n == 0 then return 1 end return n * fact(n - 1) end --------------------------- fact = function(n) if n == 0 then return 1 end return n * ???(n-1) end arr = [1, 2, 3, 4, 5] -------------------------------- arr.length -------------------------------- def len(arr) if arr == [] return 0 else return 1 + len(arr[1.</description>
+    </item>
+    
+    <item>
+      <title>Essential of Lambda-Calculus</title>
+      <link>https://example.com/2020/essential/</link>
+      <pubDate>Wed, 18 Nov 2020 17:10:10 +0800</pubDate>
+      
+      <guid>https://example.com/2020/essential/</guid>
+      <description>法国作家、冒险家、艺术家和航空工程师 安东尼·德·圣埃克苏佩里 (Antoine de Saint-Exupéry) 在论飞机设计时说： “La perfection est atteinte non quand il ne reste rien à ajouter，mais quand il ne reste rien à enlever!” 完美之道，不在无可增加，而在无可删减!
+ 0x01 什么是 lambda-calculus λ-演算(lambda/λ-calculus)是一套从数学逻辑中发展，以变量绑定和替换的规则，来研究函数如何抽象化定义、函数如何被应用以及递归的形式系统.
+20世纪30年代，一个名叫阿隆佐-邱奇的数学家,首次发表了Lambda演算， 从而解决了可计算理论中的判定性问题. lambda演算作为一种广泛用途的计算模型，可以清晰地定义什么是一个可计算函数，而任何可计算函数都能以这种形式表达和求值. 𝜆-演算 分为 `类型化𝜆-演算(Typed λ-Calculus)` 和 `无类型𝜆-演算(Type-Free λ-Calculus)` 也称为 `朴素λ-演算(Naive λ-Calculs)`. lambda演算简单易读写，语义强大同时图灵完备, 后续内容主要针对是无类型的λ-演算展开讲解.
+0x02 一切皆函数 大家都学过不少编程语言, C++、Java、Go、Python等&amp;hellip; 它们大部分都有着丰富的语法特性，很多特性可以互相替换。 如果我们遵循安东尼的完美之道，去裁剪语法，那么最小化的语言是什么样的呢~
+lambda演算可比拟最根本的编程语言, 它的内核非常小,可以用以下规则来描述:
+   语法/L-exp 名称 描述     a 变量/原子 标识符引用就是一个名字，这个名字用于匹配函数表达式中的某个参数名   λx.</description>
+    </item>
+    
+    <item>
+      <title>Go Under The Hood</title>
+      <link>https://example.com/2020/go001-chan/</link>
+      <pubDate>Sat, 10 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://example.com/2020/go001-chan/</guid>
+      <description>Golang chan 原理 golang chan
+func f1(c chan int) { c &amp;lt;- 1 } </description>
+    </item>
+    
+    <item>
       <title>Docker</title>
-      <link>https://ash-z01.github.io/2020/post02/</link>
+      <link>https://example.com/2020/post02/</link>
       <pubDate>Wed, 22 Jul 2020 16:49:48 +0800</pubDate>
       
-      <guid>https://ash-z01.github.io/2020/post02/</guid>
+      <guid>https://example.com/2020/post02/</guid>
       <description>哈哈，想不到吧 哈哈哈哈哈</description>
+    </item>
+    
+    <item>
+      <title>InnoDB 存储结构</title>
+      <link>https://example.com/2020/sql002-innodb_storage_structure/</link>
+      <pubDate>Wed, 22 Jul 2020 16:49:48 +0800</pubDate>
+      
+      <guid>https://example.com/2020/sql002-innodb_storage_structure/</guid>
+      <description>InnoDB页简介 InnoDB是一个将表中的数据存储到磁盘上的存储引擎，所以即使关机后重启我们的数据还是存在的。而真正处理数据的过程是发生在内存中的，所以需要把磁盘中的数据加载到内存中，如果是处理写入或修改请求的话，还需要把内存中的内容刷新到磁盘上。而我们知道读写磁盘的速度非常慢，和内存读写差了几个数量级，所以当我们想从表中获取某些记录时，InnoDB存储引擎需要一条一条的把记录从磁盘上读出来么？不，那样会慢死，InnoDB采取的方式是：将数据划分为若干个页，以页作为磁盘和内存之间交互的基本单位，InnoDB中页的大小一般为 16 KB。也就是在一般情况下，一次最少从磁盘中读取16KB的内容到内存中，一次最少把内存中的16KB内容刷新到磁盘中
+InnoDB行格式 我们平时是以记录为单位来向表中插入数据的，这些记录在磁盘上的存放方式也被称为行格式或者记录格式。设计InnoDB存储引擎的大叔们到现在为止设计了4种不同类型的行格式，分别是Compact、Redundant、Dynamic和Compressed行格式，随着时间的推移，他们可能会设计出更多的行格式，但是不管怎么变，在原理上大体都是相同的
+指定行格式的语法 我们可以在创建或修改表的语句中指定行格式：
+-- CREATE TABLE 表名 (列的信息) ROW_FORMAT=行格式名称  -- ALTER TABLE 表名 ROW_FORMAT=行格式名称  mysql&amp;gt; USE meow; Database changed mysql&amp;gt; CREATE TABLE record_format_demo ( -&amp;gt; c1 VARCHAR(10), -&amp;gt; c2 VARCHAR(10) NOT NULL, -&amp;gt; c3 CHAR(10), -&amp;gt; c4 VARCHAR(10) -&amp;gt; ) CHARSET=ascii ROW_FORMAT=COMPACT; Query OK, 0 rows affected (0.03 sec) 可以看到我们刚刚创建的这个表的行格式就是Compact，另外，我们还显式指定了这个表的字符集为ascii，因为ascii字符集只包括空格、标点符号、数字、大小写字母和一些不可见字符，所以我们的汉字是不能存到这个表里的。我们现在向这个表中插入两条记录：
+mysql&amp;gt; INSERT INTO record_format_demo(c1, c2, c3, c4) VALUES(&amp;#39;aaaa&amp;#39;, &amp;#39;bbb&amp;#39;, &amp;#39;cc&amp;#39;, &amp;#39;d&amp;#39;), (&amp;#39;eeee&amp;#39;, &amp;#39;fff&amp;#39;, NULL, NULL); Query OK, 2 rows affected (0.</description>
+    </item>
+    
+    <item>
+      <title>字符集与比较规则</title>
+      <link>https://example.com/2020/sql001-charset_and_cmp-rules/</link>
+      <pubDate>Wed, 22 Jul 2020 16:49:48 +0800</pubDate>
+      
+      <guid>https://example.com/2020/sql001-charset_and_cmp-rules/</guid>
+      <description>字符集与比较规则简介 字符集简介 众所周知，计算机只能存储二进制数据，100110101010...，那我们是怎么看到各式各样的字符的呢？当然是做映射啦~，这里要搞清楚两件事儿~
+ 需要将哪些字符映射成数据 当然是如何映射  人们抽象出一个字符集的概念来描述某个字符范围的编码规则. 比方说我们来自定义一个名称为 meow 的字符集，它包含的字符范围和编码规则如下&amp;hellip;
+ 包含字符 &#39;a&#39;, &#39;A&#39;, &#39;b&#39;, &#39;B&#39; 采用一个字节，编码一个字符 &amp;#39;a&amp;#39; -&amp;gt; 00000001 // 0x01 &amp;#39;b&amp;#39; -&amp;gt; 00000010 // 0x02 &amp;#39;A&amp;#39; -&amp;gt; 00000011 // 0x03 &amp;#39;B&amp;#39; -&amp;gt; 00000100 // 0x04   有了 meow 字符集， 我们就可以用二进制数表示字符了&amp;hellip;
+&amp;#39;bA&amp;#39; -&amp;gt; 0000001000000011 // 0x0203 &amp;#39;baB&amp;#39; -&amp;gt; 000000100000000100000100 // 0x020104 &amp;#39;cd&amp;#39; -&amp;gt; // 无法表示 比较规则简介 现在我们确定了 meow 字符集表示字符的范围以及编码规则，但是该怎么比较两个字符的大小呢？
+最容易想到的就是直接比较这两个字符对应的二进制编码的大小，比方说字符&amp;rsquo;a&#39;的编码为0x01，字符&amp;rsquo;b&#39;的编码为0x02，所以&amp;rsquo;a&#39;小于&amp;rsquo;b&amp;rsquo;，这种简单的比较规则也可以被称为二进制比较规则[binary collation]
+二进制比较规则是简单，但有时候并不符合现实需求，比如在很多场合对于英文字符我们都是不区分大小写的，也就是说&amp;rsquo;a&#39;和&amp;rsquo;A&#39;是相等的，在这种场合下就不能简单粗暴的使用二进制比较规则了，这时候我们可以这样指定比较规则：
+ 将两个大小写不同的字符全都转为大写或者小写 然后，再比较这两个字符对应的二进制数据  这是一种稍微复杂一点点的比较规则，但是实际生活中的字符不止英文字符一种，比如我们的汉字有几万之多，对于某一种字符集来说，比较两个字符大小的规则可以制定出很多种，也就是说同一种字符集可以有多种比较规则，我们稍后就要介绍各种现实生活中用的字符集以及它们的一些比较规则</description>
+    </item>
+    
+    <item>
+      <title>HTTP/2 Server Push in Hugo</title>
+      <link>https://example.com/2017/http2-server-push-in-hugo/</link>
+      <pubDate>Mon, 24 Jul 2017 18:36:00 +0200</pubDate>
+      
+      <guid>https://example.com/2017/http2-server-push-in-hugo/</guid>
+      <description>Netlify recently announced support for HTTP/2 server push, and we have now added it to the gohugo.io sites for the main CSS and JS bundles, along with server-side 301 redirect support.
+If you navigate to https://gohugo.io and look in the Chrome developer network console, you should now see Push as the new source (&amp;ldquo;Initiator&amp;rdquo;) for the CSS and JSS:
+Setting up this in Hugo was easy:
+1. Configure Netlify Output Formats Add a new custom media type and two new output formats to config.</description>
+    </item>
+    
+    <item>
+      <title>Creating a New Theme</title>
+      <link>https://example.com/2014/creating-a-new-theme/</link>
+      <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://example.com/2014/creating-a-new-theme/</guid>
+      <description>Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
+We&amp;rsquo;ll start with creating a new site with a very basic template.</description>
+    </item>
+    
+    <item>
+      <title>(Hu)go Template Primer</title>
+      <link>https://example.com/2014/goisforlovers/</link>
+      <pubDate>Mon, 28 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://example.com/2014/goisforlovers/</guid>
+      <description>Hugo uses the excellent go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in go templates.
+This document is a brief primer on using go templates.</description>
+    </item>
+    
+    <item>
+      <title>Getting Started with Hugo</title>
+      <link>https://example.com/2014/hugoisforlovers/</link>
+      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://example.com/2014/hugoisforlovers/</guid>
+      <description>Step 1. Install Hugo Goto hugo releases and download the appropriate version for your os and architecture.
+Save it somewhere specific as we will be using it in the next step.
+More complete instructions are available at installing hugo
+Step 2. Build the Docs Hugo has its own example site which happens to also be the documentation site you are reading right now.
+Follow the following steps:
+ Clone the hugo repository Go into the repo Run hugo in server mode and build the docs Open your browser to http://localhost:1313  Corresponding pseudo commands:</description>
+    </item>
+    
+    <item>
+      <title>Migrate to Hugo from Jekyll</title>
+      <link>https://example.com/2014/migrate-from-jekyll/</link>
+      <pubDate>Mon, 10 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://example.com/2014/migrate-from-jekyll/</guid>
+      <description>Move static content to static Jekyll has a rule that any directory not starting with _ will be copied as-is to the _site output. Hugo keeps all static content under static. You should therefore move it all there. With Jekyll, something that looked like
+▾ &amp;lt;root&amp;gt;/ ▾ images/ logo.png  should become
+▾ &amp;lt;root&amp;gt;/ ▾ static/ ▾ images/ logo.png  Additionally, you&amp;rsquo;ll want any files that should reside at the root (such as CNAME) to be moved to static.</description>
     </item>
     
   </channel>

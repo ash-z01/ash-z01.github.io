@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="meow">
+  
+  
+  
+  <link rel="prev" href="https://example.com/2020/sql001-charset_and_cmp-rules/" />
+  <link rel="next" href="https://example.com/2020/post02/" />
+  <link rel="canonical" href="https://example.com/2020/sql002-innodb_storage_structure/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           InnoDB 存储结构 | E-Meow Site
+       
+  </title>
+  <meta name="title" content="InnoDB 存储结构 | E-Meow Site">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/example.com"
+    },
+    "articleSection" : "posts",
+    "name" : "InnoDB 存储结构",
+    "headline" : "InnoDB 存储结构",
+    "description" : "InnoDB页简介 InnoDB是一个将表中的数据存储到磁盘上的存储引擎，所以即使关机后重启我们的数据还是存在的。而真正处理数据的过程是发生在内存中的，所以需要把磁盘中的数据加载到内存中，如果是处理写入或修改请求的话，还需要把内存中的内容刷新到磁盘上。而我们知道读写磁盘的速度非常慢，和内存读写差了几个数量级，所以当我们想从表中获取某些记录时，InnoDB存储引擎需要一条一条的把记录从磁盘上读出来么？不，那样会慢死，InnoDB采取的方式是：将数据划分为若干个页，以页作为磁盘和内存之间交互的基本单位，InnoDB中页的大小一般为 16 KB。也就是在一般情况下，一次最少从磁盘中读取16KB的内容到内存中，一次最少把内存中的16KB内容刷新到磁盘中\nInnoDB行格式 我们平时是以记录为单位来向表中插入数据的，这些记录在磁盘上的存放方式也被称为行格式或者记录格式。设计InnoDB存储引擎的大叔们到现在为止设计了4种不同类型的行格式，分别是Compact、Redundant、Dynamic和Compressed行格式，随着时间的推移，他们可能会设计出更多的行格式，但是不管怎么变，在原理上大体都是相同的\n指定行格式的语法 我们可以在创建或修改表的语句中指定行格式：\n-- CREATE TABLE 表名 (列的信息) ROW_FORMAT=行格式名称  -- ALTER TABLE 表名 ROW_FORMAT=行格式名称  mysql\x26gt; USE meow; Database changed mysql\x26gt; CREATE TABLE record_format_demo ( -\x26gt; c1 VARCHAR(10), -\x26gt; c2 VARCHAR(10) NOT NULL, -\x26gt; c3 CHAR(10), -\x26gt; c4 VARCHAR(10) -\x26gt; ) CHARSET=ascii ROW_FORMAT=COMPACT; Query OK, 0 rows affected (0.03 sec) 可以看到我们刚刚创建的这个表的行格式就是Compact，另外，我们还显式指定了这个表的字符集为ascii，因为ascii字符集只包括空格、标点符号、数字、大小写字母和一些不可见字符，所以我们的汉字是不能存到这个表里的。我们现在向这个表中插入两条记录：\nmysql\x26gt; INSERT INTO record_format_demo(c1, c2, c3, c4) VALUES(\x26#39;aaaa\x26#39;, \x26#39;bbb\x26#39;, \x26#39;cc\x26#39;, \x26#39;d\x26#39;), (\x26#39;eeee\x26#39;, \x26#39;fff\x26#39;, NULL, NULL); Query OK, 2 rows affected (0.",
+    "inLanguage" : "en-us",
+    "author" : "ash",
+    "creator" : "ash",
+    "publisher": "ash",
+    "accountablePerson" : "ash",
+    "copyrightHolder" : "ash",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-07-22 16:49:48 \x2b0800 CST",
+    "dateModified" : "2020-07-22 16:49:48 \x2b0800 CST",
+    "url" : "https:\/\/example.com\/2020\/sql002-innodb_storage_structure\/",
+    "wordCount" : "155",
+    "keywords" : [ "MySQL","SQL","DataBase", "E-Meow Site"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://example.com">E-Meow Site</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://example.com">E-Meow Site</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">InnoDB 存储结构</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://example.com" rel="author">ash</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-07-22 itemprop="datePublished">July 22, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://example.com/categories/sql%E6%8E%A2%E7%A7%98/"> SQL探秘 </a>
+                        <a href="https://example.com/categories/hacking/"> Hacking </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h2 id="innodb页简介">InnoDB页简介</h2>
+<p>InnoDB是一个将表中的数据存储到磁盘上的存储引擎，所以即使关机后重启我们的数据还是存在的。而真正处理数据的过程是发生在内存中的，所以需要把磁盘中的数据加载到内存中，如果是处理写入或修改请求的话，还需要把内存中的内容刷新到磁盘上。而我们知道读写磁盘的速度非常慢，和内存读写差了几个数量级，所以当我们想从表中获取某些记录时，InnoDB存储引擎需要一条一条的把记录从磁盘上读出来么？不，那样会慢死，InnoDB采取的方式是：将数据划分为若干个页，以页作为磁盘和内存之间交互的基本单位，InnoDB中页的大小一般为 16 KB。也就是在一般情况下，一次最少从磁盘中读取16KB的内容到内存中，一次最少把内存中的16KB内容刷新到磁盘中</p>
+<h2 id="innodb行格式">InnoDB行格式</h2>
+<p>我们平时是以记录为单位来向表中插入数据的，这些记录在磁盘上的存放方式也被称为行格式或者记录格式。设计InnoDB存储引擎的大叔们到现在为止设计了4种不同类型的行格式，分别是Compact、Redundant、Dynamic和Compressed行格式，随着时间的推移，他们可能会设计出更多的行格式，但是不管怎么变，在原理上大体都是相同的</p>
+<h3 id="指定行格式的语法">指定行格式的语法</h3>
+<p>我们可以在创建或修改表的语句中指定行格式：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- CREATE TABLE 表名 (列的信息) ROW_FORMAT=行格式名称
+</span><span style="color:#75715e"></span>    
+<span style="color:#75715e">-- ALTER TABLE 表名 ROW_FORMAT=行格式名称
+</span><span style="color:#75715e"></span>
+mysql<span style="color:#f92672">&gt;</span> USE meow;
+<span style="color:#66d9ef">Database</span> changed
+
+mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> record_format_demo (
+    <span style="color:#f92672">-&gt;</span>     c1 VARCHAR(<span style="color:#ae81ff">10</span>),
+    <span style="color:#f92672">-&gt;</span>     c2 VARCHAR(<span style="color:#ae81ff">10</span>) <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>,
+    <span style="color:#f92672">-&gt;</span>     c3 CHAR(<span style="color:#ae81ff">10</span>),
+    <span style="color:#f92672">-&gt;</span>     c4 VARCHAR(<span style="color:#ae81ff">10</span>)
+    <span style="color:#f92672">-&gt;</span> ) CHARSET<span style="color:#f92672">=</span>ascii ROW_FORMAT<span style="color:#f92672">=</span>COMPACT;
+Query OK, <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">rows</span> affected (<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">03</span> sec)
+</code></pre></div><p>可以看到我们刚刚创建的这个表的行格式就是Compact，另外，我们还显式指定了这个表的字符集为ascii，因为ascii字符集只包括空格、标点符号、数字、大小写字母和一些不可见字符，所以我们的汉字是不能存到这个表里的。我们现在向这个表中插入两条记录：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> record_format_demo(c1, c2, c3, c4) <span style="color:#66d9ef">VALUES</span>(<span style="color:#e6db74">&#39;aaaa&#39;</span>, <span style="color:#e6db74">&#39;bbb&#39;</span>, <span style="color:#e6db74">&#39;cc&#39;</span>, <span style="color:#e6db74">&#39;d&#39;</span>), (<span style="color:#e6db74">&#39;eeee&#39;</span>, <span style="color:#e6db74">&#39;fff&#39;</span>, <span style="color:#66d9ef">NULL</span>, <span style="color:#66d9ef">NULL</span>);
+
+Query OK, <span style="color:#ae81ff">2</span> <span style="color:#66d9ef">rows</span> affected (<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">02</span> sec)
+Records: <span style="color:#ae81ff">2</span>  Duplicates: <span style="color:#ae81ff">0</span>  Warnings: <span style="color:#ae81ff">0</span>
+
+<span style="color:#75715e">-- 现在表中的记录如下
+</span><span style="color:#75715e"></span>
+mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> record_format_demo;
+<span style="color:#f92672">+</span><span style="color:#75715e">------+-----+------+------+
+</span><span style="color:#75715e"></span><span style="color:#f92672">|</span> c1   <span style="color:#f92672">|</span> c2  <span style="color:#f92672">|</span> c3   <span style="color:#f92672">|</span> c4   <span style="color:#f92672">|</span>
+<span style="color:#f92672">+</span><span style="color:#75715e">------+-----+------+------+
+</span><span style="color:#75715e"></span><span style="color:#f92672">|</span> aaaa <span style="color:#f92672">|</span> bbb <span style="color:#f92672">|</span> cc   <span style="color:#f92672">|</span> d    <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> eeee <span style="color:#f92672">|</span> fff <span style="color:#f92672">|</span> <span style="color:#66d9ef">NULL</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">NULL</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">+</span><span style="color:#75715e">------+-----+------+------+
+</span><span style="color:#75715e"></span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">rows</span> <span style="color:#66d9ef">in</span> <span style="color:#66d9ef">set</span> (<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">00</span> sec)
+</code></pre></div><p>演示表的内容也填充好了，现在我们就来看看各个行格式下的存储方式到底有啥不同吧～</p>
+<h3 id="compact行格式">Compact行格式</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">
+<span style="color:#75715e">-- Compact 行格式 示意图
+</span><span style="color:#75715e"></span>
+<span style="color:#f92672">+</span><span style="color:#75715e">--------------------------------------+----------------------------+
+</span><span style="color:#75715e"></span><span style="color:#f92672">|&lt;-</span>          <span style="color:#960050;background-color:#1e0010">记录的额外信息</span>            <span style="color:#f92672">-&gt;|&lt;-</span>       <span style="color:#960050;background-color:#1e0010">记录的真实数据</span>     <span style="color:#f92672">-&gt;|</span>
+<span style="color:#f92672">+</span><span style="color:#75715e">---------------+-----------+----------+------+-------+----+-------+
+</span><span style="color:#75715e"></span><span style="color:#f92672">|</span> <span style="color:#960050;background-color:#1e0010">变长字段长度列表</span> <span style="color:#f92672">|</span> NULL值列表 <span style="color:#f92672">|</span> <span style="color:#960050;background-color:#1e0010">记录头信息</span> <span style="color:#f92672">|</span> <span style="color:#960050;background-color:#1e0010">字段</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">|</span> <span style="color:#960050;background-color:#1e0010">字段</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">|</span> ... <span style="color:#f92672">|</span> <span style="color:#960050;background-color:#1e0010">字段</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">+</span><span style="color:#75715e">---------------+-----------+----------+------+-------+----+-------+
+</span></code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>meow </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://example.com/2020/sql002-innodb_storage_structure/>https://example.com/2020/sql002-innodb_storage_structure/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://example.com/tags/mysql/">
+                    #MySQL</a></span>
+            
+            <span class="tag"><a href="https://example.com/tags/sql/">
+                    #SQL</a></span>
+            
+            <span class="tag"><a href="https://example.com/tags/database/">
+                    #DataBase</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://example.com">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://example.com/2020/sql001-charset_and_cmp-rules/" class="prev" rel="prev" title="字符集与比较规则"><i class="iconfont icon-left"></i>&nbsp;字符集与比较规则</a>
+         
+        
+        <a href="https://example.com/2020/post02/" class="next" rel="next" title="Docker">Docker&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2020 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://example.com">meow</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

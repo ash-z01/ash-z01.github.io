@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="meow">
+  
+  
+  
+  <link rel="prev" href="https://example.com/2017/http2-server-push-in-hugo/" />
+  <link rel="next" href="https://example.com/2020/sql002-innodb_storage_structure/" />
+  <link rel="canonical" href="https://example.com/2020/sql001-charset_and_cmp-rules/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           字符集与比较规则 | E-Meow Site
+       
+  </title>
+  <meta name="title" content="字符集与比较规则 | E-Meow Site">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/example.com"
+    },
+    "articleSection" : "posts",
+    "name" : "字符集与比较规则",
+    "headline" : "字符集与比较规则",
+    "description" : "字符集与比较规则简介 字符集简介 众所周知，计算机只能存储二进制数据，100110101010...，那我们是怎么看到各式各样的字符的呢？当然是做映射啦~，这里要搞清楚两件事儿~\n 需要将哪些字符映射成数据 当然是如何映射  人们抽象出一个字符集的概念来描述某个字符范围的编码规则. 比方说我们来自定义一个名称为 meow 的字符集，它包含的字符范围和编码规则如下\x26hellip;\n 包含字符 \x27a\x27, \x27A\x27, \x27b\x27, \x27B\x27 采用一个字节，编码一个字符 \x26#39;a\x26#39; -\x26gt; 00000001 \/\/ 0x01 \x26#39;b\x26#39; -\x26gt; 00000010 \/\/ 0x02 \x26#39;A\x26#39; -\x26gt; 00000011 \/\/ 0x03 \x26#39;B\x26#39; -\x26gt; 00000100 \/\/ 0x04   有了 meow 字符集， 我们就可以用二进制数表示字符了\x26hellip;\n\x26#39;bA\x26#39; -\x26gt; 0000001000000011 \/\/ 0x0203 \x26#39;baB\x26#39; -\x26gt; 000000100000000100000100 \/\/ 0x020104 \x26#39;cd\x26#39; -\x26gt; \/\/ 无法表示 比较规则简介 现在我们确定了 meow 字符集表示字符的范围以及编码规则，但是该怎么比较两个字符的大小呢？\n最容易想到的就是直接比较这两个字符对应的二进制编码的大小，比方说字符\x26rsquo;a\x27的编码为0x01，字符\x26rsquo;b\x27的编码为0x02，所以\x26rsquo;a\x27小于\x26rsquo;b\x26rsquo;，这种简单的比较规则也可以被称为二进制比较规则[binary collation]\n二进制比较规则是简单，但有时候并不符合现实需求，比如在很多场合对于英文字符我们都是不区分大小写的，也就是说\x26rsquo;a\x27和\x26rsquo;A\x27是相等的，在这种场合下就不能简单粗暴的使用二进制比较规则了，这时候我们可以这样指定比较规则：\n 将两个大小写不同的字符全都转为大写或者小写 然后，再比较这两个字符对应的二进制数据  这是一种稍微复杂一点点的比较规则，但是实际生活中的字符不止英文字符一种，比如我们的汉字有几万之多，对于某一种字符集来说，比较两个字符大小的规则可以制定出很多种，也就是说同一种字符集可以有多种比较规则，我们稍后就要介绍各种现实生活中用的字符集以及它们的一些比较规则",
+    "inLanguage" : "en-us",
+    "author" : "ash",
+    "creator" : "ash",
+    "publisher": "ash",
+    "accountablePerson" : "ash",
+    "copyrightHolder" : "ash",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-07-22 16:49:48 \x2b0800 CST",
+    "dateModified" : "2020-07-22 16:49:48 \x2b0800 CST",
+    "url" : "https:\/\/example.com\/2020\/sql001-charset_and_cmp-rules\/",
+    "wordCount" : "652",
+    "keywords" : [ "MySQL","SQL","DataBase", "E-Meow Site"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://example.com">E-Meow Site</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://example.com">E-Meow Site</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">字符集与比较规则</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://example.com" rel="author">ash</a> with ♥ 
+                <span class="post-time">
+                on <time datetime=2020-07-22 itemprop="datePublished">July 22, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://example.com/categories/sql%E6%8E%A2%E7%A7%98/"> SQL探秘 </a>
+                        <a href="https://example.com/categories/hacking/"> Hacking </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h2 id="字符集与比较规则简介">字符集与比较规则简介</h2>
+<h3 id="字符集简介">字符集简介</h3>
+<p>众所周知，计算机只能存储二进制数据，<code>100110101010...</code>，那我们是怎么看到各式各样的字符的呢？当然是做映射啦~，这里要搞清楚两件事儿~</p>
+<ol>
+<li>需要将哪些字符映射成数据</li>
+<li>当然是如何映射</li>
+</ol>
+<p>人们抽象出一个字符集的概念来描述某个字符范围的编码规则.
+比方说我们来自定义一个名称为 <code>meow</code> 的字符集，它包含的字符范围和编码规则如下&hellip;</p>
+<ul>
+<li>包含字符 <code>'a', 'A', 'b', 'B'</code></li>
+<li>采用一个字节，编码一个字符
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#e6db74">&#39;a&#39;</span> <span style="color:#f92672">-&gt;</span> <span style="color:#ae81ff">00000001</span> <span style="color:#75715e">// 0x01
+</span><span style="color:#75715e"></span><span style="color:#e6db74">&#39;b&#39;</span> <span style="color:#f92672">-&gt;</span> <span style="color:#ae81ff">00000010</span> <span style="color:#75715e">// 0x02
+</span><span style="color:#75715e"></span><span style="color:#e6db74">&#39;A&#39;</span> <span style="color:#f92672">-&gt;</span> <span style="color:#ae81ff">00000011</span> <span style="color:#75715e">// 0x03
+</span><span style="color:#75715e"></span><span style="color:#e6db74">&#39;B&#39;</span> <span style="color:#f92672">-&gt;</span> <span style="color:#ae81ff">00000100</span> <span style="color:#75715e">// 0x04
+</span></code></pre></div></li>
+</ul>
+<p>有了 <code>meow</code> 字符集， 我们就可以用二进制数表示字符了&hellip;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#960050;background-color:#1e0010">&#39;</span>bA<span style="color:#960050;background-color:#1e0010">&#39;</span>  <span style="color:#f92672">-&gt;</span> <span style="color:#ae81ff">0000001000000011</span> <span style="color:#75715e">// 0x0203
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">&#39;</span>baB<span style="color:#960050;background-color:#1e0010">&#39;</span> <span style="color:#f92672">-&gt;</span> <span style="color:#ae81ff">000000100000000100000100</span> <span style="color:#75715e">// 0x020104
+</span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">&#39;</span>cd<span style="color:#960050;background-color:#1e0010">&#39;</span>  <span style="color:#f92672">-&gt;</span> <span style="color:#75715e">// 无法表示
+</span></code></pre></div><h3 id="比较规则简介">比较规则简介</h3>
+<p>现在我们确定了 <code>meow</code> 字符集表示字符的范围以及编码规则，但是该怎么比较两个字符的大小呢？</p>
+<p>最容易想到的就是直接比较这两个字符对应的二进制编码的大小，比方说字符&rsquo;a'的编码为0x01，字符&rsquo;b'的编码为0x02，所以&rsquo;a'小于&rsquo;b&rsquo;，这种简单的比较规则也可以被称为二进制比较规则[binary collation]</p>
+<p>二进制比较规则是简单，但有时候并不符合现实需求，比如在很多场合对于英文字符我们都是不区分大小写的，也就是说&rsquo;a'和&rsquo;A'是相等的，在这种场合下就不能简单粗暴的使用二进制比较规则了，这时候我们可以这样指定比较规则：</p>
+<ul>
+<li>将两个大小写不同的字符全都转为大写或者小写</li>
+<li>然后，再比较这两个字符对应的二进制数据</li>
+</ul>
+<p>这是一种稍微复杂一点点的比较规则，但是实际生活中的字符不止英文字符一种，比如我们的汉字有几万之多，对于某一种字符集来说，比较两个字符大小的规则可以制定出很多种，也就是说同一种字符集可以有多种比较规则，我们稍后就要介绍各种现实生活中用的字符集以及它们的一些比较规则</p>
+<h3 id="一些重要的字符集">一些重要的字符集</h3>
+<p>我们生活的世界太大了，为了满足不同的人的需要，制定出了多种字符集，它们表示的字符范围和用到的编码规则可能都不一样. 我们看一下一些常用字符集的情况&hellip;</p>
+<ul>
+<li><code>ASCII</code> 字符集</li>
+<li><code>ISO-8859-1</code> 字符集</li>
+<li><code>GB2312</code> 字符集</li>
+<li><code>GBK</code> 字符集</li>
+<li><code>utf8</code> 字符集</li>
+</ul>
+<blockquote>
+<p>小贴士：
+其实准确的说，utf8只是Unicode字符集的一种编码方案，Unicode字符集可以采用utf8、utf16、utf32这几种编码方案，utf8使用1～4个字节编码一个字符，utf16使用2个或4个字节编码一个字符，utf32使用4个字节编码一个字符。更详细的Unicode和其编码方案的知识不是本书的重点，大家上网查查哈～
+MySQL中并不区分字符集和编码方案的概念，所以后边唠叨的时候把utf8、utf16、utf32都当作一种字符集对待。</p>
+</blockquote>
+<h2 id="mysql中支持的字符集和排序规则">MySQL中支持的字符集和排序规则</h2>
+<h3 id="utf8-与-utf8mb4">utf8 与 utf8mb4</h3>
+<p>我们上边说utf8字符集表示一个字符需要使用1～4个字节，但是我们常用的一些字符使用1～3个字节就可以表示了</p>
+<p>在MySQL中字符集表示一个字符所用最大字节长度在某些方面会影响系统的存储和性能，所以MySQL的设计者偷偷的定义了两个概念：</p>
+<ul>
+<li>
+<p>utf8mb3：阉割版的utf8字符集，只使用1～3个字节表示字符</p>
+</li>
+<li>
+<p>utf8mb4：正宗的utf8字符集，使用1～4个字节表示字符</p>
+</li>
+</ul>
+<p>有一点需要大家十分的注意，在MySQL中 utf8 是 utf8mb3 的别名，所以之后在MySQL中提到 utf8 就意味着使用1~3个字节来表示一个字符，如果大家有使用4字节编码一个字符的情况，比如存储一些emoji表情啥的，那请使用utf8mb4</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- 查看字符集
+</span><span style="color:#75715e">-- SHOW (CHARACTER SET|CHARSET) [LIKE 匹配的模式];
+</span><span style="color:#75715e"></span>
+mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">SHOW</span> CHARSET;
+<span style="color:#f92672">+</span><span style="color:#75715e">----------+---------------------------------+---------------------+--------+
+</span><span style="color:#75715e"></span><span style="color:#f92672">|</span> Charset  <span style="color:#f92672">|</span> Description                     <span style="color:#f92672">|</span> <span style="color:#66d9ef">Default</span> <span style="color:#66d9ef">collation</span>   <span style="color:#f92672">|</span> Maxlen <span style="color:#f92672">|</span>
+<span style="color:#f92672">+</span><span style="color:#75715e">----------+---------------------------------+---------------------+--------+
+</span><span style="color:#75715e"></span><span style="color:#f92672">|</span> big5     <span style="color:#f92672">|</span> Big5 Traditional Chinese        <span style="color:#f92672">|</span> big5_chinese_ci     <span style="color:#f92672">|</span>      <span style="color:#ae81ff">2</span> <span style="color:#f92672">|</span>
+...
+<span style="color:#f92672">|</span> latin1   <span style="color:#f92672">|</span> cp1252 West European            <span style="color:#f92672">|</span> latin1_swedish_ci   <span style="color:#f92672">|</span>      <span style="color:#ae81ff">1</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> latin2   <span style="color:#f92672">|</span> ISO <span style="color:#ae81ff">8859</span><span style="color:#f92672">-</span><span style="color:#ae81ff">2</span> Central European     <span style="color:#f92672">|</span> latin2_general_ci   <span style="color:#f92672">|</span>      <span style="color:#ae81ff">1</span> <span style="color:#f92672">|</span>
+...
+<span style="color:#f92672">|</span> ascii    <span style="color:#f92672">|</span> US ASCII                        <span style="color:#f92672">|</span> ascii_general_ci    <span style="color:#f92672">|</span>      <span style="color:#ae81ff">1</span> <span style="color:#f92672">|</span>
+...
+<span style="color:#f92672">|</span> gb2312   <span style="color:#f92672">|</span> GB2312 Simplified Chinese       <span style="color:#f92672">|</span> gb2312_chinese_ci   <span style="color:#f92672">|</span>      <span style="color:#ae81ff">2</span> <span style="color:#f92672">|</span>
+...
+<span style="color:#f92672">|</span> gbk      <span style="color:#f92672">|</span> GBK Simplified Chinese          <span style="color:#f92672">|</span> gbk_chinese_ci      <span style="color:#f92672">|</span>      <span style="color:#ae81ff">2</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> latin5   <span style="color:#f92672">|</span> ISO <span style="color:#ae81ff">8859</span><span style="color:#f92672">-</span><span style="color:#ae81ff">9</span> Turkish              <span style="color:#f92672">|</span> latin5_turkish_ci   <span style="color:#f92672">|</span>      <span style="color:#ae81ff">1</span> <span style="color:#f92672">|</span>
+...
+<span style="color:#f92672">|</span> utf8     <span style="color:#f92672">|</span> UTF<span style="color:#f92672">-</span><span style="color:#ae81ff">8</span> Unicode                   <span style="color:#f92672">|</span> utf8_general_ci     <span style="color:#f92672">|</span>      <span style="color:#ae81ff">3</span> <span style="color:#f92672">|</span>
+...
+<span style="color:#f92672">|</span> latin7   <span style="color:#f92672">|</span> ISO <span style="color:#ae81ff">8859</span><span style="color:#f92672">-</span><span style="color:#ae81ff">13</span> Baltic              <span style="color:#f92672">|</span> latin7_general_ci   <span style="color:#f92672">|</span>      <span style="color:#ae81ff">1</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8mb4  <span style="color:#f92672">|</span> UTF<span style="color:#f92672">-</span><span style="color:#ae81ff">8</span> Unicode                   <span style="color:#f92672">|</span> utf8mb4_general_ci  <span style="color:#f92672">|</span>      <span style="color:#ae81ff">4</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf16    <span style="color:#f92672">|</span> UTF<span style="color:#f92672">-</span><span style="color:#ae81ff">16</span> Unicode                  <span style="color:#f92672">|</span> utf16_general_ci    <span style="color:#f92672">|</span>      <span style="color:#ae81ff">4</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf16le  <span style="color:#f92672">|</span> UTF<span style="color:#f92672">-</span><span style="color:#ae81ff">16</span>LE Unicode                <span style="color:#f92672">|</span> utf16le_general_ci  <span style="color:#f92672">|</span>      <span style="color:#ae81ff">4</span> <span style="color:#f92672">|</span>
+...
+<span style="color:#f92672">|</span> utf32    <span style="color:#f92672">|</span> UTF<span style="color:#f92672">-</span><span style="color:#ae81ff">32</span> Unicode                  <span style="color:#f92672">|</span> utf32_general_ci    <span style="color:#f92672">|</span>      <span style="color:#ae81ff">4</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> binary   <span style="color:#f92672">|</span> Binary pseudo charset           <span style="color:#f92672">|</span> binary              <span style="color:#f92672">|</span>      <span style="color:#ae81ff">1</span> <span style="color:#f92672">|</span>
+...
+<span style="color:#f92672">|</span> gb18030  <span style="color:#f92672">|</span> China <span style="color:#66d9ef">National</span> Standard GB18030 <span style="color:#f92672">|</span> gb18030_chinese_ci  <span style="color:#f92672">|</span>      <span style="color:#ae81ff">4</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">+</span><span style="color:#75715e">----------+---------------------------------+---------------------+--------+
+</span><span style="color:#75715e"></span><span style="color:#ae81ff">41</span> <span style="color:#66d9ef">rows</span> <span style="color:#66d9ef">in</span> <span style="color:#66d9ef">set</span> (<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">01</span> sec)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- 查看比较规则
+</span><span style="color:#75715e">-- SHOW COLLATION [LIKE 匹配的模式];
+</span><span style="color:#75715e"></span>
+mysql<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">SHOW</span> <span style="color:#66d9ef">COLLATION</span> <span style="color:#66d9ef">LIKE</span> <span style="color:#e6db74">&#39;utf8\_%&#39;</span>;
+<span style="color:#f92672">+</span><span style="color:#75715e">--------------------------+---------+-----+---------+----------+---------+
+</span><span style="color:#75715e"></span><span style="color:#f92672">|</span> <span style="color:#66d9ef">Collation</span>                <span style="color:#f92672">|</span> Charset <span style="color:#f92672">|</span> Id  <span style="color:#f92672">|</span> <span style="color:#66d9ef">Default</span> <span style="color:#f92672">|</span> Compiled <span style="color:#f92672">|</span> Sortlen <span style="color:#f92672">|</span>
+<span style="color:#f92672">+</span><span style="color:#75715e">--------------------------+---------+-----+---------+----------+---------+
+</span><span style="color:#75715e"></span><span style="color:#f92672">|</span> utf8_general_ci          <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span>  <span style="color:#ae81ff">33</span> <span style="color:#f92672">|</span> Yes     <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">1</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_bin                 <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span>  <span style="color:#ae81ff">83</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">1</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_unicode_ci          <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">192</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_icelandic_ci        <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">193</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_latvian_ci          <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">194</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_romanian_ci         <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">195</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_slovenian_ci        <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">196</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_polish_ci           <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">197</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_estonian_ci         <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">198</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_spanish_ci          <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">199</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_swedish_ci          <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">200</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_turkish_ci          <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">201</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_czech_ci            <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">202</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_danish_ci           <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">203</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_lithuanian_ci       <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">204</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_slovak_ci           <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">205</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_spanish2_ci         <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">206</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_roman_ci            <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">207</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_persian_ci          <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">208</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_esperanto_ci        <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">209</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_hungarian_ci        <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">210</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_sinhala_ci          <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">211</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_german2_ci          <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">212</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_croatian_ci         <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">213</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_unicode_520_ci      <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">214</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_vietnamese_ci       <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">215</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">8</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">|</span> utf8_general_mysql500_ci <span style="color:#f92672">|</span> utf8    <span style="color:#f92672">|</span> <span style="color:#ae81ff">223</span> <span style="color:#f92672">|</span>         <span style="color:#f92672">|</span> Yes      <span style="color:#f92672">|</span>       <span style="color:#ae81ff">1</span> <span style="color:#f92672">|</span>
+<span style="color:#f92672">+</span><span style="color:#75715e">--------------------------+---------+-----+---------+----------+---------+
+</span><span style="color:#75715e"></span><span style="color:#ae81ff">27</span> <span style="color:#66d9ef">rows</span> <span style="color:#66d9ef">in</span> <span style="color:#66d9ef">set</span> (<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">00</span> sec)
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>meow </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://example.com/2020/sql001-charset_and_cmp-rules/>https://example.com/2020/sql001-charset_and_cmp-rules/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://example.com/tags/mysql/">
+                    #MySQL</a></span>
+            
+            <span class="tag"><a href="https://example.com/tags/sql/">
+                    #SQL</a></span>
+            
+            <span class="tag"><a href="https://example.com/tags/database/">
+                    #DataBase</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://example.com">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://example.com/2017/http2-server-push-in-hugo/" class="prev" rel="prev" title="HTTP/2 Server Push in Hugo"><i class="iconfont icon-left"></i>&nbsp;HTTP/2 Server Push in Hugo</a>
+         
+        
+        <a href="https://example.com/2020/sql002-innodb_storage_structure/" class="next" rel="next" title="InnoDB 存储结构">InnoDB 存储结构&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2020 - 2020</span>
+        
+        <span class="with-love">
+    	 <i class="iconfont icon-love"></i> 
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://example.com">meow</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>
