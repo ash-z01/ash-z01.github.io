@@ -2,7 +2,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
     <url>
-      <loc>https://example.com/categories/</loc>
+      <loc>https://ash-z01.github.io/categories/</loc>
       
       <lastmod>2020-11-19T11:40:10+08:00</lastmod>
       
@@ -12,7 +12,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/tags/lambda/</loc>
+      <loc>https://ash-z01.github.io/tags/lambda/</loc>
       
       <lastmod>2020-11-19T11:40:10+08:00</lastmod>
       
@@ -22,7 +22,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/categories/lambda%E5%A5%A5%E7%A7%98/</loc>
+      <loc>https://ash-z01.github.io/categories/lambda%E5%A5%A5%E7%A7%98/</loc>
       
       <lastmod>2020-11-19T11:40:10+08:00</lastmod>
       
@@ -32,7 +32,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/2020/number/</loc>
+      <loc>https://ash-z01.github.io/2020/number/</loc>
       
       <lastmod>2020-11-19T11:40:10+08:00</lastmod>
       
@@ -42,7 +42,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/posts/</loc>
+      <loc>https://ash-z01.github.io/posts/</loc>
       
       <lastmod>2020-11-19T11:40:10+08:00</lastmod>
       
@@ -52,7 +52,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/tags/</loc>
+      <loc>https://ash-z01.github.io/tags/</loc>
       
       <lastmod>2020-11-19T11:40:10+08:00</lastmod>
       
@@ -62,7 +62,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/tags/%CE%BB/</loc>
+      <loc>https://ash-z01.github.io/tags/%CE%BB/</loc>
       
       <lastmod>2020-11-19T11:40:10+08:00</lastmod>
       
@@ -72,7 +72,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/tags/%CE%BB-%E6%BC%94%E7%AE%97/</loc>
+      <loc>https://ash-z01.github.io/tags/%CE%BB-%E6%BC%94%E7%AE%97/</loc>
       
       <lastmod>2020-11-19T11:40:10+08:00</lastmod>
       
@@ -82,7 +82,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/2020/essential/</loc>
+      <loc>https://ash-z01.github.io/2020/essential/</loc>
       
       <lastmod>2020-11-18T17:10:10+08:00</lastmod>
       
@@ -92,7 +92,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/tags/go/</loc>
+      <loc>https://ash-z01.github.io/tags/go/</loc>
       
       <lastmod>2020-10-10T00:00:00+00:00</lastmod>
       
@@ -102,7 +102,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/2020/go001-chan/</loc>
+      <loc>https://ash-z01.github.io/2020/go001-chan/</loc>
       
       <lastmod>2020-10-10T00:00:00+00:00</lastmod>
       
@@ -112,7 +112,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/tags/golang/</loc>
+      <loc>https://ash-z01.github.io/tags/golang/</loc>
       
       <lastmod>2020-10-10T00:00:00+00:00</lastmod>
       
@@ -122,7 +122,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/tags/hacking/</loc>
+      <loc>https://ash-z01.github.io/tags/hacking/</loc>
       
       <lastmod>2020-10-10T00:00:00+00:00</lastmod>
       
@@ -132,7 +132,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/categories/hacking/</loc>
+      <loc>https://ash-z01.github.io/categories/hacking/</loc>
       
       <lastmod>2020-10-10T00:00:00+00:00</lastmod>
       
@@ -142,7 +142,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/categories/programming-language/</loc>
+      <loc>https://ash-z01.github.io/categories/programming-language/</loc>
       
       <lastmod>2020-10-10T00:00:00+00:00</lastmod>
       
@@ -152,7 +152,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/about/</loc>
+      <loc>https://ash-z01.github.io/about/</loc>
       
       <lastmod>2020-07-22T16:49:48+08:00</lastmod>
       
@@ -162,7 +162,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/tags/database/</loc>
+      <loc>https://ash-z01.github.io/tags/database/</loc>
       
       <lastmod>2020-07-22T16:49:48+08:00</lastmod>
       
@@ -172,7 +172,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/2020/post02/</loc>
+      <loc>https://ash-z01.github.io/2020/post02/</loc>
       
       <lastmod>2020-07-22T16:49:48+08:00</lastmod>
       
@@ -182,7 +182,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/</loc>
+      <loc>https://ash-z01.github.io/</loc>
       
       <lastmod>2020-07-22T16:49:48+08:00</lastmod>
       
@@ -192,7 +192,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/2020/sql002-innodb_storage_structure/</loc>
+      <loc>https://ash-z01.github.io/2020/sql002-innodb_storage_structure/</loc>
       
       <lastmod>2020-07-22T16:49:48+08:00</lastmod>
       
@@ -202,7 +202,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/tags/mysql/</loc>
+      <loc>https://ash-z01.github.io/tags/mysql/</loc>
       
       <lastmod>2020-07-22T16:49:48+08:00</lastmod>
       
@@ -212,7 +212,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/tags/sql/</loc>
+      <loc>https://ash-z01.github.io/tags/sql/</loc>
       
       <lastmod>2020-07-22T16:49:48+08:00</lastmod>
       
@@ -222,7 +222,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/categories/sql%E6%8E%A2%E7%A7%98/</loc>
+      <loc>https://ash-z01.github.io/categories/sql%E6%8E%A2%E7%A7%98/</loc>
       
       <lastmod>2020-07-22T16:49:48+08:00</lastmod>
       
@@ -232,7 +232,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/2020/sql001-charset_and_cmp-rules/</loc>
+      <loc>https://ash-z01.github.io/2020/sql001-charset_and_cmp-rules/</loc>
       
       <lastmod>2020-07-22T16:49:48+08:00</lastmod>
       
@@ -242,7 +242,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/categories/blog/</loc>
+      <loc>https://ash-z01.github.io/categories/blog/</loc>
       
       <lastmod>2017-07-24T18:36:00+02:00</lastmod>
       
@@ -252,7 +252,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/2017/http2-server-push-in-hugo/</loc>
+      <loc>https://ash-z01.github.io/2017/http2-server-push-in-hugo/</loc>
       
       <lastmod>2017-07-24T18:36:00+02:00</lastmod>
       
@@ -262,7 +262,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/2014/creating-a-new-theme/</loc>
+      <loc>https://ash-z01.github.io/2014/creating-a-new-theme/</loc>
       
       <lastmod>2014-09-28T00:00:00+00:00</lastmod>
       
@@ -272,7 +272,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/tags/hugo/</loc>
+      <loc>https://ash-z01.github.io/tags/hugo/</loc>
       
       <lastmod>2014-09-28T00:00:00+00:00</lastmod>
       
@@ -282,7 +282,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/tags/theme/</loc>
+      <loc>https://ash-z01.github.io/tags/theme/</loc>
       
       <lastmod>2014-09-28T00:00:00+00:00</lastmod>
       
@@ -292,7 +292,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/categories/uncategorized/</loc>
+      <loc>https://ash-z01.github.io/categories/uncategorized/</loc>
       
       <lastmod>2014-09-28T00:00:00+00:00</lastmod>
       
@@ -302,7 +302,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/2014/goisforlovers/</loc>
+      <loc>https://ash-z01.github.io/2014/goisforlovers/</loc>
       
       <lastmod>2014-07-28T00:00:00+00:00</lastmod>
       
@@ -312,7 +312,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/tags/development/</loc>
+      <loc>https://ash-z01.github.io/tags/development/</loc>
       
       <lastmod>2014-07-28T00:00:00+00:00</lastmod>
       
@@ -322,7 +322,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/tags/templates/</loc>
+      <loc>https://ash-z01.github.io/tags/templates/</loc>
       
       <lastmod>2014-07-28T00:00:00+00:00</lastmod>
       
@@ -332,7 +332,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/tags/themes/</loc>
+      <loc>https://ash-z01.github.io/tags/themes/</loc>
       
       <lastmod>2014-07-28T00:00:00+00:00</lastmod>
       
@@ -342,7 +342,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/2014/hugoisforlovers/</loc>
+      <loc>https://ash-z01.github.io/2014/hugoisforlovers/</loc>
       
       <lastmod>2014-04-02T00:00:00+00:00</lastmod>
       
@@ -352,7 +352,7 @@
     </url>
   
     <url>
-      <loc>https://example.com/2014/migrate-from-jekyll/</loc>
+      <loc>https://ash-z01.github.io/2014/migrate-from-jekyll/</loc>
       
       <lastmod>2014-03-10T00:00:00+00:00</lastmod>
       

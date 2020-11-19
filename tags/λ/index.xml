@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>λ on E-Meow Site</title>
-    <link>https://example.com/tags/%CE%BB/</link>
+    <link>https://ash-z01.github.io/tags/%CE%BB/</link>
     <description>Recent content in λ on E-Meow Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 19 Nov 2020 11:40:10 +0800</lastBuildDate>
     
-	<atom:link href="https://example.com/tags/%CE%BB/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://ash-z01.github.io/tags/%CE%BB/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Number of Lambda-Calculus</title>
-      <link>https://example.com/2020/number/</link>
+      <link>https://ash-z01.github.io/2020/number/</link>
       <pubDate>Thu, 19 Nov 2020 11:40:10 +0800</pubDate>
       
-      <guid>https://example.com/2020/number/</guid>
+      <guid>https://ash-z01.github.io/2020/number/</guid>
       <description>len&amp;amp;fact function fact :: (Integral a) =&amp;gt; a -&amp;gt; a fact 0 = 1 fact n = n * fact (n - 1) function fact(n) if n == 0 then return 1 end return n * fact(n - 1) end --------------------------- fact = function(n) if n == 0 then return 1 end return n * ???(n-1) end arr = [1, 2, 3, 4, 5] -------------------------------- arr.length -------------------------------- def len(arr) if arr == [] return 0 else return 1 + len(arr[1.</description>
     </item>
     
     <item>
       <title>Essential of Lambda-Calculus</title>
-      <link>https://example.com/2020/essential/</link>
+      <link>https://ash-z01.github.io/2020/essential/</link>
       <pubDate>Wed, 18 Nov 2020 17:10:10 +0800</pubDate>
       
-      <guid>https://example.com/2020/essential/</guid>
+      <guid>https://ash-z01.github.io/2020/essential/</guid>
       <description>法国作家、冒险家、艺术家和航空工程师 安东尼·德·圣埃克苏佩里 (Antoine de Saint-Exupéry) 在论飞机设计时说： “La perfection est atteinte non quand il ne reste rien à ajouter，mais quand il ne reste rien à enlever!” 完美之道，不在无可增加，而在无可删减!
  0x01 什么是 lambda-calculus λ-演算(lambda/λ-calculus)是一套从数学逻辑中发展，以变量绑定和替换的规则，来研究函数如何抽象化定义、函数如何被应用以及递归的形式系统.
 20世纪30年代，一个名叫阿隆佐-邱奇的数学家,首次发表了Lambda演算， 从而解决了可计算理论中的判定性问题. lambda演算作为一种广泛用途的计算模型，可以清晰地定义什么是一个可计算函数，而任何可计算函数都能以这种形式表达和求值. 𝜆-演算 分为 `类型化𝜆-演算(Typed λ-Calculus)` 和 `无类型𝜆-演算(Type-Free λ-Calculus)` 也称为 `朴素λ-演算(Naive λ-Calculs)`. lambda演算简单易读写，语义强大同时图灵完备, 后续内容主要针对是无类型的λ-演算展开讲解.

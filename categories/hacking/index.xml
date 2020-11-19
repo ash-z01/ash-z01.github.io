@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hacking on E-Meow Site</title>
-    <link>https://example.com/categories/hacking/</link>
+    <link>https://ash-z01.github.io/categories/hacking/</link>
     <description>Recent content in Hacking on E-Meow Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 10 Oct 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://example.com/categories/hacking/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://ash-z01.github.io/categories/hacking/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Go Under The Hood</title>
-      <link>https://example.com/2020/go001-chan/</link>
+      <link>https://ash-z01.github.io/2020/go001-chan/</link>
       <pubDate>Sat, 10 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://example.com/2020/go001-chan/</guid>
+      <guid>https://ash-z01.github.io/2020/go001-chan/</guid>
       <description>Golang chan 原理 golang chan
 func f1(c chan int) { c &amp;lt;- 1 } </description>
     </item>
     
     <item>
       <title>InnoDB 存储结构</title>
-      <link>https://example.com/2020/sql002-innodb_storage_structure/</link>
+      <link>https://ash-z01.github.io/2020/sql002-innodb_storage_structure/</link>
       <pubDate>Wed, 22 Jul 2020 16:49:48 +0800</pubDate>
       
-      <guid>https://example.com/2020/sql002-innodb_storage_structure/</guid>
+      <guid>https://ash-z01.github.io/2020/sql002-innodb_storage_structure/</guid>
       <description>InnoDB页简介 InnoDB是一个将表中的数据存储到磁盘上的存储引擎，所以即使关机后重启我们的数据还是存在的。而真正处理数据的过程是发生在内存中的，所以需要把磁盘中的数据加载到内存中，如果是处理写入或修改请求的话，还需要把内存中的内容刷新到磁盘上。而我们知道读写磁盘的速度非常慢，和内存读写差了几个数量级，所以当我们想从表中获取某些记录时，InnoDB存储引擎需要一条一条的把记录从磁盘上读出来么？不，那样会慢死，InnoDB采取的方式是：将数据划分为若干个页，以页作为磁盘和内存之间交互的基本单位，InnoDB中页的大小一般为 16 KB。也就是在一般情况下，一次最少从磁盘中读取16KB的内容到内存中，一次最少把内存中的16KB内容刷新到磁盘中
 InnoDB行格式 我们平时是以记录为单位来向表中插入数据的，这些记录在磁盘上的存放方式也被称为行格式或者记录格式。设计InnoDB存储引擎的大叔们到现在为止设计了4种不同类型的行格式，分别是Compact、Redundant、Dynamic和Compressed行格式，随着时间的推移，他们可能会设计出更多的行格式，但是不管怎么变，在原理上大体都是相同的
 指定行格式的语法 我们可以在创建或修改表的语句中指定行格式：
@@ -36,10 +36,10 @@ mysql&amp;gt; INSERT INTO record_format_demo(c1, c2, c3, c4) VALUES(&amp;#39;aaa
     
     <item>
       <title>字符集与比较规则</title>
-      <link>https://example.com/2020/sql001-charset_and_cmp-rules/</link>
+      <link>https://ash-z01.github.io/2020/sql001-charset_and_cmp-rules/</link>
       <pubDate>Wed, 22 Jul 2020 16:49:48 +0800</pubDate>
       
-      <guid>https://example.com/2020/sql001-charset_and_cmp-rules/</guid>
+      <guid>https://ash-z01.github.io/2020/sql001-charset_and_cmp-rules/</guid>
       <description>字符集与比较规则简介 字符集简介 众所周知，计算机只能存储二进制数据，100110101010...，那我们是怎么看到各式各样的字符的呢？当然是做映射啦~，这里要搞清楚两件事儿~
  需要将哪些字符映射成数据 当然是如何映射  人们抽象出一个字符集的概念来描述某个字符范围的编码规则. 比方说我们来自定义一个名称为 meow 的字符集，它包含的字符范围和编码规则如下&amp;hellip;
  包含字符 &#39;a&#39;, &#39;A&#39;, &#39;b&#39;, &#39;B&#39; 采用一个字节，编码一个字符 &amp;#39;a&amp;#39; -&amp;gt; 00000001 // 0x01 &amp;#39;b&amp;#39; -&amp;gt; 00000010 // 0x02 &amp;#39;A&amp;#39; -&amp;gt; 00000011 // 0x03 &amp;#39;B&amp;#39; -&amp;gt; 00000100 // 0x04   有了 meow 字符集， 我们就可以用二进制数表示字符了&amp;hellip;
