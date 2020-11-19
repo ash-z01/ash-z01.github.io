@@ -33,7 +33,7 @@
 
 .icon-twitter:before { content: "\eb2a"; }
 
-.icon-love:before { content: "\e745"; }
+/* .icon-love:before { content: "\e745"; } */
 
 .icon-github:before { content: "\e712"; }
 
@@ -54,10 +54,6 @@
 .icon-tumblr:before { content: "\e61f"; }
 
 .icon-telegram:before { content: "\e731"; }
-
-.icon-xihuan:before { content: "\e86f"; }
-
-.icon-xihuan1:before { content: "\e870"; }
 
 .icon-right:before { content: "\e6dd"; }
 
