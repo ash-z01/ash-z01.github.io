@@ -6,10 +6,23 @@
     <description>Recent content in λ-演算 on E-Meow Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Nov 2020 11:40:10 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 20 Nov 2020 12:12:10 +0800</lastBuildDate>
     
 	<atom:link href="https://ash-z01.github.io/tags/%CE%BB-%E6%BC%94%E7%AE%97/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Bool and Condition of Lambda-Calculus</title>
+      <link>https://ash-z01.github.io/2020/boolandcondition/</link>
+      <pubDate>Fri, 20 Nov 2020 12:12:10 +0800</pubDate>
+      
+      <guid>https://ash-z01.github.io/2020/boolandcondition/</guid>
+      <description>我想寻求这样一张特殊的字母表，其元素表示的不是声音而是概念。有了这样一个符号系统，我们就可以发展出一种语言， 我们仅凭符号演算，就可以确定用这种语言写成的哪些句子为真，以及它们之间存在着什么样的逻辑关系。 &amp;mdash;&amp;mdash;&amp;mdash; 莱布尼茨的愿望
+ 0x01 函数化的布尔值 在计算机编程语言中，为了达到条件判断，大都会引入 if-then-else 这类条件分支语言，像这样~
+if n == 1 then ... else ... end 为了实现条件真假判断，先得看看lambda演算中的布尔值和逻辑运算.(带上点语法糖，看起来更有味儿)
+let TRUE = lambda x y . x let FALSE = lambda x y . y 嘛~ 现在貌似还看不出 TRUE 和 FALSE 的lambda表达式的用意.. 再看看逻辑运算符吧
+let And = lambda x y . x y FALSE let Or = lambda x y . x TRUE y let Not = lambda x . x FALSE TRUE 咦~ 什么乱起八糟的，果然只有动动手，才能加深理解了.</description>
+    </item>
     
     <item>
       <title>Number of Lambda-Calculus</title>
