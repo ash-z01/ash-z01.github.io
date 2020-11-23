@@ -57,7 +57,7 @@
     "datePublished": "2020-11-19 11:40:10 \x2b0800 CST",
     "dateModified" : "2020-11-19 11:40:10 \x2b0800 CST",
     "url" : "https:\/\/ash-z01.github.io\/2020\/number\/",
-    "wordCount" : "347",
+    "wordCount" : "400",
     "keywords" : [ "Lambda","λ","λ-演算", "E-Meow Site"]
 }
 </script>
@@ -177,7 +177,12 @@ let add = <span style="color:#e6db74">`lambda m n . (lambda f x . m f (n f x))`<
     = lambda f x . f (f ((lambda s3 z3 . s3 (s3 (s3 z3))) f x)) // 展开 3
     = lambda f x . f (f (f (f (f x)))) // beta规约 仔细看看这是啥. 5?! 
 </code></pre></div><p>嘿!~ 还挺神奇哈!!</p>
-<h2 id="0x03-它还能指导编程语言">0x03 它还能指导编程语言?</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">// 其它的一些算术运算
+succ = lambda n . (lambda f . (lambda x . f (n f) x))
+add  = lambda m n . (lambda f x . m f (n f x))
+mul  = lambda m n . (lambda f . m n f)
+zero? = lambda n . n TRUE FALSE TRUE
+</code></pre></div><h2 id="0x03-它还能指导编程语言">0x03 它还能指导编程语言?</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#75715e">-- 0 = lambda f x. x</span>
 zero <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (f)
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (x)

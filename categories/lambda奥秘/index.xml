@@ -6,10 +6,23 @@
     <description>Recent content in Lambda奥秘 on E-Meow Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Nov 2020 12:12:10 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 23 Nov 2020 15:57:10 +0800</lastBuildDate>
     
 	<atom:link href="https://ash-z01.github.io/categories/lambda%E5%A5%A5%E7%A7%98/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Recursion of Lambda-Calculus</title>
+      <link>https://ash-z01.github.io/2020/recursion/</link>
+      <pubDate>Mon, 23 Nov 2020 15:57:10 +0800</pubDate>
+      
+      <guid>https://ash-z01.github.io/2020/recursion/</guid>
+      <description>从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事呢！故事是什么呢？“从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事呢！故事是什么呢？‘从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事呢！故事是什么呢？……’”
+ 0x01 不动点 定义函数 𝑓:ℝ↦ℝ，如果 ∃𝑥∈𝐷(𝑓)，使得 𝑥=𝑓(𝑥)，则称点 𝑥 是函数 𝑓(𝑥) 的不动点.
+// 等式 x = f(x) 可以进行如下的无穷变换 x = f(x) = f(f(x)) = f(f(f(x))) = ... 0x02 递归 递归的强大之处在于它允许用户用有限的语句描述无限的对象! 瑞士的计算机科学家 尼克劳斯·维尔特 这样说道..
+考虑 阶乘函数 fact 的定义:
+fact n = 1 if n == 0 else (n * fact (n-1)) // 尝试进行 lambda 抽象 [忽略表达式的细节] let zero? = lambda c x y . if-then-else (c == 0) x y let pred = lambda x .</description>
+    </item>
     
     <item>
       <title>Bool and Condition of Lambda-Calculus</title>

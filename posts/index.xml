@@ -6,10 +6,23 @@
     <description>Recent content in Posts on E-Meow Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Nov 2020 12:12:10 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 23 Nov 2020 15:57:10 +0800</lastBuildDate>
     
 	<atom:link href="https://ash-z01.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Recursion of Lambda-Calculus</title>
+      <link>https://ash-z01.github.io/2020/recursion/</link>
+      <pubDate>Mon, 23 Nov 2020 15:57:10 +0800</pubDate>
+      
+      <guid>https://ash-z01.github.io/2020/recursion/</guid>
+      <description>从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事呢！故事是什么呢？“从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事呢！故事是什么呢？‘从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事呢！故事是什么呢？……’”
+ 0x01 不动点 定义函数 𝑓:ℝ↦ℝ，如果 ∃𝑥∈𝐷(𝑓)，使得 𝑥=𝑓(𝑥)，则称点 𝑥 是函数 𝑓(𝑥) 的不动点.
+// 等式 x = f(x) 可以进行如下的无穷变换 x = f(x) = f(f(x)) = f(f(f(x))) = ... 0x02 递归 递归的强大之处在于它允许用户用有限的语句描述无限的对象! 瑞士的计算机科学家 尼克劳斯·维尔特 这样说道..
+考虑 阶乘函数 fact 的定义:
+fact n = 1 if n == 0 else (n * fact (n-1)) // 尝试进行 lambda 抽象 [忽略表达式的细节] let zero? = lambda c x y . if-then-else (c == 0) x y let pred = lambda x .</description>
+    </item>
     
     <item>
       <title>Bool and Condition of Lambda-Calculus</title>
@@ -48,25 +61,6 @@ let And = lambda x y . x y FALSE let Or = lambda x y . x TRUE y let Not = lambda
 0x02 一切皆函数 大家都学过不少编程语言, C++、Java、Go、Python等&amp;hellip; 它们大部分都有着丰富的语法特性，很多特性可以互相替换。 如果我们遵循安东尼的完美之道，去裁剪语法，那么最小化的语言是什么样的呢~
 lambda演算可比拟最根本的编程语言, 它的内核非常小,可以用以下规则来描述:
    语法/L-exp 名称 描述     a 变量/原子 标识符引用就是一个名字，这个名字用于匹配函数表达式中的某个参数名   λx.</description>
-    </item>
-    
-    <item>
-      <title>Go Under The Hood</title>
-      <link>https://ash-z01.github.io/2020/go001-chan/</link>
-      <pubDate>Sat, 10 Oct 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://ash-z01.github.io/2020/go001-chan/</guid>
-      <description>Golang chan 原理 golang chan
-func f1(c chan int) { c &amp;lt;- 1 } </description>
-    </item>
-    
-    <item>
-      <title>Docker</title>
-      <link>https://ash-z01.github.io/2020/post02/</link>
-      <pubDate>Wed, 22 Jul 2020 16:49:48 +0800</pubDate>
-      
-      <guid>https://ash-z01.github.io/2020/post02/</guid>
-      <description>哈哈，想不到吧 哈哈哈哈哈</description>
     </item>
     
     <item>

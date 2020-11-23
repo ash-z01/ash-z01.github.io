@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="meow">
+  
+  
+  
+  <link rel="prev" href="https://ash-z01.github.io/2020/boolandcondition/" />
+  
+  <link rel="canonical" href="https://ash-z01.github.io/2020/recursion/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Recursion of Lambda-Calculus | E-Meow Site
+       
+  </title>
+  <meta name="title" content="Recursion of Lambda-Calculus | E-Meow Site">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/ash-z01.github.io\/"
+    },
+    "articleSection" : "posts",
+    "name" : "Recursion of Lambda-Calculus",
+    "headline" : "Recursion of Lambda-Calculus",
+    "description" : "从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事呢！故事是什么呢？“从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事呢！故事是什么呢？‘从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事呢！故事是什么呢？……’”\n 0x01 不动点 定义函数 𝑓:ℝ↦ℝ，如果 ∃𝑥∈𝐷(𝑓)，使得 𝑥=𝑓(𝑥)，则称点 𝑥 是函数 𝑓(𝑥) 的不动点.\n\/\/ 等式 x = f(x) 可以进行如下的无穷变换 x = f(x) = f(f(x)) = f(f(f(x))) = ... 0x02 递归 递归的强大之处在于它允许用户用有限的语句描述无限的对象! 瑞士的计算机科学家 尼克劳斯·维尔特 这样说道..\n考虑 阶乘函数 fact 的定义:\nfact n = 1 if n == 0 else (n * fact (n-1)) \/\/ 尝试进行 lambda 抽象 [忽略表达式的细节] let zero? = lambda c x y . if-then-else (c == 0) x y let pred = lambda x .",
+    "inLanguage" : "en-us",
+    "author" : "ash",
+    "creator" : "ash",
+    "publisher": "ash",
+    "accountablePerson" : "ash",
+    "copyrightHolder" : "ash",
+    "copyrightYear" : "2020",
+    "datePublished": "2020-11-23 15:57:10 \x2b0800 CST",
+    "dateModified" : "2020-11-23 15:57:10 \x2b0800 CST",
+    "url" : "https:\/\/ash-z01.github.io\/2020\/recursion\/",
+    "wordCount" : "1237",
+    "keywords" : [ "Lambda","λ","λ-演算", "E-Meow Site"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch">
+                
+                🐾
+            </a>&nbsp;<a href="https://ash-z01.github.io/">E-Meow Site</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-right"></i></a>&nbsp;<a href="https://ash-z01.github.io/">E-Meow Site</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Recursion of Lambda-Calculus</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://ash-z01.github.io/" rel="author">ash</a> 🐱‍💻 
+                <span class="post-time">
+                on <time datetime=2020-11-23 itemprop="datePublished">November 23, 2020</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://ash-z01.github.io/categories/lambda%E5%A5%A5%E7%A7%98/"> Lambda奥秘 </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <blockquote>
+<p>从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事呢！故事是什么呢？“从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事呢！故事是什么呢？‘从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事呢！故事是什么呢？……’”</p>
+</blockquote>
+<h2 id="0x01-不动点">0x01 不动点</h2>
+<p>定义函数 𝑓:ℝ↦ℝ，如果 ∃𝑥∈𝐷(𝑓)，使得 𝑥=𝑓(𝑥)，则称点 𝑥 是函数 𝑓(𝑥) 的不动点.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">// 等式 x = f(x) 可以进行如下的无穷变换
+
+x = f(x)
+  = f(f(x))
+  = f(f(f(x)))
+  = ...
+</code></pre></div><h2 id="0x02-递归">0x02 递归</h2>
+<p>递归的强大之处在于它允许用户用有限的语句描述无限的对象! 瑞士的计算机科学家 <code>尼克劳斯·维尔特</code> 这样说道..</p>
+<p>考虑 阶乘函数 fact 的定义:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">fact n = 1 if n == 0 else (n <span style="font-style:italic">* fact (n-1))
+</span><span style="font-style:italic">
+</span><span style="font-style:italic">// 尝试进行 lambda 抽象 [忽略表达式的细节]
+</span><span style="font-style:italic">let zero? = lambda c x y . if-then-else (c == 0) x y
+</span><span style="font-style:italic">let pred = lambda x . x - 1
+</span><span style="font-style:italic">
+</span><span style="font-style:italic">fact = lambda n . zero? n 1 fact(n *</span> (pred n))
+
+// 右侧还是有fact，怎么办，再次使用lambda, 把它拽出来试试..
+
+fact = (lambda f . (lambda n . zero? n 1 f(n * (pred n)))) fact
+
+// 看着好乱，抽象一下吧..
+F = E(F) // F是fact, E是中间的lambda函数
+  = E(E(F)) // 发现可以无穷替换哎!!!!!!
+  = E(E(E(F)))
+  = ...
+</code></pre></div><p>也就是说, <code>F</code> 是 <code>E</code> 的不动点，但是这个函数看着好复杂鸭，我该如何求解呢(这里先不讨论高阶函数的求解方法)~ 如果无法解出 <code>F</code> 岂不白高兴一场..</p>
+<h2 id="0x03-传说中的-y组合子">0x03 传说中的 Y组合子</h2>
+<p>召唤!! <code>Y组合子</code> !! 一起来瞅瞅这是个啥东东~</p>
+<p><code>Y组合子</code> 作为高级函数不动点的 <code>&quot;通用求根公式&quot;</code>，只要函数存在不动点，我们就可以通过 <code>Y组合子</code> 结合函数，进行求解</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">Y(E) = F
+     = E(F)      // F = E(F) 
+     = E(Y(E))
+     = E(E(Y(E)))
+</code></pre></div><p>利用 <code>Y组合子</code> 可以求解得到 <code>F</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">F = Y(E)
+  = Y(lambda f . (lambda n . zero? n 1 f(n * (pred n))))
+</code></pre></div><p>那么这个 <code>Y</code> 到底长啥样鸭~ (我偏不告诉你, 自己动手，丰衣足食，我们通过一个有趣的小栗子, 一起推导一下吧)</p>
+<h2 id="0x04-推导-y-组合子编程">0x04 推导 Y 组合子[编程]</h2>
+<p>这节我们将从一个常见的函数出发，编程推导出 <code>Y组合子</code> ，不熟悉编程的小伙伴，可以直接跳过，不过我采用的Lua语言简单灵活，很方便阅读理解的，那么开始吧~</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua">arr <span style="color:#f92672">=</span> {<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>} <span style="color:#75715e">-- Lua中定义的数组(其实是表，不用在意这些细节)</span>
+<span style="color:#75715e">-- 那么如果 我想 求解 arr 的长度该怎么做呢</span>
+<span style="color:#75715e">-- 不少语言都有内置的函数或者方法或者语法糖 可以方便的求出</span>
+<span style="color:#75715e">-- Lua当然也有啦,继续往下看</span>
+print(<span style="color:#f92672">#</span>arr) <span style="color:#75715e">-- 5, 哈哈，我们成功得到了 数组arr 的长度</span>
+
+<span style="color:#75715e">-- 生命不息，折腾不止，如果我不让你使用内置的语法，该怎么做呢?</span>
+<span style="color:#75715e">-- 聪明的你肯定想到了鸭</span>
+<span style="color:#75715e">-- 由于Lua的数组其实是表，所以数组的非空判断、相等性比较都比较麻烦</span>
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">rlen</span>(arr)
+    <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span> <span style="color:#75715e">-- 空表判断 arr == {}</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">else</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>) <span style="color:#75715e">-- Lua下标从1开始</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> rlen(arr)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+print(rlen(arr)) <span style="color:#75715e">-- 嘿嘿，还是5，轻轻松松~</span>
+
+<span style="color:#75715e">-- 你以为这就完了? TYTN</span>
+<span style="color:#75715e">-- 上面的rlen函数，函数体中递归调用了rlen本身，但是使用了函数名，现在要求函数体内不允许使用函数名.</span>
+<span style="color:#75715e">-- 纳尼！？我看，你是在刁难我胖虎！！</span>
+
+len  <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(arr)
+    <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span> <span style="color:#75715e">-- 空表判断 arr == {}</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">else</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>) <span style="color:#75715e">-- Lua下标从1开始</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> <span style="color:#960050;background-color:#1e0010">???</span>(arr)  <span style="color:#75715e">-- 这里怎么办鸭</span>
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#75715e">-- 先来看点别的, 这个函数做啥鸭，好像不断调用自身，永远不会停止!</span>
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">eternity</span>(x)
+    <span style="color:#66d9ef">return</span> eternity(x)
+<span style="color:#66d9ef">end</span>
+
+len  <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(arr)
+    <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">else</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> eternity(arr)  <span style="color:#75715e">-- 用eternity代替??? 是的程序可以运行</span>
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#75715e">-- 俗话说，心急吃不了热豆腐, 我们求不了那么长的数组长度，求个空数组试试，</span>
+<span style="color:#75715e">-- 既然是空数组，长度就是0了</span>
+
+len0 <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (arr)
+    <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">end</span>
+    table.remove(arr, <span style="color:#ae81ff">1</span>)
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> eternity(arr)
+<span style="color:#66d9ef">end</span>
+print(len0({}))  <span style="color:#75715e">-- 嘿嘿，成功</span>
+
+<span style="color:#75715e">-- 那长度为1的数组，我也能求了</span>
+len1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (arr)
+    <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">end</span>
+    table.remove(arr, <span style="color:#ae81ff">1</span>)
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> len0(arr)
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#75715e">-- 展开</span>
+len1_1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (arr)
+    <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">end</span>
+    table.remove(arr, <span style="color:#ae81ff">1</span>)
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (<span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> eternity(arr)
+    <span style="color:#66d9ef">end</span>)(arr)
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#75715e">-- 那长度为2的数组也不在话下了~</span>
+len2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (arr)
+    <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">end</span>
+    table.remove(arr, <span style="color:#ae81ff">1</span>)
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (<span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (<span style="color:#66d9ef">function</span> (arr)
+            <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+                <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+            <span style="color:#66d9ef">end</span>
+            table.remove(arr, <span style="color:#ae81ff">1</span>)
+            <span style="color:#66d9ef">return</span>  <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> eternity(arr)
+        <span style="color:#66d9ef">end</span>)(arr)
+    <span style="color:#66d9ef">end</span>)(arr)
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#75715e">-- 函数内部好像挺多重复的部分，看看能不能提取出来</span>
+
+<span style="color:#75715e">-- 数组为空</span>
+length0 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (length)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)(eternity)
+
+<span style="color:#75715e">-- 数组长度为1</span>
+length1 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (length)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)(length0)
+
+<span style="color:#75715e">-- 展开看看</span>
+length1_1 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (length)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)((<span style="color:#66d9ef">function</span> (length)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)(eternity))
+
+<span style="color:#75715e">-- 再看看数组长度是2的</span>
+length2 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (length)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)((<span style="color:#66d9ef">function</span> (length)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)((<span style="color:#66d9ef">function</span> (length)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)(eternity)))
+
+<span style="color:#75715e">-- 好像是 f(f(f(ete))) 这样的模式, 再提取看看..</span>
+<span style="color:#75715e">-- 数组为空</span>
+len_0 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
+    <span style="color:#66d9ef">return</span> makelen(eternity)
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (length)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)
+
+<span style="color:#75715e">-- 数组长度为1</span>
+len_1 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
+    <span style="color:#66d9ef">return</span> makelen(makelen(eternity))
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (length)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)
+
+<span style="color:#75715e">-- 数组长度为2</span>
+len_2 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
+    <span style="color:#66d9ef">return</span> makelen(makelen(makelen(eternity)))
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (length)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)
+
+<span style="color:#75715e">-- 数组长度为3</span>
+len_3 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
+    <span style="color:#66d9ef">return</span> makelen(makelen(makelen(makelen(eternity))))
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (length)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)
+
+<span style="color:#75715e">-- emmm...有点神奇哈~</span>
+
+<span style="color:#75715e">-- 既然eternity函数执行不到，可以替换了</span>
+lenx0 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
+    <span style="color:#66d9ef">return</span> makelen(makelen)
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (length)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)
+
+<span style="color:#75715e">-- 仔细看看, 好像length函数的名字已经不影响整体了, 也替换</span>
+lenxx0 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
+    <span style="color:#66d9ef">return</span> makelen(makelen)
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (makelen)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> makelen(arr)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)
+
+<span style="color:#75715e">-- 展开</span>
+lenxx000 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> makelen(arr)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (makelen)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> makelen(arr)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)
+
+<span style="color:#75715e">-- 把函数自身作为参数，传给自身进行规约</span>
+
+<span style="color:#75715e">-- 当传入{}数组时, 返回0</span>
+<span style="color:#75715e">-- 传入{1}时, 返回 1 + 构造出接收一个数组，返回能够计算空数组长度的函数</span>
+<span style="color:#75715e">-- 那么如果构造出的函数也是自己呢？</span>
+
+lenxx0000 <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (arr)
+    <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">end</span>
+    table.remove(arr, <span style="color:#ae81ff">1</span>)
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (<span style="color:#66d9ef">function</span> (makelen)
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+            <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+                <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+            <span style="color:#66d9ef">end</span>
+            table.remove(arr, <span style="color:#ae81ff">1</span>)
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> makelen(arr)
+        <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">end</span>)(arr)
+<span style="color:#66d9ef">end</span>
+
+lenx <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
+    <span style="color:#66d9ef">return</span> makelen(makelen)
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (makelen)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (makelen(makelen))(arr) 
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)
+
+<span style="color:#75715e">-- !!!大功告成!!! </span>
+<span style="color:#75715e">-- 进一步提取</span>
+
+newlen <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
+    <span style="color:#66d9ef">return</span> makelen(makelen)
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (makelen)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#75715e">-- return 1 + (makelen(makelen))(arr)</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (<span style="color:#66d9ef">function</span> (x)    <span style="color:#75715e">-- call-by-value的求值策略下，避免无限地参数求值</span>
+            <span style="color:#66d9ef">return</span> makelen(makelen)(x)
+        <span style="color:#66d9ef">end</span>)(arr)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)
+
+newlenxx <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
+    <span style="color:#66d9ef">return</span> makelen(makelen)
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (makelen)
+    <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">function</span> (length)
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+            <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+                <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+            <span style="color:#66d9ef">end</span>
+            table.remove(arr, <span style="color:#ae81ff">1</span>)
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+        <span style="color:#66d9ef">end</span>
+    <span style="color:#75715e">-- end)((makelen(makelen)))</span>
+    <span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (x)
+        <span style="color:#66d9ef">return</span> makelen(makelen)(x)
+    <span style="color:#66d9ef">end</span>)
+<span style="color:#66d9ef">end</span>)
+
+
+nnlen <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
+    <span style="color:#66d9ef">return</span> makelen(makelen)
+<span style="color:#66d9ef">end</span>)((<span style="color:#66d9ef">function</span> (flen)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (makelen)
+        <span style="color:#66d9ef">return</span> flen(<span style="color:#66d9ef">function</span> (x)
+            <span style="color:#66d9ef">return</span> makelen(makelen)(x)
+        <span style="color:#66d9ef">end</span>)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (length)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>))
+
+
+<span style="color:#75715e">-- 到这里差不多了，观察一下函数形式 F = Y(E)</span>
+
+nnnlen <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (flen)
+    <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">function</span> (makelen)
+        <span style="color:#66d9ef">return</span> makelen(makelen)
+    <span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (makelen)
+        <span style="color:#66d9ef">return</span> flen(<span style="color:#66d9ef">function</span> (x)
+            <span style="color:#66d9ef">return</span> makelen(makelen)(x)
+        <span style="color:#66d9ef">end</span>)
+    <span style="color:#66d9ef">end</span>)
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (length)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)
+
+<span style="color:#75715e">-- 最终提取 Y</span>
+
+Y <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (f)
+    <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">function</span> (u)
+        <span style="color:#66d9ef">return</span> u(u)
+    <span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (u)
+        <span style="color:#66d9ef">return</span> f(<span style="color:#66d9ef">function</span> (x)
+            <span style="color:#66d9ef">return</span> u(u)(x)
+        <span style="color:#66d9ef">end</span>)
+    <span style="color:#66d9ef">end</span>)
+<span style="color:#66d9ef">end</span>
+finlen <span style="color:#f92672">=</span> Y(<span style="color:#66d9ef">function</span> (length)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        table.remove(arr, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)
+
+print(finlen({<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>}))
+
+<span style="color:#75715e">-- 终于结束了!!!  </span>
+</code></pre></div><h2 id="0x05-终于见到-y">0x05 终于见到 Y</h2>
+<p>经过上面的编程推演, 最终得到了 <code>Y组合子</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">Y = λf.(λx.(f (x x)) λx.(f (x x)))  // Call-By-Name
+Y = λf.(λu.(u u)) λx.(f λv.(x x v)) // Call-By-Value
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#75715e">// 最后用一个例子函数g来展开它，可以看到这个函数是如何成为一个不动点组合子的
+</span><span style="color:#75715e"></span>
+(Y g)
+    = (<span style="color:#960050;background-color:#1e0010">λ</span>f.(<span style="color:#960050;background-color:#1e0010">λ</span>x.(f (x x)) <span style="color:#960050;background-color:#1e0010">λ</span>x.(f (x x))) g) <span style="color:#75715e">// 展开
+</span><span style="color:#75715e"></span>    = (<span style="color:#960050;background-color:#1e0010">λ</span>x.(g (x x)) <span style="color:#960050;background-color:#1e0010">λ</span>x.(g (x x))) <span style="color:#75715e">// λf的β-归约 - 应用主函数于g
+</span><span style="color:#75715e"></span>    = (<span style="color:#960050;background-color:#1e0010">λ</span>y.(g (y y)) <span style="color:#960050;background-color:#1e0010">λ</span>x.(g (x x)))<span style="color:#75715e">// α-转换 - 重命名约束变量
+</span><span style="color:#75715e"></span>    = (g (<span style="color:#960050;background-color:#1e0010">λ</span>x.(g (x x)) <span style="color:#960050;background-color:#1e0010">λ</span>x.(g (x x)))) <span style="color:#75715e">// λy的β-归约 - 应用左侧函数于右侧函数
+</span><span style="color:#75715e"></span>    = (g (Y g)) <span style="color:#75715e">// Y的定义
+</span></code></pre></div><h2 id="0x06-参考">0x06 参考</h2>
+<ul>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%93%88%E6%96%AF%E5%87%AF%E5%B0%94%C2%B7%E6%9F%AF%E9%87%8C">wiki - 哈斯凯尔·柯里</a></li>
+<li><a href="https://mitpress.mit.edu/books/little-schemer-fourth-edition">book - TheLittleSchemer</a></li>
+<li><a href="...">paper - Programming Languages and Lambda Calculi</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E9%80%92%E5%BD%92">wiki - 递归</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%CE%9B%E6%BC%94%E7%AE%97">wiki - λ演算</a></li>
+<li><a href="http://goodmath.blogspot.com/">blog - Good Math/Bad Math</a></li>
+<li><a href="https://www.slideshare.net/yinwang0/reinventing-the-ycombinator">share - 王垠</a></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>meow </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://ash-z01.github.io/2020/recursion/>https://ash-z01.github.io/2020/recursion/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://ash-z01.github.io/tags/lambda/">
+                    #Lambda</a></span>
+            
+            <span class="tag"><a href="https://ash-z01.github.io/tags/%CE%BB/">
+                    #λ</a></span>
+            
+            <span class="tag"><a href="https://ash-z01.github.io/tags/%CE%BB-%E6%BC%94%E7%AE%97/">
+                    #λ-演算</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://ash-z01.github.io/">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://ash-z01.github.io/2020/boolandcondition/" class="prev" rel="prev" title="Bool and Condition of Lambda-Calculus"><i class="iconfont icon-left"></i>&nbsp;Bool and Condition of Lambda-Calculus</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2020 - 2020</span>
+        
+        <span class="with-ash">
+        
+        🚀
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://ash-z01.github.io/">meow</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>
