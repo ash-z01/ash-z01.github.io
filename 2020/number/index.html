@@ -57,7 +57,7 @@
     "datePublished": "2020-11-19 11:40:10 \x2b0800 CST",
     "dateModified" : "2020-11-19 11:40:10 \x2b0800 CST",
     "url" : "https:\/\/ash-z01.github.io\/2020\/number\/",
-    "wordCount" : "702",
+    "wordCount" : "1269",
     "keywords" : [ "Lambda","λ","λ-演算", "E-Meow Site"]
 }
 </script>
@@ -169,11 +169,12 @@
 </code></pre></div><p>我们简单地用  -&gt; 函数 <code>f</code> 运用到 <code>x</code> (及其后继) 上的次数  来表示数字.</p>
 <h2 id="0x02-算术运算">0x02 算术运算</h2>
 <p>现在我们有了数字，那么我想实现 <code>2 + 3</code> 该怎么做呢？ 看看lambda表达式是怎么做加法的..</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md"><span style="color:#e6db74">`lambda m n . (lambda f x . m f (n f x))`</span> 
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md"><span style="color:#e6db74">`lambda m n . (lambda f x . m f (n f x))`</span>  &lt;- 这是什么？ |  两数相加的 lambda表达式.. 
+
 let add = <span style="color:#e6db74">`lambda m n . (lambda f x . m f (n f x))`</span> // 来点语法糖， 巴啦啦能量变！！
 </code></pre></div><p>看着有点费解哎~ 我们应用一下试试， (没忘记alpha转换和beta规约吧..)</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">add 2 3
-    = (lambda m n . (lambda f x . m f (n f x))) 2 3
+    = (lambda m n . (lambda f x . m f (n f x))) 2 3 // 展开
     = lambda f x . 2 f (3 f x) // beta规约
     = lambda f x . (lambda s2 z2 . s2 (s2 z2)) f (3 f x) // 看看上面lambda演算中的数字2，alpha转换一下, 回避名称冲突
     = lambda f x . f (f (3 f x)) // beta规约
@@ -182,11 +183,13 @@ let add = <span style="color:#e6db74">`lambda m n . (lambda f x . m f (n f x))`<
 </code></pre></div><p>嘿!~ 还挺神奇哈!!</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">// 其它的一些算术运算
 succ = lambda n . (lambda f . (lambda x . f (n f x)))
+plus = lambda m . (lamnda n . m succ n)
 add  = lambda m n . (lambda f x . m f (n f x))
 mul  = lambda m n . (lambda f . m (n f))
+pow  = lambda b . lambda e . e b
+pred = lambda n . (lambda f . (lambda x . n (lambda g . (lambda h . h (g f))) (lambda u . x) (lambda u . u)))
+sub  = lambda m . (lambda n .n pred m)
 zero? = lambda n . n (TRUE FALSE) TRUE  // TRUE FALSE 的定义 参考下一节
-
-pred = lambda n . (n (lambda p . (lambda z . (z (succ (p TRUE)))) (p TRUE)) lambda x . x 0 0) FALSE // 有误!!
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">mul <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span>
     = (lambda m n . (lambda f . m (n f))) <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span>
     = lambda f . <span style="color:#ae81ff">2</span> (<span style="color:#ae81ff">3</span> f)
@@ -220,6 +223,53 @@ zero? <span style="color:#ae81ff">2</span>
     = (TRUE FALSE) ((TRUE FALSE) TRUE)
     = (lambda x y .  x) FALSE ((TRUE FALSE) TRUE)
     = FALSE
+
+pred <span style="color:#ae81ff">2</span>
+    = [lambda n . (lambda f x . n (lambda g h . h (g f)) (lambda u . x) (lambda u . u))] <span style="color:#ae81ff">2</span>
+    = lambda f x . <span style="color:#ae81ff">2</span> (lambda g h . h (g f)) (lambda u . x) (lambda u . u)
+    = lambda f x . (lambda s z . s (s z)) (lambda g h . h (g f)) (lambda u . x) (lambda u . u)
+    = lambda f x . (lambda g h . h (g f)) ((lambda g h . h (g f)) (lambda u . x)) (lambda u . u)
+    = lambda f x . (lambda u . u) (((lambda g h . h (g f)) (lambda u . x)) f)
+    = lambda f x . (lambda g h . h (g f)) (lambda u . x) f
+    = lambda f x . f ((lambda u . x) f)
+    = lambda f x . f x
+    = <span style="color:#ae81ff">1</span>
+
+sub <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">2</span>
+    = (lambda m . (lambda n .n pred m)) <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">2</span>
+    = (lambda m n . n pred m) <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">2</span>
+    = <span style="color:#ae81ff">2</span> pred <span style="color:#ae81ff">3</span>
+    = (lambda f x . f (f x)) pred <span style="color:#ae81ff">3</span>
+    = pred (pred <span style="color:#ae81ff">3</span>)
+    = <span style="color:#ae81ff">1</span>
+
+mul <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">2</span>
+    = (lambda m n . (lambda f . m (n f))) <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">2</span>
+    = lambda f . <span style="color:#ae81ff">3</span> (<span style="color:#ae81ff">2</span> f)
+    = lambda f . <span style="color:#ae81ff">3</span> ((lambda s . (lambda z . s (s z))) f)
+    = lambda f . <span style="color:#ae81ff">3</span> (lambda z . f (f z))
+    = lambda f . (lambda w . (lambda x . w (w (w x)))) (lambda z . f (f z))
+    = lambda f . (lambda x . (lambda z . f (f z)) ((lambda z . f (f z)) ((lambda z . f (f z)) x))
+    = lamdda f x . (lambda z . f (f z)) ((lambda z . f (f z)) ((lambda z . f (f z)) x))
+    = lamdda f x . (lambda z . f (f z)) ((lambda z . f (f z)) (f (f x)))
+    = lambda f x . (lambda z . f (f z)) (f (f (f (f x))))
+    = lambda f x . f (f (f (f (f (f x)))))
+    = <span style="color:#ae81ff">6</span>
+
+pow <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span>
+    = (lambda b . lambda e . e b) <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span>
+    = (lambda b e . e b) <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span>
+    = <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span>
+    = (lambda f . (lambda x . f (f x))) <span style="color:#ae81ff">2</span>
+    = lambda w . <span style="color:#ae81ff">2</span> (<span style="color:#ae81ff">2</span> w)
+    = lambda w . <span style="color:#ae81ff">2</span> ((lambda f . (lambda x . f (f x))) w)
+    = lambda w . <span style="color:#ae81ff">2</span> (lambda x . w (w x))
+    = lambda f . (lambda s . (lambda z . s (s z))) (lambda x . f (f x))
+    = lambda f . (lambda z . (lambda x . f (f x)) ((lambda x . f (f x)) z))
+    = lambda f z . (lambda x . f (f x)) ((lambda x . f (f x)) z)
+    = lambda f z . (lambda x . f (f x)) (f (f z))
+    = lambda f z . f (f (f (f z))) 
+    = <span style="color:#ae81ff">4</span>
 </code></pre></div><h2 id="0x03-它还能指导编程语言">0x03 它还能指导编程语言?</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#75715e">-- 0 = lambda f x. x</span>
 zero <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (f)
@@ -231,7 +281,7 @@ zero <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</
 <span style="color:#75715e">-- 1 = lambda f x . f x</span>
 one <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (f)
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (x)
-        f(x)
+        <span style="color:#66d9ef">return</span> f(x)
     <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>
 

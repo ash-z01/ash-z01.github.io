@@ -57,7 +57,7 @@
     "datePublished": "2020-11-18 17:10:10 \x2b0800 CST",
     "dateModified" : "2020-11-18 17:10:10 \x2b0800 CST",
     "url" : "https:\/\/ash-z01.github.io\/2020\/essential\/",
-    "wordCount" : "252",
+    "wordCount" : "371",
     "keywords" : [ "Lambda","λ","λ-演算", "E-Meow Site"]
 }
 </script>
@@ -184,7 +184,7 @@ lambda演算作为一种广泛用途的计算模型，可以清晰地定义什�
 <tr>
 <td align="right">λx.M</td>
 <td>抽象化/抽象规则</td>
-<td>函数定义, 变量x 在 body 中被绑定</td>
+<td>函数定义, 变量x 在 M 中被绑定</td>
 </tr>
 <tr>
 <td align="right">(F N)</td>
@@ -193,21 +193,28 @@ lambda演算作为一种广泛用途的计算模型，可以清晰地定义什�
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">&lt;identifier&gt; --&gt; a | b | ... 
-&lt;abstraction&gt; --&gt; λ&lt;identifier&gt;.&lt;λ-exp&gt;
-&lt;application&gt; --&gt; (&lt;λ-exp&gt;)&lt;identifier&gt;
-&lt;λ-exp&gt; --&gt; &lt;identifier&gt; | &lt;abstraction&gt; | &lt;application&gt;
+<p>上面表格中看着比较抽象，试着写得简明一点..</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">&lt;identifier&gt; --&gt; a | b | ...   // 标识符
+&lt;abstraction&gt; --&gt; λ&lt;identifier&gt;.&lt;λ-exp&gt;  // 抽象规则
+&lt;application&gt; --&gt; (&lt;λ-exp&gt;)&lt;identifier&gt;  // 应用规则
+&lt;λ-exp&gt; --&gt; &lt;identifier&gt; | &lt;abstraction&gt; | &lt;application&gt;  // 所有这些都是 λ表达式
 </code></pre></div><h2 id="0x03-柯里化">0x03 柯里化</h2>
-<p>观察上面的定义，你会发现一个 Lambda表达式 只接受一个参数. 这似乎是一个很大的局限. 比如，怎样才能在只有一个参数的情况下实现加法呢？</p>
-<p>当然没有问题啦，因为函数也是值. 所以单参数函数可以返回另一个单参数的函数，这样就可以实现两个参数相加的函数了. 本质上二者一致.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">这就是所谓的柯里化(Currying)，以伟大的逻辑学家Haskell Curry命名.
+<p>观察上面的定义，你会发现一个 Lambda表达式 只接受一个参数, 这似乎是一个很大的局限. (嘛~ 其实我们平时可以写多个参数的λ-exp, 更简洁一点)</p>
+<p>比如，怎样才能在只有一个参数的情况下实现加法呢？</p>
+<p>当然没有问题~，因为函数也是值嘛. 所以单参数函数可以返回另一个单参数的函数，这样就可以实现两个参数相加的函数了. 本质上二者一致.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">这就是所谓的柯里化(Currying)，以伟大的逻辑学家 Haskell Curry 命名.
 </code></pre></div><h2 id="0x04-自由与约束">0x04 自由与约束</h2>
-<p>自由变量 是那些在lambda抽象不受到绑定的变量</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">例如，`lambda x.x`，其中的lambda项没有自由变量，但是在函数`lambda x.y x`中的lambda项，有一个自由变量 <span style="color:#e6db74">`y`</span>.
-</code></pre></div><p>lambda表达式还有一个重要的语法：闭包(closure)或者叫完全绑定(complete-binding). (接触过一些函数式编程技术的小伙伴一定听说过闭包吧~), 在对一个Lambda表达式进行求值的时候，不能引用任何未绑定的标识符.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">表达式 <span style="color:#e6db74">`lambda y . (lambda x . plus x y)`</span>, 在内层演算 <span style="color:#e6db74">`lambda x . plus x y`</span> 中，`y` 和 <span style="color:#e6db74">`plus`</span> 是自由的，`x`是绑定的, 而在完整表达中，`x` 和 <span style="color:#e6db74">`y`</span>是绑定的: <span style="color:#e6db74">`x`</span>受内层绑定，而`y`由剩下的演算绑定. <span style="color:#e6db74">`plus`</span>仍然是自由变量.
-</code></pre></div><h2 id="0x05-规约">0x05 规约</h2>
-<p>lambda表达式的求值过程中，需要用到的一些规约操作.</p>
+<p>自由变量 是那些在lambda抽象中不受到绑定的变量..</p>
+<p>啥意思呢? 继续看..</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">表达式 <span style="color:#e6db74">`lambda x . x`</span> 中的lambda项没有自由变量. 
+表达式 <span style="color:#e6db74">`lambda x . y x`</span> 中的lambda项，有一个自由变量 <span style="color:#e6db74">`y`</span>.
+</code></pre></div><p>这就引出了一个 lambda表达式 的重要语法：闭包(closure)或者叫完全绑定(complete-binding). (接触过一些函数式编程技术的小伙伴一定听说过闭包吧~), 在对一个Lambda表达式进行求值的时候，不能引用任何未绑定的标识符.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">表达式 <span style="color:#e6db74">`lambda y . (lambda x . plus x y)`</span> 
+
+在内层演算 <span style="color:#e6db74">`lambda x . plus x y`</span> 中，`y` 和 <span style="color:#e6db74">`plus`</span> 是自由的，`x`是绑定的, 
+而在完整的表达中，`x` 和 <span style="color:#e6db74">`y`</span>是绑定的: <span style="color:#e6db74">`x`</span>受内层绑定，而`y`由剩下的演算绑定. <span style="color:#e6db74">`plus`</span>仍然是自由变量.
+</code></pre></div><h2 id="0x05-转换与规约">0x05 转换与规约</h2>
+<p>lambda表达式的求值过程中，需要用到的一些操作.</p>
 <table>
 <thead>
 <tr>
@@ -229,25 +236,36 @@ lambda演算作为一种广泛用途的计算模型，可以清晰地定义什�
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md"><span style="color:#66d9ef">*</span> η-变换(Eta-变换)
-Eta-变换 表达的是外延性的概念，在这里外延性指的是，对于任一给定的参数，当且仅当两个函数得到的结果都一致，则它们将被视同为一个函数.
-Eta-变换可以令 <span style="color:#e6db74">`lambda x.fx`</span> 和 <span style="color:#e6db74">`f`</span> 相互转换，只要 <span style="color:#e6db74">`x`</span> 不是 <span style="color:#e6db74">`f`</span> 中的自由变量.
+<p>举个栗子.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">// 先来看看 alpha-转换
+lambda x . x  --- alpha-转换 ---&gt;  lambda z . z
+
+// 再来..
+lambda f . (lambda x . f x)   --- alpha-转换 ---&gt;  lambda f . (lambda y . f y)
+
+// 再瞧瞧 beta-规约
+(lambda x . f x) 666  --- beta-规约 ---&gt; f 666
+
+// 再来..
+(lambda n . (lambda x . n f x)) 666  --- beta-规约 ---&gt; lambda x . 666 f x
+</code></pre></div><p>其实lambda还有一种变换操作, 叫做 <code>η-变换(Eta-变换)</code>..</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">Eta-变换 表达的是外延性的概念，在这里外延性指的是，对于任一给定的参数，当且仅当两个函数得到的结果都一致，则它们将被视同为一个函数.
+Eta-变换可以令 <span style="color:#e6db74">`lambda x . f x`</span> 和 <span style="color:#e6db74">`f`</span> 相互转换，只要 <span style="color:#e6db74">`x`</span> 不是 <span style="color:#e6db74">`f`</span> 中的自由变量.
 </code></pre></div><h2 id="0x06-能不能通俗点">0x06 能不能通俗点?</h2>
 <p>那就来点小栗子吧~</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">lambda x . x
-
-这个函数足够简单吧，返回自身, 那我们应用一下
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">lambda x . x  // 这个表达式足够简单吧， 入啥出啥， 那应用一下
 
 (lambda x . x) 1 = 1
+(lambda x . x) lambda z . z = lambda z . z
 </code></pre></div><p>看看下一个..</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">lambda x . (lambda y . plus x y)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">lambda x . (lambda y . plus x y)  // 假定 plus 已经实现了数字相加，具体实现请看下回分解吧~
 
-应用一下
+// 应用一下
 
 (lambda x . (lambda y . plus x y)) 2 3
     = (lambda y . plus 2 y) 3  // Beta规约
     = plus 2 3 // Beta-规约
-    = 5 // 假设 plus 已经实现了数字相加
+    = 5 
 </code></pre></div><h2 id="0x07-参考">0x07 参考</h2>
 <ul>
 <li><a href="https://zh.wikipedia.org/wiki/%CE%9B%E6%BC%94%E7%AE%97">wiki - λ演算</a></li>

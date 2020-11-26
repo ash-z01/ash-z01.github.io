@@ -46,7 +46,7 @@
     "articleSection" : "posts",
     "name" : "Recursion of Lambda-Calculus",
     "headline" : "Recursion of Lambda-Calculus",
-    "description" : "从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事呢！故事是什么呢？“从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事呢！故事是什么呢？‘从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事呢！故事是什么呢？……’”\n 0x01 不动点 定义函数 𝑓:ℝ↦ℝ，如果 ∃𝑥∈𝐷(𝑓)，使得 𝑥=𝑓(𝑥)，则称点 𝑥 是函数 𝑓(𝑥) 的不动点.\n\/\/ 等式 x = f(x) 可以进行如下的无穷变换 x = f(x) = f(f(x)) = f(f(f(x))) = ... 0x02 递归 递归的强大之处在于它允许用户用有限的语句描述无限的对象! 瑞士的计算机科学家 尼克劳斯·维尔特 这样说道..\n考虑 阶乘函数 fact 的定义:\nfact n = 1 if n == 0 else (n * fact (n-1)) \/\/ 尝试进行 lambda 抽象 [忽略表达式的细节] let zero? = lambda c x y . if-then-else (c == 0) x y let pred = lambda x .",
+    "description" : "从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事呢！故事是什么呢？“从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事呢！故事是什么呢？‘从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事呢！故事是什么呢？……’”\n 0x01 不动点 定义函数 𝑓:ℝ↦ℝ，如果 ∃𝑥∈𝐷(𝑓)，使得 𝑥=𝑓(𝑥)，则称点 𝑥 是函数 𝑓(𝑥) 的不动点.\n\/\/ 等式 x = f(x) 可以进行如下的无穷变换 x = f(x) = f(f(x)) = f(f(f(x))) = ... 0x02 递归  递归的强大之处在于它允许用户用有限的语句描述无限的对象! 瑞士的计算机科学家 尼克劳斯·维尔特 如是说..\n 考虑一下 阶乘函数 fact 的定义:\nfact n = 1 if n == 0 else (n * fact (n-1)) \/\/ 尝试进行 lambda 抽象 [忽略表达式的细节] let zero? = lambda n x y . if-then-else (n == 0) x y let pred = lambda x .",
     "inLanguage" : "en-us",
     "author" : "ash",
     "creator" : "ash",
@@ -57,7 +57,7 @@
     "datePublished": "2020-11-23 15:57:10 \x2b0800 CST",
     "dateModified" : "2020-11-23 15:57:10 \x2b0800 CST",
     "url" : "https:\/\/ash-z01.github.io\/2020\/recursion\/",
-    "wordCount" : "1259",
+    "wordCount" : "1256",
     "keywords" : [ "Lambda","λ","λ-演算", "E-Meow Site"]
 }
 </script>
@@ -164,26 +164,28 @@ x = f(x)
   = f(f(f(x)))
   = ...
 </code></pre></div><h2 id="0x02-递归">0x02 递归</h2>
-<p>递归的强大之处在于它允许用户用有限的语句描述无限的对象! 瑞士的计算机科学家 <code>尼克劳斯·维尔特</code> 这样说道..</p>
-<p>考虑 阶乘函数 fact 的定义:</p>
+<blockquote>
+<p>递归的强大之处在于它允许用户用有限的语句描述无限的对象! 瑞士的计算机科学家 <code>尼克劳斯·维尔特</code> 如是说..</p>
+</blockquote>
+<p>考虑一下 阶乘函数 <code>fact</code> 的定义:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">fact n = 1 if n == 0 else (n <span style="font-style:italic">* fact (n-1))
 </span><span style="font-style:italic">
 </span><span style="font-style:italic">// 尝试进行 lambda 抽象 [忽略表达式的细节]
-</span><span style="font-style:italic">let zero? = lambda c x y . if-then-else (c == 0) x y
+</span><span style="font-style:italic">let zero? = lambda n x y . if-then-else (n == 0) x y
 </span><span style="font-style:italic">let pred = lambda x . x - 1
 </span><span style="font-style:italic">
-</span><span style="font-style:italic">fact = lambda n . zero? n 1 fact(n *</span> (pred n))
+</span><span style="font-style:italic">fact = lambda n . zero? n 1 (n *</span> fact (pred n))
 
 // 右侧还是有fact，怎么办，再次使用lambda, 把它拽出来试试..
 
-fact = (lambda f . (lambda n . zero? n 1 f(n * (pred n)))) fact
+fact = (lambda f . (lambda n . zero? n 1 (n * f (pred n)))) fact
 
 // 看着好乱，抽象一下吧..
 F = E(F) // F是fact, E是中间的lambda函数
-  = E(E(F)) // 发现可以无穷替换哎!!!!!!
+  = E(E(F)) // 可以无穷替换哎!!!
   = E(E(E(F)))
   = ...
-</code></pre></div><p>也就是说, <code>F</code> 是 <code>E</code> 的不动点，但是这个函数看着好复杂鸭，我该如何求解呢(这里先不讨论高阶函数的求解方法)~ 如果无法解出 <code>F</code> 岂不白高兴一场..</p>
+</code></pre></div><p>也就是说, <code>F</code> 是函数 <code>E</code> 的不动点，但是这个函数看着好复杂鸭，我该如何求解呢(这里先不讨论高阶函数的求解方法)~</p>
 <h2 id="0x03-传说中的-y组合子">0x03 传说中的 Y组合子</h2>
 <p>召唤!! <code>Y组合子</code> !! 一起来瞅瞅这是个啥东东~</p>
 <p><code>Y组合子</code> 作为高级函数不动点的 <code>&quot;通用求根公式&quot;</code>，只要函数存在不动点，我们就可以通过 <code>Y组合子</code> 结合函数，进行求解</p>
@@ -194,7 +196,7 @@ F = E(F) // F是fact, E是中间的lambda函数
 </code></pre></div><p>利用 <code>Y组合子</code> 可以求解得到 <code>F</code></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">F = Y(E)
   = Y(lambda f . (lambda n . zero? n 1 f(n * (pred n))))
-</code></pre></div><p>那么这个 <code>Y</code> 到底长啥样鸭~ (我偏不告诉你, 自己动手，丰衣足食，我们通过一个有趣的小栗子, 一起推导一下吧)</p>
+</code></pre></div><p>那么这个 <code>Y</code> 到底长啥样呢~ (让我们通过一个有趣的小栗子, 一起推导一下吧~)</p>
 <h2 id="0x04-推导-y-组合子编程">0x04 推导 Y 组合子[编程]</h2>
 <p>这节我们将从一个常见的函数出发，编程推导出 <code>Y组合子</code> ，不熟悉编程的小伙伴，可以直接跳过，不过我采用的Lua语言简单灵活，很方便阅读理解的，那么开始吧~</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua">arr <span style="color:#f92672">=</span> {<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>} <span style="color:#75715e">-- Lua中定义的数组(其实是表，不用在意这些细节)</span>
@@ -608,15 +610,14 @@ print(finlen({<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2
 <p>经过上面的编程推演, 最终得到了 <code>Y组合子</code>.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">Y = λf.(λx.(f (x x)) λx.(f (x x)))  // Call-By-Name
 Y = λf.(λu.(u u)) λx.(f λv.(x x v)) // Call-By-Value
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#75715e">// 最后用一个例子函数g来展开它，可以看到这个函数是如何成为一个不动点组合子的
-</span><span style="color:#75715e"></span>
-(Y g)
-    = (<span style="color:#960050;background-color:#1e0010">λ</span>f.(<span style="color:#960050;background-color:#1e0010">λ</span>x.(f (x x)) <span style="color:#960050;background-color:#1e0010">λ</span>x.(f (x x))) g) <span style="color:#75715e">// 展开
-</span><span style="color:#75715e"></span>    = (<span style="color:#960050;background-color:#1e0010">λ</span>x.(g (x x)) <span style="color:#960050;background-color:#1e0010">λ</span>x.(g (x x))) <span style="color:#75715e">// λf的β-归约 - 应用主函数于g
-</span><span style="color:#75715e"></span>    = (<span style="color:#960050;background-color:#1e0010">λ</span>y.(g (y y)) <span style="color:#960050;background-color:#1e0010">λ</span>x.(g (x x)))<span style="color:#75715e">// α-转换 - 重命名约束变量
-</span><span style="color:#75715e"></span>    = (g (<span style="color:#960050;background-color:#1e0010">λ</span>x.(g (x x)) <span style="color:#960050;background-color:#1e0010">λ</span>x.(g (x x)))) <span style="color:#75715e">// λy的β-归约 - 应用左侧函数于右侧函数
-</span><span style="color:#75715e"></span>    = (g (Y g)) <span style="color:#75715e">// Y的定义
-</span></code></pre></div><h2 id="0x06-参考">0x06 参考</h2>
+</code></pre></div><p>最后用一个例子函数g来展开它，可以看到这个函数是如何成为一个不动点组合子的.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">(Y g)
+    = (λf.(λx.(f (x x)) λx.(f (x x))) g) // 展开
+    = (λx.(g (x x)) λx.(g (x x))) // λf的β-归约 - 应用主函数于g
+    = (λy.(g (y y)) λx.(g (x x)))// α-转换 - 重命名约束变量
+    = (g (λx.(g (x x)) λx.(g (x x)))) // λy的β-归约 - 应用左侧函数于右侧函数
+    = (g (Y g)) // Y的定义
+</code></pre></div><h2 id="0x06-参考">0x06 参考</h2>
 <ul>
 <li><a href="https://zh.wikipedia.org/wiki/%E5%93%88%E6%96%AF%E5%87%AF%E5%B0%94%C2%B7%E6%9F%AF%E9%87%8C">wiki - 哈斯凯尔·柯里</a></li>
 <li><a href="https://mitpress.mit.edu/books/little-schemer-fourth-edition">book - TheLittleSchemer</a></li>
