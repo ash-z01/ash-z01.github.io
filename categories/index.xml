@@ -6,10 +6,28 @@
     <description>Recent content in Categories on E-Meow Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Nov 2020 15:57:10 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 08 Feb 2021 17:03:10 +0800</lastBuildDate>
     
 	<atom:link href="https://ash-z01.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>CAP</title>
+      <link>https://ash-z01.github.io/categories/cap/</link>
+      <pubDate>Mon, 08 Feb 2021 17:03:10 +0800</pubDate>
+      
+      <guid>https://ash-z01.github.io/categories/cap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>安全攻防</title>
+      <link>https://ash-z01.github.io/categories/%E5%AE%89%E5%85%A8%E6%94%BB%E9%98%B2/</link>
+      <pubDate>Fri, 25 Dec 2020 19:06:12 +0800</pubDate>
+      
+      <guid>https://ash-z01.github.io/categories/%E5%AE%89%E5%85%A8%E6%94%BB%E9%98%B2/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Lambda奥秘</title>

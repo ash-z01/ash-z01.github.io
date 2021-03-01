@@ -159,9 +159,9 @@
 </blockquote>
 <h2 id="0x01-什么是-lambda-calculus">0x01 什么是 lambda-calculus</h2>
 <p><strong>λ-演算</strong>(lambda/λ-calculus)是一套从数学逻辑中发展，以变量绑定和替换的规则，来研究函数如何抽象化定义、函数如何被应用以及递归的形式系统.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">20世纪30年代，一个名叫阿隆佐-邱奇的数学家,首次发表了Lambda演算， 从而解决了可计算理论中的判定性问题.
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-s" data-lang="s"><span style="color:#ae81ff">20</span>世纪<span style="color:#ae81ff">30</span>年代，一个名叫阿隆佐<span style="color:#f92672">-</span>邱奇的数学家,首次发表了Lambda演算， 从而解决了可计算理论中的判定性问题.
 lambda演算作为一种广泛用途的计算模型，可以清晰地定义什么是一个可计算函数，而任何可计算函数都能以这种形式表达和求值.
-𝜆-演算 分为 <span style="color:#e6db74">`类型化𝜆-演算(Typed λ-Calculus)`</span> 和 <span style="color:#e6db74">`无类型𝜆-演算(Type-Free λ-Calculus)`</span> 也称为 <span style="color:#e6db74">`朴素λ-演算(Naive λ-Calculs)`</span>.
+𝜆<span style="color:#f92672">-</span>演算 分为 `类型化𝜆-演算(Typed λ-Calculus)` 和 `无类型𝜆-演算(Type-Free λ-Calculus)` 也称为 `朴素λ-演算(Naive λ-Calculs)`.
 </code></pre></div><p>lambda演算简单易读写，语义强大同时图灵完备, 后续内容主要针对是无类型的λ-演算展开讲解.</p>
 <h2 id="0x02-一切皆函数">0x02 一切皆函数</h2>
 <p>大家都学过不少编程语言, C++、Java、Go、Python等&hellip; 它们大部分都有着丰富的语法特性，很多特性可以互相替换。
@@ -194,25 +194,25 @@ lambda演算作为一种广泛用途的计算模型，可以清晰地定义什�
 </tbody>
 </table>
 <p>上面表格中看着比较抽象，试着写得简明一点..</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">&lt;identifier&gt; --&gt; a | b | ...   // 标识符
-&lt;abstraction&gt; --&gt; λ&lt;identifier&gt;.&lt;λ-exp&gt;  // 抽象规则
-&lt;application&gt; --&gt; (&lt;λ-exp&gt;)&lt;identifier&gt;  // 应用规则
-&lt;λ-exp&gt; --&gt; &lt;identifier&gt; | &lt;abstraction&gt; | &lt;application&gt;  // 所有这些都是 λ表达式
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-s" data-lang="s"><span style="color:#f92672">&lt;</span>identifier<span style="color:#f92672">&gt;</span> <span style="color:#f92672">--&gt;</span> a <span style="color:#f92672">|</span> b <span style="color:#f92672">|</span> <span style="color:#66d9ef">...</span>   <span style="color:#f92672">//</span> 标识符
+<span style="color:#f92672">&lt;</span>abstraction<span style="color:#f92672">&gt;</span> <span style="color:#f92672">--&gt;</span> λ<span style="color:#f92672">&lt;</span>identifier<span style="color:#f92672">&gt;</span>.&lt;λ<span style="color:#f92672">-</span>exp<span style="color:#f92672">&gt;</span>  <span style="color:#f92672">//</span> 抽象规则
+<span style="color:#f92672">&lt;</span>application<span style="color:#f92672">&gt;</span> <span style="color:#f92672">--&gt;</span> (<span style="color:#f92672">&lt;</span>λ<span style="color:#f92672">-</span>exp<span style="color:#f92672">&gt;</span>)<span style="color:#f92672">&lt;</span>identifier<span style="color:#f92672">&gt;</span>  <span style="color:#f92672">//</span> 应用规则
+<span style="color:#f92672">&lt;</span>λ<span style="color:#f92672">-</span>exp<span style="color:#f92672">&gt;</span> <span style="color:#f92672">--&gt;</span> <span style="color:#f92672">&lt;</span>identifier<span style="color:#f92672">&gt;</span> <span style="color:#f92672">|</span> <span style="color:#f92672">&lt;</span>abstraction<span style="color:#f92672">&gt;</span> <span style="color:#f92672">|</span> <span style="color:#f92672">&lt;</span>application<span style="color:#f92672">&gt;</span>  <span style="color:#f92672">//</span> 所有这些都是 λ表达式
 </code></pre></div><h2 id="0x03-柯里化">0x03 柯里化</h2>
 <p>观察上面的定义，你会发现一个 Lambda表达式 只接受一个参数, 这似乎是一个很大的局限. (嘛~ 其实我们平时可以写多个参数的λ-exp, 更简洁一点)</p>
 <p>比如，怎样才能在只有一个参数的情况下实现加法呢？</p>
 <p>当然没有问题~，因为函数也是值嘛. 所以单参数函数可以返回另一个单参数的函数，这样就可以实现两个参数相加的函数了. 本质上二者一致.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">这就是所谓的柯里化(Currying)，以伟大的逻辑学家 Haskell Curry 命名.
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-s" data-lang="s">这就是所谓的柯里化(Currying)，以伟大的逻辑学家 Haskell Curry 命名.
 </code></pre></div><h2 id="0x04-自由与约束">0x04 自由与约束</h2>
 <p>自由变量 是那些在lambda抽象中不受到绑定的变量..</p>
 <p>啥意思呢? 继续看..</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">表达式 <span style="color:#e6db74">`lambda x . x`</span> 中的lambda项没有自由变量. 
-表达式 <span style="color:#e6db74">`lambda x . y x`</span> 中的lambda项，有一个自由变量 <span style="color:#e6db74">`y`</span>.
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-s" data-lang="s">表达式 [lambda x . x] 中的lambda项没有自由变量. 
+表达式 [lambda x . y x] 中的lambda项，有一个自由变量 [y].
 </code></pre></div><p>这就引出了一个 lambda表达式 的重要语法：闭包(closure)或者叫完全绑定(complete-binding). (接触过一些函数式编程技术的小伙伴一定听说过闭包吧~), 在对一个Lambda表达式进行求值的时候，不能引用任何未绑定的标识符.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">表达式 <span style="color:#e6db74">`lambda y . (lambda x . plus x y)`</span> 
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-s" data-lang="s">表达式 [lambda y <span style="color:#a6e22e">. </span>(lambda x . plus x y)]
 
-在内层演算 <span style="color:#e6db74">`lambda x . plus x y`</span> 中，`y` 和 <span style="color:#e6db74">`plus`</span> 是自由的，`x`是绑定的, 
-而在完整的表达中，`x` 和 <span style="color:#e6db74">`y`</span>是绑定的: <span style="color:#e6db74">`x`</span>受内层绑定，而`y`由剩下的演算绑定. <span style="color:#e6db74">`plus`</span>仍然是自由变量.
+在内层演算 [lambda x . plus x y] 中，[y] 和 [plus] 是自由的，[x]是绑定的, 
+而在完整的表达中，[x] 和 [y]是绑定的<span style="color:#f92672">:</span> [x]受内层绑定，而[y]由剩下的演算绑定. [plus]仍然是自由变量.
 </code></pre></div><h2 id="0x05-转换与规约">0x05 转换与规约</h2>
 <p>lambda表达式的求值过程中，需要用到的一些操作.</p>
 <table>
@@ -237,35 +237,35 @@ lambda演算作为一种广泛用途的计算模型，可以清晰地定义什�
 </tbody>
 </table>
 <p>举个栗子.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">// 先来看看 alpha-转换
-lambda x . x  --- alpha-转换 ---&gt;  lambda z . z
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-s" data-lang="s"><span style="color:#f92672">//</span> 先来看看 alpha<span style="color:#f92672">-</span>转换
+lambda x . x  <span style="color:#f92672">---</span> alpha<span style="color:#f92672">-</span>转换 <span style="color:#f92672">---&gt;</span>  lambda z . z
 
-// 再来..
-lambda f . (lambda x . f x)   --- alpha-转换 ---&gt;  lambda f . (lambda y . f y)
+<span style="color:#f92672">//</span> 再来..
+lambda f <span style="color:#a6e22e">. </span>(lambda x . f x)   <span style="color:#f92672">---</span> alpha<span style="color:#f92672">-</span>转换 <span style="color:#f92672">---&gt;</span>  lambda f <span style="color:#a6e22e">. </span>(lambda y . f y)
 
-// 再瞧瞧 beta-规约
-(lambda x . f x) 666  --- beta-规约 ---&gt; f 666
+<span style="color:#f92672">//</span> 再瞧瞧 beta<span style="color:#f92672">-</span>规约
+(lambda x . f x) <span style="color:#ae81ff">666</span>  <span style="color:#f92672">---</span> beta<span style="color:#f92672">-</span>规约 <span style="color:#f92672">---&gt;</span> f <span style="color:#ae81ff">666</span>
 
-// 再来..
-(lambda n . (lambda x . n f x)) 666  --- beta-规约 ---&gt; lambda x . 666 f x
+<span style="color:#f92672">//</span> 再来<span style="color:#a6e22e">..
+</span><span style="color:#a6e22e"></span>(lambda n <span style="color:#a6e22e">. </span>(lambda x . n f x)) <span style="color:#ae81ff">666</span>  <span style="color:#f92672">---</span> beta<span style="color:#f92672">-</span>规约 <span style="color:#f92672">---&gt;</span> lambda x . 666 f x
 </code></pre></div><p>其实lambda还有一种变换操作, 叫做 <code>η-变换(Eta-变换)</code>..</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">Eta-变换 表达的是外延性的概念，在这里外延性指的是，对于任一给定的参数，当且仅当两个函数得到的结果都一致，则它们将被视同为一个函数.
-Eta-变换可以令 <span style="color:#e6db74">`lambda x . f x`</span> 和 <span style="color:#e6db74">`f`</span> 相互转换，只要 <span style="color:#e6db74">`x`</span> 不是 <span style="color:#e6db74">`f`</span> 中的自由变量.
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-s" data-lang="s">Eta<span style="color:#f92672">-</span>变换 表达的是外延性的概念，在这里外延性指的是，对于任一给定的参数，当且仅当两个函数得到的结果都一致，则它们将被视同为一个函数.
+Eta<span style="color:#f92672">-</span>变换可以令 [lambda x . f x] 和 [f] 相互转换，只要 [x] 不是 [f] 中的自由变量.
 </code></pre></div><h2 id="0x06-能不能通俗点">0x06 能不能通俗点?</h2>
 <p>那就来点小栗子吧~</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">lambda x . x  // 这个表达式足够简单吧， 入啥出啥， 那应用一下
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-s" data-lang="s">lambda x . x  <span style="color:#f92672">//</span> 这个表达式足够简单吧， 入啥出啥， 那应用一下
 
-(lambda x . x) 1 = 1
-(lambda x . x) lambda z . z = lambda z . z
+(lambda x . x) <span style="color:#ae81ff">1</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+(lambda x . x) lambda z . z <span style="color:#f92672">=</span> lambda z . z
 </code></pre></div><p>看看下一个..</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">lambda x . (lambda y . plus x y)  // 假定 plus 已经实现了数字相加，具体实现请看下回分解吧~
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-s" data-lang="s">lambda x <span style="color:#a6e22e">. </span>(lambda y . plus x y)  <span style="color:#f92672">//</span> 假定 plus 已经实现了数字相加，具体实现请看下回分解吧<span style="color:#f92672">~</span>
 
-// 应用一下
+<span style="color:#f92672">//</span> 应用一下
 
-(lambda x . (lambda y . plus x y)) 2 3
-    = (lambda y . plus 2 y) 3  // Beta规约
-    = plus 2 3 // Beta-规约
-    = 5 
+(lambda x <span style="color:#a6e22e">. </span>(lambda y . plus x y)) <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span>
+    <span style="color:#f92672">=</span> (lambda y . plus <span style="color:#ae81ff">2</span> y) <span style="color:#ae81ff">3</span>  <span style="color:#f92672">//</span> Beta规约
+    <span style="color:#f92672">=</span> plus <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">//</span> Beta<span style="color:#f92672">-</span>规约
+    <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span> 
 </code></pre></div><h2 id="0x07-参考">0x07 参考</h2>
 <ul>
 <li><a href="https://zh.wikipedia.org/wiki/%CE%9B%E6%BC%94%E7%AE%97">wiki - λ演算</a></li>
@@ -341,7 +341,7 @@ Eta-变换可以令 <span style="color:#e6db74">`lambda x . f x`</span> 和 <spa
     <div class="copyright">
         &copy;
         
-        <span itemprop="copyrightYear">2020 - 2020</span>
+        <span itemprop="copyrightYear">2020 - 2021</span>
         
         <span class="with-ash">
         

@@ -10,7 +10,7 @@
   
   
   <link rel="prev" href="https://ash-z01.github.io/2020/boolandcondition/" />
-  
+  <link rel="next" href="https://ash-z01.github.io/2020/timingattack/" />
   <link rel="canonical" href="https://ash-z01.github.io/2020/recursion/" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -57,7 +57,7 @@
     "datePublished": "2020-11-23 15:57:10 \x2b0800 CST",
     "dateModified" : "2020-11-23 15:57:10 \x2b0800 CST",
     "url" : "https:\/\/ash-z01.github.io\/2020\/recursion\/",
-    "wordCount" : "1256",
+    "wordCount" : "1473",
     "keywords" : [ "Lambda","λ","λ-演算", "E-Meow Site"]
 }
 </script>
@@ -199,390 +199,501 @@ F = E(F) // F是fact, E是中间的lambda函数
 </code></pre></div><p>那么这个 <code>Y</code> 到底长啥样呢~ (让我们通过一个有趣的小栗子, 一起推导一下吧~)</p>
 <h2 id="0x04-推导-y-组合子编程">0x04 推导 Y 组合子[编程]</h2>
 <p>这节我们将从一个常见的函数出发，编程推导出 <code>Y组合子</code> ，不熟悉编程的小伙伴，可以直接跳过，不过我采用的Lua语言简单灵活，很方便阅读理解的，那么开始吧~</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua">arr <span style="color:#f92672">=</span> {<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>} <span style="color:#75715e">-- Lua中定义的数组(其实是表，不用在意这些细节)</span>
-<span style="color:#75715e">-- 那么如果 我想 求解 arr 的长度该怎么做呢</span>
-<span style="color:#75715e">-- 不少语言都有内置的函数或者方法或者语法糖 可以方便的求出</span>
-<span style="color:#75715e">-- Lua当然也有啦,继续往下看</span>
-print(<span style="color:#f92672">#</span>arr) <span style="color:#75715e">-- 5, 哈哈，我们成功得到了 数组arr 的长度</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#75715e">--[[
+</span><span style="color:#75715e"># Y魔法
+</span><span style="color:#75715e"># Y Y = Y (Y Y)
+</span><span style="color:#75715e">]]</span>
 
-<span style="color:#75715e">-- 生命不息，折腾不止，如果我不让你使用内置的语法，该怎么做呢?</span>
-<span style="color:#75715e">-- 聪明的你肯定想到了鸭</span>
-<span style="color:#75715e">-- 由于Lua的数组其实是表，所以数组的非空判断、相等性比较都比较麻烦</span>
+<span style="color:#66d9ef">local</span> arr1 <span style="color:#f92672">=</span> {<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>} <span style="color:#75715e">-- Lua中定义的数组(其实是表，不用在意这些细节)</span>
 
-<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">rlen</span>(arr)
-    <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span> <span style="color:#75715e">-- 空表判断 arr == {}</span>
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
-    <span style="color:#66d9ef">else</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>) <span style="color:#75715e">-- Lua下标从1开始</span>
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> rlen(arr)
+<span style="color:#75715e">--[[
+</span><span style="color:#75715e">    这里先定义两个函数,
+</span><span style="color:#75715e">    isEmpty 用于判断数组是否为空;
+</span><span style="color:#75715e">    shift   用于将数组中第一项元素移除, JS玩家应该很熟悉这个命名吧~
+</span><span style="color:#75715e">]]</span>
+
+<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">isEmpty</span>(arr)
+    <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>   <span style="color:#75715e">-- 蹩脚的 空表判断 arr == {}, 将就一下吧</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
     <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-print(rlen(arr)) <span style="color:#75715e">-- 嘿嘿，还是5，轻轻松松~</span>
-
-<span style="color:#75715e">-- 你以为这就完了? TYTN</span>
-<span style="color:#75715e">-- 上面的rlen函数，函数体中递归调用了rlen本身，但是使用了函数名，现在要求函数体内不允许使用函数名.</span>
-<span style="color:#75715e">-- 纳尼！？我看，你是在刁难我胖虎！！</span>
-
-len  <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(arr)
-    <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span> <span style="color:#75715e">-- 空表判断 arr == {}</span>
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
-    <span style="color:#66d9ef">else</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>) <span style="color:#75715e">-- Lua下标从1开始</span>
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> <span style="color:#960050;background-color:#1e0010">???</span>(arr)  <span style="color:#75715e">-- 这里怎么办鸭</span>
-    <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
 <span style="color:#66d9ef">end</span>
 
-<span style="color:#75715e">-- 先来看点别的, 这个函数做啥鸭，好像不断调用自身，永远不会停止!</span>
-<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">eternity</span>(x)
+<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">shift</span>(arr)
+    table.remove(arr, <span style="color:#ae81ff">1</span>)   <span style="color:#75715e">-- Lua下标从1开始</span>
+    <span style="color:#66d9ef">return</span> arr
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#75715e">-- 好的，开始我们的旅程吧~</span>
+
+<span style="color:#75715e">--[[
+</span><span style="color:#75715e">* 现在问题来了，我想求解 数组的长度 该怎么做呢?
+</span><span style="color:#75715e">]]</span>
+
+<span style="color:#75715e">-- [务实的小伙伴肯定第一时间想到，Lua有没有内建函数或者语法糖，有的话，那就很方便了鸭~]</span>
+<span style="color:#75715e">-- 一番检索之后，发现 Lua 还真有</span>
+<span style="color:#75715e">-- print(#arr1) -- 哈哈，成功得到了 数组arr 的长度</span>
+
+<span style="color:#75715e">-- 看来大家都能很轻松地应对嘛~  [就这!??]</span>
+
+
+<span style="color:#75715e">-- 那如果，不允许使用内置语法糖呢??</span>
+<span style="color:#75715e">-- [聪明的小伙伴表示: 这也难不倒我~ 看我递归显神通...]</span>
+<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">rlength</span>(arr)
+    <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> rlength(shift(arr))  <span style="color:#75715e">-- 使用了本身的函数名</span>
+<span style="color:#66d9ef">end</span>
+<span style="color:#75715e">-- print(rlength(arr1))  </span>
+
+<span style="color:#75715e">-- (啪-啪-啪~ 鼓掌声)</span>
+
+<span style="color:#75715e">--[[ 
+</span><span style="color:#75715e">    但是!! 你们以为这就完了嘛~?~ too young too naive~
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">    [我知道！尾调用优化，改成尾递归形式~]
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">    不不不，不要误会，我不是在一步步刁难各位~
+</span><span style="color:#75715e">    我只是发现，函数体内使用着函数本身的名字，想把它去掉而已
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">    [纳尼！？我看，你就是在刁难我胖虎！！]
+</span><span style="color:#75715e">]]</span>
+
+<span style="color:#66d9ef">local</span> lenX <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(arr)
+    <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">end</span>
+    <span style="color:#75715e">-- return 1 + ???(shift(arr))</span>
+<span style="color:#66d9ef">end</span>
+
+
+<span style="color:#75715e">--[[
+</span><span style="color:#75715e">    先去看点别的
+</span><span style="color:#75715e">]]</span>
+
+<span style="color:#75715e">-- 这个函数做啥鸭，好像不断调用自身，永远不会停止!</span>
+<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">eternity</span>(x)
     <span style="color:#66d9ef">return</span> eternity(x)
 <span style="color:#66d9ef">end</span>
 
-len  <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(arr)
-    <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
-    <span style="color:#66d9ef">else</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> eternity(arr)  <span style="color:#75715e">-- 用eternity代替??? 是的程序可以运行</span>
-    <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#75715e">-- 俗话说，心急吃不了热豆腐, 我们求不了那么长的数组长度，求个空数组试试，</span>
-<span style="color:#75715e">-- 既然是空数组，长度就是0了</span>
-
-len0 <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (arr)
-    <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+<span style="color:#75715e">-- 来看看 这个函数是啥</span>
+<span style="color:#66d9ef">local</span> len0 <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(arr)
+    <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
         <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
     <span style="color:#66d9ef">end</span>
-    table.remove(arr, <span style="color:#ae81ff">1</span>)
-    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> eternity(arr)
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> eternity(shift(arr))
 <span style="color:#66d9ef">end</span>
-print(len0({}))  <span style="color:#75715e">-- 嘿嘿，成功</span>
+<span style="color:#75715e">-- 我们先跨出最小的一步，求解 长度为0 的数组长度</span>
+<span style="color:#75715e">-- print(len0({}))</span>
 
-<span style="color:#75715e">-- 那长度为1的数组，我也能求了</span>
+
+<span style="color:#75715e">-- 那么长度为1 的数组呢</span>
+<span style="color:#66d9ef">local</span> len1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(arr)
+    <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> len0(shift(arr))
+<span style="color:#66d9ef">end</span>
+<span style="color:#75715e">-- print(len1({1}))</span>
+
+
+<span style="color:#75715e">-- 函数展开一下</span>
 len1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (arr)
-    <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+    <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
         <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
     <span style="color:#66d9ef">end</span>
-    table.remove(arr, <span style="color:#ae81ff">1</span>)
-    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> len0(arr)
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#75715e">-- 展开</span>
-len1_1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (arr)
-    <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
-    <span style="color:#66d9ef">end</span>
-    table.remove(arr, <span style="color:#ae81ff">1</span>)
     <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (<span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> eternity(arr)
-    <span style="color:#66d9ef">end</span>)(arr)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> eternity(shift(arr))
+    <span style="color:#66d9ef">end</span>)(shift(arr))
 <span style="color:#66d9ef">end</span>
+<span style="color:#75715e">-- print(len1({1}))</span>
 
-<span style="color:#75715e">-- 那长度为2的数组也不在话下了~</span>
+
+<span style="color:#75715e">-- 好像 很难没有太多启发嘛，那就继续，看看 长度为2 的数组</span>
+<span style="color:#66d9ef">local</span> len2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (arr)
+    <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> len1(shift(arr))
+<span style="color:#66d9ef">end</span>
+<span style="color:#75715e">-- print(len2({1,2}))</span>
+
+<span style="color:#75715e">-- 继续展开</span>
 len2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (arr)
-    <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+    <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
         <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
     <span style="color:#66d9ef">end</span>
-    table.remove(arr, <span style="color:#ae81ff">1</span>)
     <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (<span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
         <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (<span style="color:#66d9ef">function</span> (arr)
-            <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
                 <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
             <span style="color:#66d9ef">end</span>
-            table.remove(arr, <span style="color:#ae81ff">1</span>)
-            <span style="color:#66d9ef">return</span>  <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> eternity(arr)
-        <span style="color:#66d9ef">end</span>)(arr)
-    <span style="color:#66d9ef">end</span>)(arr)
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> eternity(shift(arr))
+        <span style="color:#66d9ef">end</span>)(shift(arr))
+    <span style="color:#66d9ef">end</span>)(shift(arr))
 <span style="color:#66d9ef">end</span>
+<span style="color:#75715e">-- print(len2({1,2}))</span>
 
-<span style="color:#75715e">-- 函数内部好像挺多重复的部分，看看能不能提取出来</span>
 
-<span style="color:#75715e">-- 数组为空</span>
-length0 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (length)
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+<span style="color:#75715e">-- 开始看着有点绕了呢，但是还是没有看出太多端倪呢~</span>
+<span style="color:#75715e">-- 前进!!  长度为3 的数组</span>
+<span style="color:#66d9ef">local</span> len3 <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (arr)
+    <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span> 
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (<span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (<span style="color:#66d9ef">function</span> (arr)
+            <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
+                <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+            <span style="color:#66d9ef">end</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (<span style="color:#66d9ef">function</span> (arr)
+                <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
+                    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+                <span style="color:#66d9ef">end</span>
+                <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> eternity(shift(arr))
+            <span style="color:#66d9ef">end</span>)(shift(arr))
+        <span style="color:#66d9ef">end</span>)(shift(arr))
+    <span style="color:#66d9ef">end</span>)(shift(arr))
+<span style="color:#66d9ef">end</span>
+<span style="color:#75715e">-- print(len3({1,2,3}))</span>
+
+
+<span style="color:#75715e">-- 害，重复代码挺多的，看看能不能提取出来</span>
+<span style="color:#75715e">-- 简单一点就从 长度为0 的数组开始吧</span>
+len0 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (flen)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> flen(shift(arr))
     <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>)(eternity)
+<span style="color:#75715e">-- print(len0({}))</span>
 
-<span style="color:#75715e">-- 数组长度为1</span>
-length1 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (length)
+<span style="color:#75715e">-- 那么 长度为1，2，3的数组 也就明了了</span>
+len1 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (flen)
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> flen(shift(arr))
     <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>)(length0)
+<span style="color:#66d9ef">end</span>)(len0)
+<span style="color:#75715e">-- print(len1({1}))</span>
 
-<span style="color:#75715e">-- 展开看看</span>
-length1_1 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (length)
+len2 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (flen)
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> flen(shift(arr))
     <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>)((<span style="color:#66d9ef">function</span> (length)
+<span style="color:#66d9ef">end</span>)(len1)
+<span style="color:#75715e">-- print(len2({1,2}))</span>
+
+len3 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (flen)
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> flen(shift(arr))
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)(len2)
+<span style="color:#75715e">-- print(len3({1,2,3}))</span>
+
+
+<span style="color:#75715e">-- 感觉看不出啥端倪，继续展开看看</span>
+len1 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (flen)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> flen(shift(arr))
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)((<span style="color:#66d9ef">function</span> (flen)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> flen(shift(arr))
     <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>)(eternity))
 
-<span style="color:#75715e">-- 再看看数组长度是2的</span>
-length2 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (length)
+
+len2 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (flen)
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> flen(shift(arr))
     <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>)((<span style="color:#66d9ef">function</span> (length)
+<span style="color:#66d9ef">end</span>)((<span style="color:#66d9ef">function</span> (flen)
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> flen(shift(arr))
     <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>)((<span style="color:#66d9ef">function</span> (length)
+<span style="color:#66d9ef">end</span>)((<span style="color:#66d9ef">function</span> (flen)
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> flen(shift(arr))
     <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>)(eternity)))
 
-<span style="color:#75715e">-- 好像是 f(f(f(ete))) 这样的模式, 再提取看看..</span>
-<span style="color:#75715e">-- 数组为空</span>
-len_0 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
-    <span style="color:#66d9ef">return</span> makelen(eternity)
-<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (length)
+
+len3 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (flen)
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> flen(shift(arr))
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)((<span style="color:#66d9ef">function</span> (flen)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> flen(shift(arr))
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)((<span style="color:#66d9ef">function</span> (flen)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> flen(shift(arr))
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)((<span style="color:#66d9ef">function</span> (flen)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> flen(shift(arr))
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)(eternity))))
+
+<span style="color:#75715e">-- print(len0({}))</span>
+<span style="color:#75715e">-- print(len1({1}))</span>
+<span style="color:#75715e">-- print(len2({1,2}))</span>
+<span style="color:#75715e">-- print(len3({1,2,3}))</span>
+
+
+<span style="color:#75715e">-- 自己观察一下，好像是 f(f(f(ete))) 这样的模式呢，emmmm... 那么再提取试试</span>
+len0 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (f)
+    <span style="color:#66d9ef">return</span> f(eternity)
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (flen)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">end</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> flen(shift(arr))
     <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>)
+<span style="color:#75715e">-- print(len0({}))</span>
 
-<span style="color:#75715e">-- 数组长度为1</span>
-len_1 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
-    <span style="color:#66d9ef">return</span> makelen(makelen(eternity))
-<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (length)
+
+<span style="color:#75715e">-- 学废了！！ 长度为1，2，3的数组  依样画葫芦~</span>
+len1 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (f)
+    <span style="color:#66d9ef">return</span> f(f(eternity))
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (flen)
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> flen(shift(arr))
     <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>)
+<span style="color:#75715e">-- print(len1({1}))</span>
 
-<span style="color:#75715e">-- 数组长度为2</span>
-len_2 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
-    <span style="color:#66d9ef">return</span> makelen(makelen(makelen(eternity)))
-<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (length)
+len2 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (f)
+    <span style="color:#66d9ef">return</span> f(f(f(eternity)))
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (flen)
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> flen(shift(arr))
     <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>)
+<span style="color:#75715e">-- print(len2({1,2}))</span>
 
-<span style="color:#75715e">-- 数组长度为3</span>
-len_3 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
-    <span style="color:#66d9ef">return</span> makelen(makelen(makelen(makelen(eternity))))
-<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (length)
+len3 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (f)
+    <span style="color:#66d9ef">return</span> f(f(f(f(eternity))))
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (flen)
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> flen(shift(arr))
     <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>)
+<span style="color:#75715e">-- print(len3({1,2,3}))</span>
 
-<span style="color:#75715e">-- emmm...有点神奇哈~</span>
 
-<span style="color:#75715e">-- 既然eternity函数执行不到，可以替换了</span>
-lenx0 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
-    <span style="color:#66d9ef">return</span> makelen(makelen)
-<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (length)
+<span style="color:#75715e">--[[
+</span><span style="color:#75715e">   感觉悟出了一些啥，但是还是没有进一步的思路哎~
+</span><span style="color:#75715e">   害，既然如此，就搞事情！！
+</span><span style="color:#75715e">   eternity函数既然不会执行到, 那就可以随意替换, 比如这样-&gt; [替换自身]
+</span><span style="color:#75715e">]]</span>
+len0 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (f)
+    <span style="color:#66d9ef">return</span> f(f)
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (flen)
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> flen(shift(arr))
     <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>)
+<span style="color:#75715e">-- print(len0({}))</span>
 
-<span style="color:#75715e">-- 仔细看看, 好像length函数的名字已经不影响整体了, 也替换</span>
-lenxx0 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
-    <span style="color:#66d9ef">return</span> makelen(makelen)
-<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (makelen)
+<span style="color:#75715e">-- emmm~ 心满意足!  再仔细看看，好像flen这个函数名字也可以换一下~ 一家人就是要整整齐齐!~</span>
+len0 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (f)
+    <span style="color:#66d9ef">return</span> f(f)
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (f)
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> makelen(arr)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> f(shift(arr))
     <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>)
+<span style="color:#75715e">-- print(len0({}))</span>
 
-<span style="color:#75715e">-- 展开</span>
-lenxx000 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
+<span style="color:#75715e">--  规约一下看看是啥样~</span>
+len0 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (f)
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> makelen(arr)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> f(shift(arr))
     <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (makelen)
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (f)
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> makelen(arr)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> f(shift(arr))
     <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>)
+<span style="color:#75715e">-- print(len0({}))</span>
 
-<span style="color:#75715e">-- 把函数自身作为参数，传给自身进行规约</span>
+<span style="color:#75715e">-- 天呐!!! 函数把自己传给了自己~!!!!</span>
 
-<span style="color:#75715e">-- 当传入{}数组时, 返回0</span>
-<span style="color:#75715e">-- 传入{1}时, 返回 1 + 构造出接收一个数组，返回能够计算空数组长度的函数</span>
-<span style="color:#75715e">-- 那么如果构造出的函数也是自己呢？</span>
 
-lenxx0000 <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (arr)
-    <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+<span style="color:#75715e">-- 进一步规约！</span>
+len0 <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (arr)
+    <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
         <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
     <span style="color:#66d9ef">end</span>
-    table.remove(arr, <span style="color:#ae81ff">1</span>)
-    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (<span style="color:#66d9ef">function</span> (makelen)
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (<span style="color:#66d9ef">function</span> (f)
         <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-            <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
                 <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
             <span style="color:#66d9ef">end</span>
-            table.remove(arr, <span style="color:#ae81ff">1</span>)
-            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> makelen(arr)
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> f(shift(arr))
         <span style="color:#66d9ef">end</span>
-    <span style="color:#66d9ef">end</span>)(arr)
+    <span style="color:#66d9ef">end</span>)(shift(arr))
 <span style="color:#66d9ef">end</span>
+<span style="color:#75715e">-- print(len0({}))</span>
 
-lenx <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
-    <span style="color:#66d9ef">return</span> makelen(makelen)
-<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (makelen)
+<span style="color:#75715e">--[[
+</span><span style="color:#75715e">    细细揣摩一下, F(F) 构造出的函数Z
+</span><span style="color:#75715e">    1. 当传入长度为0的空数组时，返回0   Z({}) =&gt; 0
+</span><span style="color:#75715e">    2. Z({1}) =&gt; 1 + 函数F(...)  如果此时这个F 还是 F(F) 呢 =&gt; F(F)(...)
+</span><span style="color:#75715e">  
+</span><span style="color:#75715e">  想象一下，会发生什么~
+</span><span style="color:#75715e">
+</span><span style="color:#75715e">]]</span>
+<span style="color:#75715e">--</span>
+
+len0 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (f)
+    <span style="color:#66d9ef">return</span> f(f)
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (f)
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (makelen(makelen))(arr) 
+        <span style="color:#75715e">-- return 1 + f(shift(arr))</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> f(f)(shift(arr))  <span style="color:#75715e">-- 注意此处的变化</span>
     <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>)
+<span style="color:#75715e">-- print(len0({}))</span>
+<span style="color:#75715e">-- print(len0({1,2}))</span>
 
-<span style="color:#75715e">-- !!!大功告成!!! </span>
+<span style="color:#75715e">-- 通过不断产生的 F(F)， 不断推迟计算，直至 数组长度为0. </span>
+
+<span style="color:#75715e">-- 这里是不是蕴涵着某种更通用的神秘力量呢~</span>
 <span style="color:#75715e">-- 进一步提取</span>
-
-newlen <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
-    <span style="color:#66d9ef">return</span> makelen(makelen)
-<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (makelen)
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
-            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
-        <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#75715e">-- return 1 + (makelen(makelen))(arr)</span>
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (<span style="color:#66d9ef">function</span> (x)    <span style="color:#75715e">-- call-by-value的求值策略下，避免无限地参数求值</span>
-            <span style="color:#66d9ef">return</span> makelen(makelen)(x)
-        <span style="color:#66d9ef">end</span>)(arr)
-    <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>)
-
-newlenxx <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
-    <span style="color:#66d9ef">return</span> makelen(makelen)
-<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (makelen)
+lenX <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (f)
+    <span style="color:#66d9ef">return</span> f(f)
+<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (f)
     <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">function</span> (length)
         <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-            <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
                 <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
             <span style="color:#66d9ef">end</span>
-            table.remove(arr, <span style="color:#ae81ff">1</span>)
-            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(shift(arr))
         <span style="color:#66d9ef">end</span>
-    <span style="color:#75715e">-- end)((makelen(makelen)))</span>
-    <span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (x)
-        <span style="color:#66d9ef">return</span> makelen(makelen)(x)
+    <span style="color:#66d9ef">end</span>)
+    <span style="color:#75715e">-- (f(f))          -- call-by-value的求值策略下，避免参数无限求值，导致栈溢出</span>
+    (<span style="color:#66d9ef">function</span> (x)
+        <span style="color:#66d9ef">return</span> f(f)(x)
     <span style="color:#66d9ef">end</span>)
 <span style="color:#66d9ef">end</span>)
+<span style="color:#75715e">-- print(lenX({1,2,3,4,5}))</span>
 
 
-nnlen <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (makelen)
-    <span style="color:#66d9ef">return</span> makelen(makelen)
-<span style="color:#66d9ef">end</span>)((<span style="color:#66d9ef">function</span> (flen)
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (makelen)
+<span style="color:#75715e">-- lenX = (function (f)</span>
+<span style="color:#75715e">--     return f(f)</span>
+<span style="color:#75715e">-- end)((function (flen)</span>
+<span style="color:#75715e">--     return function (f)</span>
+<span style="color:#75715e">--         return flen(function (x)</span>
+<span style="color:#75715e">--             return f(f)(x)</span>
+<span style="color:#75715e">--         end)</span>
+<span style="color:#75715e">--     end</span>
+<span style="color:#75715e">-- end)(function (length)</span>
+<span style="color:#75715e">--     return function (arr)</span>
+<span style="color:#75715e">--         if isEmpty(arr) then</span>
+<span style="color:#75715e">--             return 0</span>
+<span style="color:#75715e">--         end</span>
+<span style="color:#75715e">--         return 1 + length(shift(arr))</span>
+<span style="color:#75715e">--     end</span>
+<span style="color:#75715e">-- end))</span>
+
+<span style="color:#75715e">-- 再提取</span>
+lenX <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (flen)
+    <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">function</span> (f)
+        <span style="color:#66d9ef">return</span> f(f)
+    <span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (f)
         <span style="color:#66d9ef">return</span> flen(<span style="color:#66d9ef">function</span> (x)
-            <span style="color:#66d9ef">return</span> makelen(makelen)(x)
-        <span style="color:#66d9ef">end</span>)
-    <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (length)
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
-            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
-        <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
-    <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>))
-
-
-<span style="color:#75715e">-- 到这里差不多了，观察一下函数形式 F = Y(E)</span>
-
-nnnlen <span style="color:#f92672">=</span> (<span style="color:#66d9ef">function</span> (flen)
-    <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">function</span> (makelen)
-        <span style="color:#66d9ef">return</span> makelen(makelen)
-    <span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (makelen)
-        <span style="color:#66d9ef">return</span> flen(<span style="color:#66d9ef">function</span> (x)
-            <span style="color:#66d9ef">return</span> makelen(makelen)(x)
+            <span style="color:#66d9ef">return</span> f(f)(x)
         <span style="color:#66d9ef">end</span>)
     <span style="color:#66d9ef">end</span>)
 <span style="color:#66d9ef">end</span>)(<span style="color:#66d9ef">function</span> (length)
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(shift(arr))
     <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>)
+<span style="color:#75715e">-- print(lenX({1,2,3,4,5}))</span>
 
-<span style="color:#75715e">-- 最终提取 Y</span>
+<span style="color:#75715e">-- OK, 到了这里就差不多了，观察一下函数形式  F = Y(E)</span>
+<span style="color:#75715e">-- 提取Y函数</span>
 
 Y <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (f)
     <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">function</span> (u)
@@ -593,23 +704,52 @@ Y <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</spa
         <span style="color:#66d9ef">end</span>)
     <span style="color:#66d9ef">end</span>)
 <span style="color:#66d9ef">end</span>
-finlen <span style="color:#f92672">=</span> Y(<span style="color:#66d9ef">function</span> (length)
+
+<span style="color:#66d9ef">local</span> final_len <span style="color:#f92672">=</span> Y(<span style="color:#66d9ef">function</span> (length)
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (arr)
-        <span style="color:#66d9ef">if</span> next(arr) <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">if</span> isEmpty(arr) <span style="color:#66d9ef">then</span>
             <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">end</span>
-        table.remove(arr, <span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(arr)
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> length(shift(arr))
     <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>)
 
-print(finlen({<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>}))
+<span style="color:#75715e">-- print(final_len({1,2,3,4,5}))</span>
 
-<span style="color:#75715e">-- 终于结束了!!!  </span>
+<span style="color:#75715e">--[[
+</span><span style="color:#75715e">    有了Y函数，我们就能很方便地处理匿名递归
+</span><span style="color:#75715e">]]</span>
+
+<span style="color:#75715e">-- 阶乘函数[递归形式]</span>
+<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">fact</span>(n)
+    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span>
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">return</span> n <span style="color:#f92672">*</span> fact(n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+<span style="color:#66d9ef">end</span>
+<span style="color:#75715e">-- print(fact(4))</span>
+
+
+<span style="color:#75715e">-- 阶乘函数[匿名递归]</span>
+<span style="color:#66d9ef">local</span> anon_fact <span style="color:#f92672">=</span> Y(<span style="color:#66d9ef">function</span> (fact)
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (n)
+        <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span>
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+        <span style="color:#66d9ef">end</span>
+        <span style="color:#66d9ef">return</span> n <span style="color:#f92672">*</span> fact(n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>)
+<span style="color:#75715e">-- print(anon_fact(5))</span>
+
+
+<span style="color:#75715e">--[[
+</span><span style="color:#75715e">    [所以这个Y函数到底是啥呢??] 
+</span><span style="color:#75715e">    在这里，我们可以称为 -&gt; [应用序]Y组合子
+</span><span style="color:#75715e">]]</span>
 </code></pre></div><h2 id="0x05-终于见到-y">0x05 终于见到 Y</h2>
 <p>经过上面的编程推演, 最终得到了 <code>Y组合子</code>.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">Y = λf.(λx.(f (x x)) λx.(f (x x)))  // Call-By-Name
-Y = λf.(λu.(u u)) λx.(f λv.(x x v)) // Call-By-Value
+Y = λf.((λu.(u u)) λx.(f λv.(x x v))) // Call-By-Value
 </code></pre></div><p>最后用一个例子函数g来展开它，可以看到这个函数是如何成为一个不动点组合子的.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-md" data-lang="md">(Y g)
     = (λf.(λx.(f (x x)) λx.(f (x x))) g) // 展开
@@ -682,6 +822,8 @@ Y = λf.(λu.(u u)) λx.(f λv.(x x v)) // Call-By-Value
         <a href="https://ash-z01.github.io/2020/boolandcondition/" class="prev" rel="prev" title="Bool and Condition of Lambda-Calculus"><i class="iconfont icon-left"></i>&nbsp;Bool and Condition of Lambda-Calculus</a>
          
         
+        <a href="https://ash-z01.github.io/2020/timingattack/" class="next" rel="next" title="Timing Attack 时序攻击">Timing Attack 时序攻击&nbsp;<i class="iconfont icon-right"></i></a>
+        
     </div>
 
     <div class="post-comment">
@@ -696,7 +838,7 @@ Y = λf.(λu.(u u)) λx.(f λv.(x x v)) // Call-By-Value
     <div class="copyright">
         &copy;
         
-        <span itemprop="copyrightYear">2020 - 2020</span>
+        <span itemprop="copyrightYear">2020 - 2021</span>
         
         <span class="with-ash">
         
