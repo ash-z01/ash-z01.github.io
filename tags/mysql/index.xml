@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>MySQL on E-Meow Site</title>
+    <title>MySQL on Rubik Cell Space</title>
     <link>https://ash-z01.github.io/tags/mysql/</link>
-    <description>Recent content in MySQL on E-Meow Site</description>
+    <description>Recent content in MySQL on Rubik Cell Space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Jul 2020 16:49:48 +0800</lastBuildDate>
-    
-	<atom:link href="https://ash-z01.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 22 Jul 2020 16:49:48 +0800</lastBuildDate><atom:link href="https://ash-z01.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>InnoDB 存储结构</title>
       <link>https://ash-z01.github.io/2020/sql002-innodb_storage_structure/</link>
@@ -34,8 +30,8 @@ mysql&amp;gt; INSERT INTO record_format_demo(c1, c2, c3, c4) VALUES(&amp;#39;aaa
  需要将哪些字符映射成数据 当然是如何映射  人们抽象出一个字符集的概念来描述某个字符范围的编码规则. 比方说我们来自定义一个名称为 meow 的字符集，它包含的字符范围和编码规则如下&amp;hellip;
  包含字符 &#39;a&#39;, &#39;A&#39;, &#39;b&#39;, &#39;B&#39; 采用一个字节，编码一个字符 &amp;#39;a&amp;#39; -&amp;gt; 00000001 // 0x01 &amp;#39;b&amp;#39; -&amp;gt; 00000010 // 0x02 &amp;#39;A&amp;#39; -&amp;gt; 00000011 // 0x03 &amp;#39;B&amp;#39; -&amp;gt; 00000100 // 0x04   有了 meow 字符集， 我们就可以用二进制数表示字符了&amp;hellip;
 &amp;#39;bA&amp;#39; -&amp;gt; 0000001000000011 // 0x0203 &amp;#39;baB&amp;#39; -&amp;gt; 000000100000000100000100 // 0x020104 &amp;#39;cd&amp;#39; -&amp;gt; // 无法表示 比较规则简介 现在我们确定了 meow 字符集表示字符的范围以及编码规则，但是该怎么比较两个字符的大小呢？
-最容易想到的就是直接比较这两个字符对应的二进制编码的大小，比方说字符&amp;rsquo;a&#39;的编码为0x01，字符&amp;rsquo;b&#39;的编码为0x02，所以&amp;rsquo;a&#39;小于&amp;rsquo;b&amp;rsquo;，这种简单的比较规则也可以被称为二进制比较规则[binary collation]
-二进制比较规则是简单，但有时候并不符合现实需求，比如在很多场合对于英文字符我们都是不区分大小写的，也就是说&amp;rsquo;a&#39;和&amp;rsquo;A&#39;是相等的，在这种场合下就不能简单粗暴的使用二进制比较规则了，这时候我们可以这样指定比较规则：
+最容易想到的就是直接比较这两个字符对应的二进制编码的大小，比方说字符&amp;rsquo;a&amp;rsquo;的编码为0x01，字符&amp;rsquo;b&amp;rsquo;的编码为0x02，所以&amp;rsquo;a&amp;rsquo;小于&amp;rsquo;b&#39;，这种简单的比较规则也可以被称为二进制比较规则[binary collation]
+二进制比较规则是简单，但有时候并不符合现实需求，比如在很多场合对于英文字符我们都是不区分大小写的，也就是说&amp;rsquo;a&amp;rsquo;和&amp;rsquo;A&amp;rsquo;是相等的，在这种场合下就不能简单粗暴的使用二进制比较规则了，这时候我们可以这样指定比较规则：
  将两个大小写不同的字符全都转为大写或者小写 然后，再比较这两个字符对应的二进制数据  这是一种稍微复杂一点点的比较规则，但是实际生活中的字符不止英文字符一种，比如我们的汉字有几万之多，对于某一种字符集来说，比较两个字符大小的规则可以制定出很多种，也就是说同一种字符集可以有多种比较规则，我们稍后就要介绍各种现实生活中用的字符集以及它们的一些比较规则</description>
     </item>
     

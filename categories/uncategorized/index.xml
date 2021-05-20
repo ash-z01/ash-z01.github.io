@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Uncategorized on E-Meow Site</title>
+    <title>Uncategorized on Rubik Cell Space</title>
     <link>https://ash-z01.github.io/categories/uncategorized/</link>
-    <description>Recent content in Uncategorized on E-Meow Site</description>
+    <description>Recent content in Uncategorized on Rubik Cell Space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 24 Jul 2017 18:36:00 +0200</lastBuildDate>
-    
-	<atom:link href="https://ash-z01.github.io/categories/uncategorized/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 24 Jul 2017 18:36:00 +0200</lastBuildDate><atom:link href="https://ash-z01.github.io/categories/uncategorized/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>HTTP/2 Server Push in Hugo</title>
       <link>https://ash-z01.github.io/2017/http2-server-push-in-hugo/</link>

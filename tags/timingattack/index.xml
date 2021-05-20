@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>TimingAttack on E-Meow Site</title>
+    <title>TimingAttack on Rubik Cell Space</title>
     <link>https://ash-z01.github.io/tags/timingattack/</link>
-    <description>Recent content in TimingAttack on E-Meow Site</description>
+    <description>Recent content in TimingAttack on Rubik Cell Space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 25 Dec 2020 19:06:12 +0800</lastBuildDate>
-    
-	<atom:link href="https://ash-z01.github.io/tags/timingattack/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Thu, 20 May 2021 15:06:12 +0800</lastBuildDate><atom:link href="https://ash-z01.github.io/tags/timingattack/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Timing Attack 时序攻击</title>
-      <link>https://ash-z01.github.io/2020/timingattack/</link>
-      <pubDate>Fri, 25 Dec 2020 19:06:12 +0800</pubDate>
+      <link>https://ash-z01.github.io/2021/timingattack/</link>
+      <pubDate>Thu, 20 May 2021 15:06:12 +0800</pubDate>
       
-      <guid>https://ash-z01.github.io/2020/timingattack/</guid>
-      <description></description>
+      <guid>https://ash-z01.github.io/2021/timingattack/</guid>
+      <description>0x00 本篇出场人物  小Z -&amp;gt; Rust/Lua/C/Lisp/Ruby 小E -&amp;gt; TS/JS/Go/Haskell/Ruby  0x01 不一样的字符串比较.. [[茶水间]]
+Z: 哎? 小E? 你也来用茶水啊&amp;hellip;
+E: 哦.. 是呀~ 哎? 怎么看你愁眉不展的~ 是遇到什么难题了吗?
+Z: emm.. 我今天在 PlayFramework中 看到一段 进行数据验证的代码，啊.. 其实就是两个字符串的比较，但是我一直没想明白~
+E: 字符串比较? 能给我看看嘛~
+Z: 嗯~ 好，你来我座位，我演示给你看~
+[小E 踮着小碎步 跟着我到了我座位旁&amp;hellip;]
+[[我的座位]]
+Z: 你看一下，就是这段代码. 我改用了Rust.
+fn safe_equal(a: String, b: String) -&amp;gt; bool { if a.len() != b.len() { return false; } let mut equal = 0; for i in 0..a.len() { equal |= a.</description>
     </item>
     
   </channel>

@@ -1,15 +1,60 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on E-Meow Site</title>
+    <title>Posts on Rubik Cell Space</title>
     <link>https://ash-z01.github.io/posts/</link>
-    <description>Recent content in Posts on E-Meow Site</description>
+    <description>Recent content in Posts on Rubik Cell Space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Feb 2021 17:03:10 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 20 May 2021 15:06:12 +0800</lastBuildDate><atom:link href="https://ash-z01.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Timing Attack 时序攻击</title>
+      <link>https://ash-z01.github.io/2021/timingattack/</link>
+      <pubDate>Thu, 20 May 2021 15:06:12 +0800</pubDate>
+      
+      <guid>https://ash-z01.github.io/2021/timingattack/</guid>
+      <description>0x00 本篇出场人物  小Z -&amp;gt; Rust/Lua/C/Lisp/Ruby 小E -&amp;gt; TS/JS/Go/Haskell/Ruby  0x01 不一样的字符串比较.. [[茶水间]]
+Z: 哎? 小E? 你也来用茶水啊&amp;hellip;
+E: 哦.. 是呀~ 哎? 怎么看你愁眉不展的~ 是遇到什么难题了吗?
+Z: emm.. 我今天在 PlayFramework中 看到一段 进行数据验证的代码，啊.. 其实就是两个字符串的比较，但是我一直没想明白~
+E: 字符串比较? 能给我看看嘛~
+Z: 嗯~ 好，你来我座位，我演示给你看~
+[小E 踮着小碎步 跟着我到了我座位旁&amp;hellip;]
+[[我的座位]]
+Z: 你看一下，就是这段代码. 我改用了Rust.
+fn safe_equal(a: String, b: String) -&amp;gt; bool { if a.len() != b.len() { return false; } let mut equal = 0; for i in 0..a.len() { equal |= a.</description>
+    </item>
     
-	<atom:link href="https://ash-z01.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Neovim &#43; Lua = init.lua</title>
+      <link>https://ash-z01.github.io/2021/lua_nvim/</link>
+      <pubDate>Wed, 05 May 2021 11:58:12 +0800</pubDate>
+      
+      <guid>https://ash-z01.github.io/2021/lua_nvim/</guid>
+      <description>0x00 Why Lua? NeoVim 的目标之一，是使用 Lua 来替代陈旧的 VimL.
+这样做的原因之一是因为 VimL 是一种执行非常缓慢的解释型语言，并且几乎没有进行优化. 同时由于 VimL 的陈旧，当代码基础增长时，VimL 可能会变得有点混乱.
+因此，在 vim 的启动和可能阻塞编辑器主循环的插件操作中，大部分时间都花在解析和执行 vimscript 上.
+所以在新版本的 NeoVim 中，作为更好的语言选择，Lua被集成进来. 通过内嵌 Lua 运行时来创建和提供更快更强的扩展.
+万事开头难(，然后中间难，最后结果难)~ 那就一起来看看它的真面目吧~
+ 本文以 NeoVim v0.5.0-dev+1297-g63d8a8f4e 版本为基础 进行编写.
+ 0x01 NeoVim Lua Basics </description>
+    </item>
     
+    <item>
+      <title>An Empirical Evaluation of In-Memory Multi-Version Concurrency Control</title>
+      <link>https://ash-z01.github.io/2021/mvcc/</link>
+      <pubDate>Wed, 21 Apr 2021 14:46:02 +0800</pubDate>
+      
+      <guid>https://ash-z01.github.io/2021/mvcc/</guid>
+      <description>0x00 摘要 多版本并发控制(MVCC)是目前 现代数据库管理系统(DBMS)中 最流行的事务管理方案. MVCC在20世纪70年代后期被提出，但是过去十年里，主流的关系型数据库都开始采用它. MVCC维护多个版本的数据，使得DMBS在处理事务时，不违背ACID的同时，增加并行性. 但是，在多核和内存设置中扩展 MVCC 并非易事: 当有大量线程并行运行时，同步的开销可能会超过MVCC带来的好处.
+为了理解 MVCC 在现代硬件中处理事务时的表现，我们对4个关键设计决策进行了广泛的研究: 并发控制协议、版本存储、垃圾回收 和 索引管理. 我们在基于内存的 DBMS 中实现了所有这些的最新变体，并使用 OLTP 工作负载评估它们. 我们的分析确定了每个设计选择的基本瓶颈.
+0x01 前言 计算机体系结构的进步导致了多核、基于内存的DBMS 的兴起，它们采用高效的事务管理机制来最大化并行性. 在DMBS中使用最广泛的方案是多版本并发控制协议(MVCC). MVCC 的基本思想是，DBMS 维护数据库中每个逻辑对象的多个物理版本，以允许对同一对象的操作并行进行. 这些对象可以是任何粒度的，但几乎每个 MVCC DBMS 都使用元组，因为它在并行性和版本跟踪之间提供了很好的平衡. 多版本控制允许只读事务访问元组的旧版本，而不会阻止读写事务同时生成新版本. 在单一版本的系统中，事务总是使用新的信息编写元组来更新它.
+本文对 MVCC 数据库管理系统中的关键事务管理设计决策进行了研究:
+1. 并发控制协议 2. 版本存储 3. 垃圾回收 4. 索引管理  对于每个主题，我们描述内存中 DBMS 的最新实现，并讨论它们的优缺点. 我们还强调了阻止它们伸缩以支持更大的线程数和更复杂的工作负载的问题. 我们的分析确定了强调实现的场景，并讨论了缓解这些场景的方法(如果可能的话).
+0x02 背景 我们首先概述 mvcc 的高级概念，然后讨论 DBMS 用于跟踪传输和维护版本控制信息的元数据.
+2-1 MVCC 总览 事务管理方案允许终端用户以多线程的方式访问数据库，同时保持每个数据库都在专用系统上单独执行的假象. 它保证了DBMS的原子性和隔离性.
+多版本系统对于现代数据库应用程序有几个优点. 最重要的是，它可能比单版本系统允许更大的并发性. 例如，MVCC DBMS 允许事务读取一个对象的旧版本，同时另一个事务更新同一个对象.</description>
+    </item>
     
     <item>
       <title>CP or AP?</title>
@@ -36,15 +81,6 @@ CAP理论 CAP理论是在分布式集群环境下讨论的，为什么分布式�
 为什么Nacos注册中心要使用AP模型？
 答：这个问题也可以转换成为什么注册中心要使用AP模型。因为可用性比一致性更加重要，可用性体现在两个方面，第一是容许集群宕机数量，AP模型中集群全部机器宕机才会造成不可用，CP模型只容许一半的机器宕机。第二是分区是否可写，例如A机房和B机房发生分区，无法进行网络调用，在CP模型下部署在A机房的服务就无法部署，因为A机房无法与B机房通讯，所以无法写入IP地址，在AP模型下，可以去中心化，就像Eureka那样就算发生分区每台机器还都能写入，集群间无Master，而是互相复制各自的服务IP信息，这样，在分区时依然是支持写入的。不可用会造成微服务间调用拿不到IP地址，进而业务崩盘，所以不可用是不可接受的，不一致会造成不同微服务拿到的IP地址不一样，会造成负载不均衡，这是可以接受的。
 AP or CP CP模型 </description>
-    </item>
-    
-    <item>
-      <title>Timing Attack 时序攻击</title>
-      <link>https://ash-z01.github.io/2020/timingattack/</link>
-      <pubDate>Fri, 25 Dec 2020 19:06:12 +0800</pubDate>
-      
-      <guid>https://ash-z01.github.io/2020/timingattack/</guid>
-      <description></description>
     </item>
     
     <item>
@@ -122,8 +158,8 @@ mysql&amp;gt; INSERT INTO record_format_demo(c1, c2, c3, c4) VALUES(&amp;#39;aaa
  需要将哪些字符映射成数据 当然是如何映射  人们抽象出一个字符集的概念来描述某个字符范围的编码规则. 比方说我们来自定义一个名称为 meow 的字符集，它包含的字符范围和编码规则如下&amp;hellip;
  包含字符 &#39;a&#39;, &#39;A&#39;, &#39;b&#39;, &#39;B&#39; 采用一个字节，编码一个字符 &amp;#39;a&amp;#39; -&amp;gt; 00000001 // 0x01 &amp;#39;b&amp;#39; -&amp;gt; 00000010 // 0x02 &amp;#39;A&amp;#39; -&amp;gt; 00000011 // 0x03 &amp;#39;B&amp;#39; -&amp;gt; 00000100 // 0x04   有了 meow 字符集， 我们就可以用二进制数表示字符了&amp;hellip;
 &amp;#39;bA&amp;#39; -&amp;gt; 0000001000000011 // 0x0203 &amp;#39;baB&amp;#39; -&amp;gt; 000000100000000100000100 // 0x020104 &amp;#39;cd&amp;#39; -&amp;gt; // 无法表示 比较规则简介 现在我们确定了 meow 字符集表示字符的范围以及编码规则，但是该怎么比较两个字符的大小呢？
-最容易想到的就是直接比较这两个字符对应的二进制编码的大小，比方说字符&amp;rsquo;a&#39;的编码为0x01，字符&amp;rsquo;b&#39;的编码为0x02，所以&amp;rsquo;a&#39;小于&amp;rsquo;b&amp;rsquo;，这种简单的比较规则也可以被称为二进制比较规则[binary collation]
-二进制比较规则是简单，但有时候并不符合现实需求，比如在很多场合对于英文字符我们都是不区分大小写的，也就是说&amp;rsquo;a&#39;和&amp;rsquo;A&#39;是相等的，在这种场合下就不能简单粗暴的使用二进制比较规则了，这时候我们可以这样指定比较规则：
+最容易想到的就是直接比较这两个字符对应的二进制编码的大小，比方说字符&amp;rsquo;a&amp;rsquo;的编码为0x01，字符&amp;rsquo;b&amp;rsquo;的编码为0x02，所以&amp;rsquo;a&amp;rsquo;小于&amp;rsquo;b&#39;，这种简单的比较规则也可以被称为二进制比较规则[binary collation]
+二进制比较规则是简单，但有时候并不符合现实需求，比如在很多场合对于英文字符我们都是不区分大小写的，也就是说&amp;rsquo;a&amp;rsquo;和&amp;rsquo;A&amp;rsquo;是相等的，在这种场合下就不能简单粗暴的使用二进制比较规则了，这时候我们可以这样指定比较规则：
  将两个大小写不同的字符全都转为大写或者小写 然后，再比较这两个字符对应的二进制数据  这是一种稍微复杂一点点的比较规则，但是实际生活中的字符不止英文字符一种，比如我们的汉字有几万之多，对于某一种字符集来说，比较两个字符大小的规则可以制定出很多种，也就是说同一种字符集可以有多种比较规则，我们稍后就要介绍各种现实生活中用的字符集以及它们的一些比较规则</description>
     </item>
     

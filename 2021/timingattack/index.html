@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="meow">
+  
+  
+  
+  <link rel="prev" href="https://ash-z01.github.io/2021/lua_nvim/" />
+  
+  <link rel="canonical" href="https://ash-z01.github.io/2021/timingattack/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Timing Attack 时序攻击 | Rubik Cell Space
+       
+  </title>
+  <meta name="title" content="Timing Attack 时序攻击 | Rubik Cell Space">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/ash-z01.github.io\/"
+    },
+    "articleSection" : "posts",
+    "name" : "Timing Attack 时序攻击",
+    "headline" : "Timing Attack 时序攻击",
+    "description" : "0x00 本篇出场人物  小Z -\u0026gt; Rust\/Lua\/C\/Lisp\/Ruby 小E -\u0026gt; TS\/JS\/Go\/Haskell\/Ruby  0x01 不一样的字符串比较.. [[茶水间]]\nZ: 哎? 小E? 你也来用茶水啊\u0026hellip;\nE: 哦.. 是呀~ 哎? 怎么看你愁眉不展的~ 是遇到什么难题了吗?\nZ: emm.. 我今天在 PlayFramework中 看到一段 进行数据验证的代码，啊.. 其实就是两个字符串的比较，但是我一直没想明白~\nE: 字符串比较? 能给我看看嘛~\nZ: 嗯~ 好，你来我座位，我演示给你看~\n[小E 踮着小碎步 跟着我到了我座位旁\u0026hellip;]\n[[我的座位]]\nZ: 你看一下，就是这段代码. 我改用了Rust.\nfn safe_equal(a: String, b: String) -\u0026gt; bool { if a.len() != b.len() { return false; } let mut equal = 0; for i in 0..a.len() { equal |= a.",
+    "inLanguage" : "en-us",
+    "author" : "ash",
+    "creator" : "ash",
+    "publisher": "ash",
+    "accountablePerson" : "ash",
+    "copyrightHolder" : "ash",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-05-20 15:06:12 \u002b0800 CST",
+    "dateModified" : "2021-05-20 15:06:12 \u002b0800 CST",
+    "url" : "https:\/\/ash-z01.github.io\/2021\/timingattack\/",
+    "wordCount" : "201",
+    "keywords" : [ "TimingAttack","Security","安全", "Rubik Cell Space"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch">
+                
+                🐾
+            </a>&nbsp;<a href="https://ash-z01.github.io/">Rubik Cell Space</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch">
+                
+                🐾
+                </a>&nbsp;<a href="https://ash-z01.github.io/">Rubik Cell Space</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Timing Attack 时序攻击</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://ash-z01.github.io/" rel="author">ash</a> 🐱‍💻 
+                <span class="post-time">
+                on <time datetime=2021-05-20 itemprop="datePublished">May 20, 2021</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://ash-z01.github.io/categories/%E5%AE%89%E5%85%A8%E6%94%BB%E9%98%B2/"> 安全攻防 </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h2 id="0x00-本篇出场人物">0x00 本篇出场人物</h2>
+<ol>
+<li>小Z -&gt; Rust/Lua/C/Lisp/Ruby</li>
+<li>小E -&gt; TS/JS/Go/Haskell/Ruby</li>
+</ol>
+<h2 id="0x01-不一样的字符串比较">0x01 不一样的字符串比较..</h2>
+<p>[[茶水间]]</p>
+<p>Z: 哎? 小E? 你也来用茶水啊&hellip;</p>
+<p>E: 哦.. 是呀~ 哎? 怎么看你愁眉不展的~ 是遇到什么难题了吗?</p>
+<p>Z: emm.. 我今天在 PlayFramework中 看到一段 进行数据验证的代码，啊.. 其实就是两个字符串的比较，但是我一直没想明白~</p>
+<p>E: 字符串比较? 能给我看看嘛~</p>
+<p>Z: 嗯~ 好，你来我座位，我演示给你看~</p>
+<p>[小E 踮着小碎步 跟着我到了我座位旁&hellip;]</p>
+<p>[[我的座位]]</p>
+<p>Z: 你看一下，就是这段代码. 我改用了Rust.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">safe_equal</span>(a: String, b: String) -&gt; <span style="color:#66d9ef">bool</span> {
+    <span style="color:#66d9ef">if</span> a.len() <span style="color:#f92672">!=</span> b.len() {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+    }
+    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> equal <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">0</span>..a.len() {
+        equal <span style="color:#f92672">|=</span> a.as_bytes()[i] <span style="color:#f92672">^</span> b.as_bytes()[i];
+    }
+    <span style="color:#66d9ef">if</span> equal <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+}
+</code></pre></div><blockquote>
+<p>TIPS:: 同值异或为零.  eg: 1 ^ 1 = 0 , 1 ^ 0 = 1,  0 ^ 0 = 0</p>
+</blockquote>
+<p>E: 嗯~ (字符的比较使用了 <code>异或</code> 加速..) 所以你的疑问点在哪里?</p>
+<p>Z: 你不觉得，如果发现字符不匹配，立刻返回<code>false</code>, 会更加合理嘛? 比如改成这样..</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-rust" data-lang="rust"><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">equal</span>(a: String, b: String) -&gt; <span style="color:#66d9ef">bool</span> {
+    <span style="color:#66d9ef">if</span> a.len() <span style="color:#f92672">!=</span> b.len() {
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+    }
+    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> equal <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    <span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">0</span>..a.len() {
+        equal <span style="color:#f92672">|=</span> a.as_bytes()[i] <span style="color:#f92672">^</span> b.as_bytes()[i];
+        <span style="color:#66d9ef">if</span> equal <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> {
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+        }
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
+}
+</code></pre></div><p>E: 我了解了~ 其实呀框架的作者应该是故意这么写的，你没看到函数名叫 <code>safe_equal</code> 嘛，既有 safe， 那我们也尝试一下从 safe 的角度考量，如果按你这样写，到底哪里 unsafe 了呢?</p>
+<p>Z: [啊~ 光顾着想这个疑点，没注意到函数名这个细微的信息.. 不愧 小E 观察真仔细呢..] 我想不到哎~ 这方面算是知识盲区&hellip;</p>
+<p>E: 你思考一下，计算机执行比较是需要消耗时间的，那么采用你这段代码运行的话，字符串前端相同的字符长度越短，执行的时间也就会越短，就有可能被有心之人利用哦~</p>
+<p>Z: 可是这能相差多少呢? 可能几微秒吧??</p>
+<p>E: 你这样想，可不符合正确的安全观哦. 如果放大这个事，比如，在Web应用时，记录每个请求的返回所需时间[通常是毫秒级]，我们重复50次甚至更多，就可以得到平均时间或p50的时间，进而我们可以了解到哪个字符返回的时间比较长，当某个尝试的字符串的时间比较长，就可以确定出这个这字符串的前面一段大概率是正确的..</p>
+<p>Z: 哦~ 原来还有这种方法啊..</p>
+<blockquote>
+<p><strong>计时攻击[Timing Attack]</strong> 是一种旁道攻击[ Side Channel Attack， 简称SCA ].</p>
+<p>旁通道攻击 是指基于从计算机系统的实现中获得的信息的任何攻击，而不是基于实现的算法本身的弱点[例如，密码分析和软件错误]. 时间信息，功耗，电磁泄漏甚至声音等等，都可以提供额外的信息来源，进而加以利用. 在很多物理隔绝的环境中[黑盒]，往往也能出奇制胜.</p>
+<p>这类新型攻击的有效性远高于传统的基于数学分析的密码分析方法.</p>
+<p>PS: 企图通过社会工程学欺骗或强迫具有合法访问权限的人来破坏密码系统通常不被视为旁道攻击.</p>
+</blockquote>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>meow </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://ash-z01.github.io/2021/timingattack/>https://ash-z01.github.io/2021/timingattack/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://ash-z01.github.io/tags/timingattack/">
+                    #TimingAttack</a></span>
+            
+            <span class="tag"><a href="https://ash-z01.github.io/tags/security/">
+                    #Security</a></span>
+            
+            <span class="tag"><a href="https://ash-z01.github.io/tags/%E5%AE%89%E5%85%A8/">
+                    #安全</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://ash-z01.github.io/">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://ash-z01.github.io/2021/lua_nvim/" class="prev" rel="prev" title="Neovim &#43; Lua = init.lua"><i class="iconfont icon-left"></i>&nbsp;Neovim &#43; Lua = init.lua</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2020 - 2021</span>
+        
+        <span class="with-ash">
+        
+        🚀
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://ash-z01.github.io/">meow</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

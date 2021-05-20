@@ -22,10 +22,10 @@
   <title>
        
        
-           字符集与比较规则 | E-Meow Site
+           字符集与比较规则 | Rubik Cell Space
        
   </title>
-  <meta name="title" content="字符集与比较规则 | E-Meow Site">
+  <meta name="title" content="字符集与比较规则 | Rubik Cell Space">
     
   
   <link rel="stylesheet" href="/font/iconfont.css">
@@ -46,7 +46,7 @@
     "articleSection" : "posts",
     "name" : "字符集与比较规则",
     "headline" : "字符集与比较规则",
-    "description" : "字符集与比较规则简介 字符集简介 众所周知，计算机只能存储二进制数据，100110101010...，那我们是怎么看到各式各样的字符的呢？当然是做映射啦~，这里要搞清楚两件事儿~\n 需要将哪些字符映射成数据 当然是如何映射  人们抽象出一个字符集的概念来描述某个字符范围的编码规则. 比方说我们来自定义一个名称为 meow 的字符集，它包含的字符范围和编码规则如下\x26hellip;\n 包含字符 \x27a\x27, \x27A\x27, \x27b\x27, \x27B\x27 采用一个字节，编码一个字符 \x26#39;a\x26#39; -\x26gt; 00000001 \/\/ 0x01 \x26#39;b\x26#39; -\x26gt; 00000010 \/\/ 0x02 \x26#39;A\x26#39; -\x26gt; 00000011 \/\/ 0x03 \x26#39;B\x26#39; -\x26gt; 00000100 \/\/ 0x04   有了 meow 字符集， 我们就可以用二进制数表示字符了\x26hellip;\n\x26#39;bA\x26#39; -\x26gt; 0000001000000011 \/\/ 0x0203 \x26#39;baB\x26#39; -\x26gt; 000000100000000100000100 \/\/ 0x020104 \x26#39;cd\x26#39; -\x26gt; \/\/ 无法表示 比较规则简介 现在我们确定了 meow 字符集表示字符的范围以及编码规则，但是该怎么比较两个字符的大小呢？\n最容易想到的就是直接比较这两个字符对应的二进制编码的大小，比方说字符\x26rsquo;a\x27的编码为0x01，字符\x26rsquo;b\x27的编码为0x02，所以\x26rsquo;a\x27小于\x26rsquo;b\x26rsquo;，这种简单的比较规则也可以被称为二进制比较规则[binary collation]\n二进制比较规则是简单，但有时候并不符合现实需求，比如在很多场合对于英文字符我们都是不区分大小写的，也就是说\x26rsquo;a\x27和\x26rsquo;A\x27是相等的，在这种场合下就不能简单粗暴的使用二进制比较规则了，这时候我们可以这样指定比较规则：\n 将两个大小写不同的字符全都转为大写或者小写 然后，再比较这两个字符对应的二进制数据  这是一种稍微复杂一点点的比较规则，但是实际生活中的字符不止英文字符一种，比如我们的汉字有几万之多，对于某一种字符集来说，比较两个字符大小的规则可以制定出很多种，也就是说同一种字符集可以有多种比较规则，我们稍后就要介绍各种现实生活中用的字符集以及它们的一些比较规则",
+    "description" : "字符集与比较规则简介 字符集简介 众所周知，计算机只能存储二进制数据，100110101010...，那我们是怎么看到各式各样的字符的呢？当然是做映射啦~，这里要搞清楚两件事儿~\n 需要将哪些字符映射成数据 当然是如何映射  人们抽象出一个字符集的概念来描述某个字符范围的编码规则. 比方说我们来自定义一个名称为 meow 的字符集，它包含的字符范围和编码规则如下\u0026hellip;\n 包含字符 \u0027a\u0027, \u0027A\u0027, \u0027b\u0027, \u0027B\u0027 采用一个字节，编码一个字符 \u0026#39;a\u0026#39; -\u0026gt; 00000001 \/\/ 0x01 \u0026#39;b\u0026#39; -\u0026gt; 00000010 \/\/ 0x02 \u0026#39;A\u0026#39; -\u0026gt; 00000011 \/\/ 0x03 \u0026#39;B\u0026#39; -\u0026gt; 00000100 \/\/ 0x04   有了 meow 字符集， 我们就可以用二进制数表示字符了\u0026hellip;\n\u0026#39;bA\u0026#39; -\u0026gt; 0000001000000011 \/\/ 0x0203 \u0026#39;baB\u0026#39; -\u0026gt; 000000100000000100000100 \/\/ 0x020104 \u0026#39;cd\u0026#39; -\u0026gt; \/\/ 无法表示 比较规则简介 现在我们确定了 meow 字符集表示字符的范围以及编码规则，但是该怎么比较两个字符的大小呢？\n最容易想到的就是直接比较这两个字符对应的二进制编码的大小，比方说字符\u0026rsquo;a\u0026rsquo;的编码为0x01，字符\u0026rsquo;b\u0026rsquo;的编码为0x02，所以\u0026rsquo;a\u0026rsquo;小于\u0026rsquo;b\u0027，这种简单的比较规则也可以被称为二进制比较规则[binary collation]\n二进制比较规则是简单，但有时候并不符合现实需求，比如在很多场合对于英文字符我们都是不区分大小写的，也就是说\u0026rsquo;a\u0026rsquo;和\u0026rsquo;A\u0026rsquo;是相等的，在这种场合下就不能简单粗暴的使用二进制比较规则了，这时候我们可以这样指定比较规则：\n 将两个大小写不同的字符全都转为大写或者小写 然后，再比较这两个字符对应的二进制数据  这是一种稍微复杂一点点的比较规则，但是实际生活中的字符不止英文字符一种，比如我们的汉字有几万之多，对于某一种字符集来说，比较两个字符大小的规则可以制定出很多种，也就是说同一种字符集可以有多种比较规则，我们稍后就要介绍各种现实生活中用的字符集以及它们的一些比较规则",
     "inLanguage" : "en-us",
     "author" : "ash",
     "creator" : "ash",
@@ -54,11 +54,11 @@
     "accountablePerson" : "ash",
     "copyrightHolder" : "ash",
     "copyrightYear" : "2020",
-    "datePublished": "2020-07-22 16:49:48 \x2b0800 CST",
-    "dateModified" : "2020-07-22 16:49:48 \x2b0800 CST",
+    "datePublished": "2020-07-22 16:49:48 \u002b0800 CST",
+    "dateModified" : "2020-07-22 16:49:48 \u002b0800 CST",
     "url" : "https:\/\/ash-z01.github.io\/2020\/sql001-charset_and_cmp-rules\/",
     "wordCount" : "652",
-    "keywords" : [ "MySQL","SQL","DataBase", "E-Meow Site"]
+    "keywords" : [ "MySQL","SQL","DataBase", "Rubik Cell Space"]
 }
 </script>
 
@@ -75,7 +75,7 @@
         	<a href="javascript:void(0);" class="theme-switch">
                 
                 🐾
-            </a>&nbsp;<a href="https://ash-z01.github.io/">E-Meow Site</a>
+            </a>&nbsp;<a href="https://ash-z01.github.io/">Rubik Cell Space</a>
         </div>
         <div class="menu navbar-right">
                 
@@ -97,7 +97,7 @@
             <div>  <a href="javascript:void(0);" class="theme-switch">
                 
                 🐾
-                </a>&nbsp;<a href="https://ash-z01.github.io/">E-Meow Site</a></div>
+                </a>&nbsp;<a href="https://ash-z01.github.io/">Rubik Cell Space</a></div>
             <div class="menu-toggle">
                 <span></span><span></span><span></span>
             </div>
@@ -177,8 +177,8 @@
 </span><span style="color:#75715e"></span><span style="color:#960050;background-color:#1e0010">&#39;</span>cd<span style="color:#960050;background-color:#1e0010">&#39;</span>  <span style="color:#f92672">-&gt;</span> <span style="color:#75715e">// 无法表示
 </span></code></pre></div><h3 id="比较规则简介">比较规则简介</h3>
 <p>现在我们确定了 <code>meow</code> 字符集表示字符的范围以及编码规则，但是该怎么比较两个字符的大小呢？</p>
-<p>最容易想到的就是直接比较这两个字符对应的二进制编码的大小，比方说字符&rsquo;a'的编码为0x01，字符&rsquo;b'的编码为0x02，所以&rsquo;a'小于&rsquo;b&rsquo;，这种简单的比较规则也可以被称为二进制比较规则[binary collation]</p>
-<p>二进制比较规则是简单，但有时候并不符合现实需求，比如在很多场合对于英文字符我们都是不区分大小写的，也就是说&rsquo;a'和&rsquo;A'是相等的，在这种场合下就不能简单粗暴的使用二进制比较规则了，这时候我们可以这样指定比较规则：</p>
+<p>最容易想到的就是直接比较这两个字符对应的二进制编码的大小，比方说字符&rsquo;a&rsquo;的编码为0x01，字符&rsquo;b&rsquo;的编码为0x02，所以&rsquo;a&rsquo;小于&rsquo;b'，这种简单的比较规则也可以被称为二进制比较规则[binary collation]</p>
+<p>二进制比较规则是简单，但有时候并不符合现实需求，比如在很多场合对于英文字符我们都是不区分大小写的，也就是说&rsquo;a&rsquo;和&rsquo;A&rsquo;是相等的，在这种场合下就不能简单粗暴的使用二进制比较规则了，这时候我们可以这样指定比较规则：</p>
 <ul>
 <li>将两个大小写不同的字符全都转为大写或者小写</li>
 <li>然后，再比较这两个字符对应的二进制数据</li>

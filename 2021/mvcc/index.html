@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="meow">
+  
+  
+  
+  <link rel="prev" href="https://ash-z01.github.io/2021/cap/" />
+  <link rel="next" href="https://ash-z01.github.io/2021/lua_nvim/" />
+  <link rel="canonical" href="https://ash-z01.github.io/2021/mvcc/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           An Empirical Evaluation of In-Memory Multi-Version Concurrency Control | Rubik Cell Space
+       
+  </title>
+  <meta name="title" content="An Empirical Evaluation of In-Memory Multi-Version Concurrency Control | Rubik Cell Space">
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/ash-z01.github.io\/"
+    },
+    "articleSection" : "posts",
+    "name" : "An Empirical Evaluation of In-Memory Multi-Version Concurrency Control",
+    "headline" : "An Empirical Evaluation of In-Memory Multi-Version Concurrency Control",
+    "description" : "0x00 摘要 多版本并发控制(MVCC)是目前 现代数据库管理系统(DBMS)中 最流行的事务管理方案. MVCC在20世纪70年代后期被提出，但是过去十年里，主流的关系型数据库都开始采用它. MVCC维护多个版本的数据，使得DMBS在处理事务时，不违背ACID的同时，增加并行性. 但是，在多核和内存设置中扩展 MVCC 并非易事: 当有大量线程并行运行时，同步的开销可能会超过MVCC带来的好处.\n为了理解 MVCC 在现代硬件中处理事务时的表现，我们对4个关键设计决策进行了广泛的研究: 并发控制协议、版本存储、垃圾回收 和 索引管理. 我们在基于内存的 DBMS 中实现了所有这些的最新变体，并使用 OLTP 工作负载评估它们. 我们的分析确定了每个设计选择的基本瓶颈.\n0x01 前言 计算机体系结构的进步导致了多核、基于内存的DBMS 的兴起，它们采用高效的事务管理机制来最大化并行性. 在DMBS中使用最广泛的方案是多版本并发控制协议(MVCC). MVCC 的基本思想是，DBMS 维护数据库中每个逻辑对象的多个物理版本，以允许对同一对象的操作并行进行. 这些对象可以是任何粒度的，但几乎每个 MVCC DBMS 都使用元组，因为它在并行性和版本跟踪之间提供了很好的平衡. 多版本控制允许只读事务访问元组的旧版本，而不会阻止读写事务同时生成新版本. 在单一版本的系统中，事务总是使用新的信息编写元组来更新它.\n本文对 MVCC 数据库管理系统中的关键事务管理设计决策进行了研究:\n1. 并发控制协议 2. 版本存储 3. 垃圾回收 4. 索引管理  对于每个主题，我们描述内存中 DBMS 的最新实现，并讨论它们的优缺点. 我们还强调了阻止它们伸缩以支持更大的线程数和更复杂的工作负载的问题. 我们的分析确定了强调实现的场景，并讨论了缓解这些场景的方法(如果可能的话).\n0x02 背景 我们首先概述 mvcc 的高级概念，然后讨论 DBMS 用于跟踪传输和维护版本控制信息的元数据.\n2-1 MVCC 总览 事务管理方案允许终端用户以多线程的方式访问数据库，同时保持每个数据库都在专用系统上单独执行的假象. 它保证了DBMS的原子性和隔离性.\n多版本系统对于现代数据库应用程序有几个优点. 最重要的是，它可能比单版本系统允许更大的并发性. 例如，MVCC DBMS 允许事务读取一个对象的旧版本，同时另一个事务更新同一个对象.",
+    "inLanguage" : "en-us",
+    "author" : "ash",
+    "creator" : "ash",
+    "publisher": "ash",
+    "accountablePerson" : "ash",
+    "copyrightHolder" : "ash",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-04-21 14:46:02 \u002b0800 CST",
+    "dateModified" : "2021-04-21 14:46:02 \u002b0800 CST",
+    "url" : "https:\/\/ash-z01.github.io\/2021\/mvcc\/",
+    "wordCount" : "217",
+    "keywords" : [ "MVCC","DataBase","Concurrency","Paper", "Rubik Cell Space"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch">
+                
+                🐾
+            </a>&nbsp;<a href="https://ash-z01.github.io/">Rubik Cell Space</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch">
+                
+                🐾
+                </a>&nbsp;<a href="https://ash-z01.github.io/">Rubik Cell Space</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="/about/" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">An Empirical Evaluation of In-Memory Multi-Version Concurrency Control</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://ash-z01.github.io/" rel="author">ash</a> 🐱‍💻 
+                <span class="post-time">
+                on <time datetime=2021-04-21 itemprop="datePublished">April 21, 2021</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://ash-z01.github.io/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"> 论文阅读 </a>
+                        
+                </span>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h2 id="0x00-摘要">0x00 摘要</h2>
+<p>多版本并发控制(MVCC)是目前 现代数据库管理系统(DBMS)中 最流行的事务管理方案. MVCC在20世纪70年代后期被提出，但是过去十年里，主流的关系型数据库都开始采用它. MVCC维护多个版本的数据，使得DMBS在处理事务时，不违背ACID的同时，增加并行性. 但是，在多核和内存设置中扩展 MVCC 并非易事: 当有大量线程并行运行时，同步的开销可能会超过MVCC带来的好处.</p>
+<p>为了理解 MVCC 在现代硬件中处理事务时的表现，我们对4个关键设计决策进行了广泛的研究: 并发控制协议、版本存储、垃圾回收 和 索引管理. 我们在基于内存的 DBMS 中实现了所有这些的最新变体，并使用 OLTP 工作负载评估它们. 我们的分析确定了每个设计选择的基本瓶颈.</p>
+<h2 id="0x01-前言">0x01 前言</h2>
+<p>计算机体系结构的进步导致了多核、基于内存的DBMS 的兴起，它们采用高效的事务管理机制来最大化并行性. 在DMBS中使用最广泛的方案是多版本并发控制协议(MVCC). MVCC 的基本思想是，DBMS 维护数据库中每个逻辑对象的多个物理版本，以允许对同一对象的操作并行进行. 这些对象可以是任何粒度的，但几乎每个 MVCC DBMS 都使用元组，因为它在并行性和版本跟踪之间提供了很好的平衡. 多版本控制允许只读事务访问元组的旧版本，而不会阻止读写事务同时生成新版本. 在单一版本的系统中，事务总是使用新的信息编写元组来更新它.</p>
+<p>本文对 MVCC 数据库管理系统中的关键事务管理设计决策进行了研究:</p>
+<pre><code>1. 并发控制协议
+2. 版本存储
+3. 垃圾回收
+4. 索引管理
+</code></pre>
+<p>对于每个主题，我们描述内存中 DBMS 的最新实现，并讨论它们的优缺点. 我们还强调了阻止它们伸缩以支持更大的线程数和更复杂的工作负载的问题. 我们的分析确定了强调实现的场景，并讨论了缓解这些场景的方法(如果可能的话).</p>
+<h2 id="0x02-背景">0x02 背景</h2>
+<p>我们首先概述 mvcc 的高级概念，然后讨论 DBMS 用于跟踪传输和维护版本控制信息的元数据.</p>
+<h3 id="2-1-mvcc-总览">2-1 MVCC 总览</h3>
+<p>事务管理方案允许终端用户以多线程的方式访问数据库，同时保持每个数据库都在专用系统上单独执行的假象. 它保证了DBMS的原子性和隔离性.</p>
+<p>多版本系统对于现代数据库应用程序有几个优点. 最重要的是，它可能比单版本系统允许更大的并发性. 例如，MVCC DBMS 允许事务读取一个对象的旧版本，同时另一个事务更新同一个对象. 这一点很重要，因为在数据库上执行只读查询的同时，读写事务会继续更新它. 如果 DBMS 从未删除旧版本，那么系统还可以支持“时间旅行”操作，允许应用程序查询数据库在过去某个时间点存在的一致快照.</p>
+<p>这些优点使 MVCC 成为近些年的新型数据库管理系统中最受欢迎的选择.</p>
+<p>下表提供了过去三十年中 MVCC 实现的总体情况:</p>
+<table>
+<thead>
+<tr>
+<th>DBMS</th>
+<th>年份</th>
+<th>并发控制协议</th>
+<th>版本存储</th>
+<th>垃圾回收</th>
+<th>索引管理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Oracle</td>
+<td>1984</td>
+<td>MV2PL</td>
+<td>Delta</td>
+<td>Tuple-Level(VAC)</td>
+<td>Logical Pointers(Tupled)</td>
+</tr>
+<tr>
+<td>Postgres</td>
+<td>1985</td>
+<td>MV2PL/SSI</td>
+<td>Append-Only(O2N)</td>
+<td>Tuple-Level(VAC)</td>
+<td>Physical Pointers</td>
+</tr>
+<tr>
+<td>MySQL-InnoDB</td>
+<td>2001</td>
+<td>MV2PL</td>
+<td>Delta</td>
+<td>Tuple-Level(VAC)</td>
+<td>Logical Pointers(PKey)</td>
+</tr>
+<tr>
+<td>HYRise</td>
+<td>2010</td>
+<td>MVOCC</td>
+<td>Append-Only(N2O)</td>
+<td>-</td>
+<td>Physical Pointers</td>
+</tr>
+<tr>
+<td>Hekaton</td>
+<td>2011</td>
+<td>MVOCC</td>
+<td>Append-Only(O2N)</td>
+<td>Tuple-Level(COOP)</td>
+<td>Physical Pointers</td>
+</tr>
+<tr>
+<td>MemSQL</td>
+<td>2012</td>
+<td>MVOCC</td>
+<td>Append-Only(N2O)</td>
+<td>Tuple-Level(VAC)</td>
+<td>Physical Pointers</td>
+</tr>
+<tr>
+<td>SAP HANA</td>
+<td>2012</td>
+<td>MV2PL</td>
+<td>Time-Travel</td>
+<td>Hybrid</td>
+<td>Logical Pointers(Tupled)</td>
+</tr>
+<tr>
+<td>NuoDB</td>
+<td>2013</td>
+<td>MV2PL</td>
+<td>Append-Only(N2O)</td>
+<td>Tuple-Level(VAC)</td>
+<td>Logical Pointers(PKey)</td>
+</tr>
+<tr>
+<td>HyPer</td>
+<td>2015</td>
+<td>MVOCC</td>
+<td>Delta</td>
+<td>Transaction-Level</td>
+<td>Logical Pointers(Tupled)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>但在DBMS中实现多版本控制有不同的方法，每种方法都会产生额外的计算和存储. 这些设计决策也高度依赖于彼此.</p>
+<p>在接下来的部分中，我们将讨论这些设计决策的实现问题和性能折衷. 之后在第7节对它们进行综合评估.</p>
+<h3 id="2-2-dbms-元数据-meta-data">2-2 DBMS 元数据 [Meta-Data]</h3>
+<h2 id="0x03-并发控制协议">0x03 并发控制协议</h2>
+<h3 id="3-1-mvto-时戳排序-timestamp-ordering">3-1 MVTO 时戳排序 [Timestamp Ordering]</h3>
+<h3 id="3-2-mvocc-乐观并发控制-optimistic-concurrency-control">3-2 MVOCC 乐观并发控制 [Optimistic Concurrency Control]</h3>
+<h3 id="3-3-mv2pl-两阶段锁-two-phase-locking">3-3 MV2PL 两阶段锁 [Two-phase Locking]</h3>
+<h3 id="3-4-序列化认证-serialization-certifier">3-4 序列化认证 [Serialization Certifier]</h3>
+<h3 id="3-5-讨论">3-5 讨论</h3>
+<h2 id="0x04-版本存储">0x04 版本存储</h2>
+<h3 id="4-1-append-only-storage">4-1 Append-only Storage</h3>
+<h3 id="4-2-time-travel-storage">4-2 Time-Travel Storage</h3>
+<h3 id="4-3-delta-storage">4-3 Delta Storage</h3>
+<h3 id="4-4-讨论">4-4 讨论</h3>
+<h2 id="0x05-垃圾回收">0x05 垃圾回收</h2>
+<h3 id="5-1-tuple-level-garbage-collection">5-1 Tuple-level Garbage Collection</h3>
+<h3 id="5-2-transaction-level-garbage-collection">5-2 Transaction-level Garbage Collection</h3>
+<h3 id="5-3-讨论">5-3 讨论</h3>
+<h2 id="0x06-索引管理">0x06 索引管理</h2>
+<h3 id="6-1-logical-pointers">6-1 Logical Pointers</h3>
+<h3 id="6-2--physical-pointers">6-2  Physical Pointers</h3>
+<h3 id="6-3-讨论">6-3 讨论</h3>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>meow </span>
+                </p>
+            
+           
+             
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://ash-z01.github.io/2021/mvcc/>https://ash-z01.github.io/2021/mvcc/</span>
+            </p>
+            
+             
+            <p class="copyright-item lincese">
+                本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可
+            </p>
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s): 
+            
+            <span class="tag"><a href="https://ash-z01.github.io/tags/mvcc/">
+                    #MVCC</a></span>
+            
+            <span class="tag"><a href="https://ash-z01.github.io/tags/database/">
+                    #DataBase</a></span>
+            
+            <span class="tag"><a href="https://ash-z01.github.io/tags/concurrency/">
+                    #Concurrency</a></span>
+            
+            <span class="tag"><a href="https://ash-z01.github.io/tags/paper/">
+                    #Paper</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> · 
+                <span><a href="https://ash-z01.github.io/">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://ash-z01.github.io/2021/cap/" class="prev" rel="prev" title="CP or AP?"><i class="iconfont icon-left"></i>&nbsp;CP or AP?</a>
+         
+        
+        <a href="https://ash-z01.github.io/2021/lua_nvim/" class="next" rel="next" title="Neovim &#43; Lua = init.lua">Neovim &#43; Lua = init.lua&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2020 - 2021</span>
+        
+        <span class="with-ash">
+        
+        🚀
+         </span>
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://ash-z01.github.io/">meow</a> | </span> 
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span> 
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+     </div>
+  </body>
+</html>

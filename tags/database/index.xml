@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>DataBase on E-Meow Site</title>
+    <title>DataBase on Rubik Cell Space</title>
     <link>https://ash-z01.github.io/tags/database/</link>
-    <description>Recent content in DataBase on E-Meow Site</description>
+    <description>Recent content in DataBase on Rubik Cell Space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Jul 2020 16:49:48 +0800</lastBuildDate>
-    
-	<atom:link href="https://ash-z01.github.io/tags/database/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Wed, 21 Apr 2021 14:46:02 +0800</lastBuildDate><atom:link href="https://ash-z01.github.io/tags/database/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>An Empirical Evaluation of In-Memory Multi-Version Concurrency Control</title>
+      <link>https://ash-z01.github.io/2021/mvcc/</link>
+      <pubDate>Wed, 21 Apr 2021 14:46:02 +0800</pubDate>
+      
+      <guid>https://ash-z01.github.io/2021/mvcc/</guid>
+      <description>0x00 摘要 多版本并发控制(MVCC)是目前 现代数据库管理系统(DBMS)中 最流行的事务管理方案. MVCC在20世纪70年代后期被提出，但是过去十年里，主流的关系型数据库都开始采用它. MVCC维护多个版本的数据，使得DMBS在处理事务时，不违背ACID的同时，增加并行性. 但是，在多核和内存设置中扩展 MVCC 并非易事: 当有大量线程并行运行时，同步的开销可能会超过MVCC带来的好处.
+为了理解 MVCC 在现代硬件中处理事务时的表现，我们对4个关键设计决策进行了广泛的研究: 并发控制协议、版本存储、垃圾回收 和 索引管理. 我们在基于内存的 DBMS 中实现了所有这些的最新变体，并使用 OLTP 工作负载评估它们. 我们的分析确定了每个设计选择的基本瓶颈.
+0x01 前言 计算机体系结构的进步导致了多核、基于内存的DBMS 的兴起，它们采用高效的事务管理机制来最大化并行性. 在DMBS中使用最广泛的方案是多版本并发控制协议(MVCC). MVCC 的基本思想是，DBMS 维护数据库中每个逻辑对象的多个物理版本，以允许对同一对象的操作并行进行. 这些对象可以是任何粒度的，但几乎每个 MVCC DBMS 都使用元组，因为它在并行性和版本跟踪之间提供了很好的平衡. 多版本控制允许只读事务访问元组的旧版本，而不会阻止读写事务同时生成新版本. 在单一版本的系统中，事务总是使用新的信息编写元组来更新它.
+本文对 MVCC 数据库管理系统中的关键事务管理设计决策进行了研究:
+1. 并发控制协议 2. 版本存储 3. 垃圾回收 4. 索引管理  对于每个主题，我们描述内存中 DBMS 的最新实现，并讨论它们的优缺点. 我们还强调了阻止它们伸缩以支持更大的线程数和更复杂的工作负载的问题. 我们的分析确定了强调实现的场景，并讨论了缓解这些场景的方法(如果可能的话).
+0x02 背景 我们首先概述 mvcc 的高级概念，然后讨论 DBMS 用于跟踪传输和维护版本控制信息的元数据.
+2-1 MVCC 总览 事务管理方案允许终端用户以多线程的方式访问数据库，同时保持每个数据库都在专用系统上单独执行的假象. 它保证了DBMS的原子性和隔离性.
+多版本系统对于现代数据库应用程序有几个优点. 最重要的是，它可能比单版本系统允许更大的并发性. 例如，MVCC DBMS 允许事务读取一个对象的旧版本，同时另一个事务更新同一个对象.</description>
+    </item>
     
     <item>
       <title>InnoDB 存储结构</title>
@@ -34,8 +46,8 @@ mysql&amp;gt; INSERT INTO record_format_demo(c1, c2, c3, c4) VALUES(&amp;#39;aaa
  需要将哪些字符映射成数据 当然是如何映射  人们抽象出一个字符集的概念来描述某个字符范围的编码规则. 比方说我们来自定义一个名称为 meow 的字符集，它包含的字符范围和编码规则如下&amp;hellip;
  包含字符 &#39;a&#39;, &#39;A&#39;, &#39;b&#39;, &#39;B&#39; 采用一个字节，编码一个字符 &amp;#39;a&amp;#39; -&amp;gt; 00000001 // 0x01 &amp;#39;b&amp;#39; -&amp;gt; 00000010 // 0x02 &amp;#39;A&amp;#39; -&amp;gt; 00000011 // 0x03 &amp;#39;B&amp;#39; -&amp;gt; 00000100 // 0x04   有了 meow 字符集， 我们就可以用二进制数表示字符了&amp;hellip;
 &amp;#39;bA&amp;#39; -&amp;gt; 0000001000000011 // 0x0203 &amp;#39;baB&amp;#39; -&amp;gt; 000000100000000100000100 // 0x020104 &amp;#39;cd&amp;#39; -&amp;gt; // 无法表示 比较规则简介 现在我们确定了 meow 字符集表示字符的范围以及编码规则，但是该怎么比较两个字符的大小呢？
-最容易想到的就是直接比较这两个字符对应的二进制编码的大小，比方说字符&amp;rsquo;a&#39;的编码为0x01，字符&amp;rsquo;b&#39;的编码为0x02，所以&amp;rsquo;a&#39;小于&amp;rsquo;b&amp;rsquo;，这种简单的比较规则也可以被称为二进制比较规则[binary collation]
-二进制比较规则是简单，但有时候并不符合现实需求，比如在很多场合对于英文字符我们都是不区分大小写的，也就是说&amp;rsquo;a&#39;和&amp;rsquo;A&#39;是相等的，在这种场合下就不能简单粗暴的使用二进制比较规则了，这时候我们可以这样指定比较规则：
+最容易想到的就是直接比较这两个字符对应的二进制编码的大小，比方说字符&amp;rsquo;a&amp;rsquo;的编码为0x01，字符&amp;rsquo;b&amp;rsquo;的编码为0x02，所以&amp;rsquo;a&amp;rsquo;小于&amp;rsquo;b&#39;，这种简单的比较规则也可以被称为二进制比较规则[binary collation]
+二进制比较规则是简单，但有时候并不符合现实需求，比如在很多场合对于英文字符我们都是不区分大小写的，也就是说&amp;rsquo;a&amp;rsquo;和&amp;rsquo;A&amp;rsquo;是相等的，在这种场合下就不能简单粗暴的使用二进制比较规则了，这时候我们可以这样指定比较规则：
  将两个大小写不同的字符全都转为大写或者小写 然后，再比较这两个字符对应的二进制数据  这是一种稍微复杂一点点的比较规则，但是实际生活中的字符不止英文字符一种，比如我们的汉字有几万之多，对于某一种字符集来说，比较两个字符大小的规则可以制定出很多种，也就是说同一种字符集可以有多种比较规则，我们稍后就要介绍各种现实生活中用的字符集以及它们的一些比较规则</description>
     </item>
     
