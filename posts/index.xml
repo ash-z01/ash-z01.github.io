@@ -53,6 +53,20 @@ fn safe_equal(a: String, b: String) -&amp;gt; bool { if a.len() != b.len() { ret
     </item>
     
     <item>
+      <title>Rsync under the hood</title>
+      <link>https://ash-z01.github.io/2021/rsync/</link>
+      <pubDate>Thu, 22 Apr 2021 15:35:01 +0800</pubDate>
+      
+      <guid>https://ash-z01.github.io/2021/rsync/</guid>
+      <description>0x00 rsync 简介 Rsync 是一款开源，快速，多功能的数据同步工具.
+ rsync 可以实现本地与远程主机之间数据的快速同步，本地主机的不同分区或目录之间也能进行同步 rsync 实现了全量或增量的数据同步、远程备份，类似 scp  但是 scp 只能全量备份
+  rsync 同样可以用于文件和目录的删除 rsync 以一当三 实现了 scp cp rm 的功能，且优于它们  0x01 rsync 核心算法 前情提要 在开始算法原理之前，先简单说明下 rsync 是如何进行增量传输的.
+假设现有主机和文件信息如下:
+    主机名 文件名 文件内容     发送端 α A ashxx123_zoe   接收端 β B ash123zoey    我们要将文件 A 同步到 β 主机上
+ 实际上 A 和 B 是同名文件, 为区分使用不同的名字</description>
+    </item>
+    
+    <item>
       <title>An Empirical Evaluation of In-Memory Multi-Version Concurrency Control</title>
       <link>https://ash-z01.github.io/2021/mvcc/</link>
       <pubDate>Wed, 21 Apr 2021 14:46:02 +0800</pubDate>
@@ -66,20 +80,6 @@ fn safe_equal(a: String, b: String) -&amp;gt; bool { if a.len() != b.len() { ret
 0x02 背景 我们首先概述 mvcc 的高级概念，然后讨论 DBMS 用于跟踪传输和维护版本控制信息的元数据.
 2-1 MVCC 总览 事务管理方案允许终端用户以多线程的方式访问数据库，同时保持每个数据库都在专用系统上单独执行的假象. 它保证了DBMS的原子性和隔离性.
 多版本系统对于现代数据库应用程序有几个优点. 最重要的是，它可能比单版本系统允许更大的并发性. 例如，MVCC DBMS 允许事务读取一个对象的旧版本，同时另一个事务更新同一个对象.</description>
-    </item>
-    
-    <item>
-      <title>Rsync under the hood</title>
-      <link>https://ash-z01.github.io/2021/rsync/</link>
-      <pubDate>Wed, 21 Apr 2021 14:46:02 +0800</pubDate>
-      
-      <guid>https://ash-z01.github.io/2021/rsync/</guid>
-      <description>0x00 rsync 简介 Rsync 是一款开源，快速，多功能的数据同步工具.
- rsync 可以实现本地与远程主机之间数据的快速同步，本地主机的不同分区或目录之间也能进行同步 rsync 实现了全量或增量的数据同步、远程备份，类似 scp  但是 scp 只能全量备份
-  rsync 同样可以用于文件和目录的删除 rsync 以一当三 实现了 scp cp rm 的功能，且优于它们  0x01 rsync 核心算法 前情提要 在开始算法原理之前，先简单说明下 rsync 是如何进行增量传输的.
-假设现有主机和文件信息如下:
-    主机名 文件名 文件内容     发送端 α A ashxx123_zoe   接收端 β B ash123zoey    我们要将文件 A 同步到 β 主机上
- 实际上 A 和 B 是同名文件, 为区分使用不同的名字</description>
     </item>
     
     <item>
