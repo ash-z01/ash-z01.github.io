@@ -23,5 +23,14 @@
 多版本系统对于现代数据库应用程序有几个优点. 最重要的是，它可能比单版本系统允许更大的并发性. 例如，MVCC DBMS 允许事务读取一个对象的旧版本，同时另一个事务更新同一个对象.</description>
     </item>
     
+    <item>
+      <title>In Search of an Understandable Consensus Algorithm</title>
+      <link>https://ash-z01.github.io/1/raft/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ash-z01.github.io/1/raft/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>

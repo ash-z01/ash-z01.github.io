@@ -6,7 +6,19 @@
     <description>Recent content in Posts on Rubik Cell Space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 May 2021 15:06:12 +0800</lastBuildDate><atom:link href="https://ash-z01.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 06 Jun 2021 14:46:02 +0800</lastBuildDate><atom:link href="https://ash-z01.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>B&#43;树</title>
+      <link>https://ash-z01.github.io/2021/bplustree/</link>
+      <pubDate>Sun, 06 Jun 2021 14:46:02 +0800</pubDate>
+      
+      <guid>https://ash-z01.github.io/2021/bplustree/</guid>
+      <description>起因 最近在研究数据库的一些实现，想着DIY一个~
+虽然早就从大名鼎鼎的MySQL知识中了解到，经典的索引结构采用了B+树，但是真正涉及到实现细节，还是有点烦乱~
+所以这篇文章，也就是一个B+树的实现和分析笔记了.
+直接开始吧~ </description>
+    </item>
+    
     <item>
       <title>Timing Attack 时序攻击</title>
       <link>https://ash-z01.github.io/2021/timingattack/</link>
@@ -54,6 +66,38 @@ fn safe_equal(a: String, b: String) -&amp;gt; bool { if a.len() != b.len() { ret
 0x02 背景 我们首先概述 mvcc 的高级概念，然后讨论 DBMS 用于跟踪传输和维护版本控制信息的元数据.
 2-1 MVCC 总览 事务管理方案允许终端用户以多线程的方式访问数据库，同时保持每个数据库都在专用系统上单独执行的假象. 它保证了DBMS的原子性和隔离性.
 多版本系统对于现代数据库应用程序有几个优点. 最重要的是，它可能比单版本系统允许更大的并发性. 例如，MVCC DBMS 允许事务读取一个对象的旧版本，同时另一个事务更新同一个对象.</description>
+    </item>
+    
+    <item>
+      <title>Rsync under the hood</title>
+      <link>https://ash-z01.github.io/2021/rsync/</link>
+      <pubDate>Wed, 21 Apr 2021 14:46:02 +0800</pubDate>
+      
+      <guid>https://ash-z01.github.io/2021/rsync/</guid>
+      <description>0x00 rsync 简介 Rsync 是一款开源，快速，多功能的数据同步工具.
+ rsync 可以实现本地与远程主机之间数据的快速同步，本地主机的不同分区或目录之间也能进行同步 rsync 实现了全量或增量的数据同步、远程备份，类似 scp  但是 scp 只能全量备份
+  rsync 同样可以用于文件和目录的删除 rsync 以一当三 实现了 scp cp rm 的功能，且优于它们  0x01 rsync 核心算法 前情提要 在开始算法原理之前，先简单说明下 rsync 是如何进行增量传输的.
+假设现有主机和文件信息如下:
+    主机名 文件名 文件内容     发送端 α A ashxx123_zoe   接收端 β B ash123zoey    我们要将文件 A 同步到 β 主机上
+ 实际上 A 和 B 是同名文件, 为区分使用不同的名字</description>
+    </item>
+    
+    <item>
+      <title>DIY SQLite</title>
+      <link>https://ash-z01.github.io/2021/diy_sqlite/</link>
+      <pubDate>Sat, 03 Apr 2021 11:20:08 +0800</pubDate>
+      
+      <guid>https://ash-z01.github.io/2021/diy_sqlite/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Semantics / 语义</title>
+      <link>https://ash-z01.github.io/2021/semantics/</link>
+      <pubDate>Sat, 03 Apr 2021 11:20:08 +0800</pubDate>
+      
+      <guid>https://ash-z01.github.io/2021/semantics/</guid>
+      <description></description>
     </item>
     
     <item>
@@ -226,6 +270,15 @@ Follow the following steps:
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://ash-z01.github.io/1/link/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>In Search of an Understandable Consensus Algorithm</title>
+      <link>https://ash-z01.github.io/1/raft/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ash-z01.github.io/1/raft/</guid>
       <description></description>
     </item>
     
